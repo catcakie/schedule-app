@@ -1,0 +1,14 @@
+{
+  "name": "scheduleapp",
+  "version": "1.0.0",
+  "description": "My personal application for keeping track of the things I do",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Danielle Hsiao",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^21.2.0"
+  }
+}
