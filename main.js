@@ -177,7 +177,7 @@ readObjectsFromJSONFile(activityFileName);
  * app: controls your application's event lifecycle.
  * BrowserWindow: creates and manages app windows.
  */
-const { app, BrowserWindow, ipcMain, nativeTheme } = require('electron')
+const { app, BrowserWindow, ipcMain, nativeTheme, dialog } = require('electron')
 const path = require('path')
 
 function createWindow () {
@@ -203,6 +203,8 @@ function createWindow () {
   ipcMain.handle('dark-mode:system', () => {
     nativeTheme.themeSource = 'system'
   })
+
+  ipcMain.handle('dialog:openFile', handleFileOpen)
 }
 
 app.whenReady().then(() => {
@@ -221,5 +223,12 @@ app.on('window-all-closed', () => {
   }
 })
 
-// ---------------------- JAVASCRIPT CODE BELOW --------------------- \\
-
+// ---------------------- TEST CODE BELOW --------------------- \\
+async function handleFileOpen() {
+    const { canceled, filePaths } = await dialog.showOpenDialog()
+    if (canceled) {
+      return
+    } else {
+      return filePaths[0]
+    }
+}
