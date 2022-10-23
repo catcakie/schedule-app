@@ -1,2 +1,3 @@
-# schedule-app
-work in progress for my personal schedule app
+# Hello
+
+This is just an electron editable table app I'm working on
