@@ -1,16 +1,86 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Hello World!</title>
-    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
-    <link rel="stylesheet" type="text/css" href="./styles.css">
+    <title>Development/Schedule</title>
+    <link rel="stylesheet" type="text/css" href="https://rawgit.com/vitmalina/w2ui/master/dist/w2ui.min.css">
 </head>
 <body>
-    
 
-        <div id="myGrid" style="height: 200px; width:500px;" class="ag-theme-alpine"></div>
+<div id="main" style="width: 100%; height: 500px;"></div>
 
-    <script src="renderer.js"></script>
+<script type="module">
+import { w2layout, w2sidebar, w2grid, query } from 'https://rawgit.com/vitmalina/w2ui/master/dist/w2ui.es6.min.js'
+
+// widget configuration
+let config = {
+    layout: {
+        name: 'layout',
+        padding: 0,
+        panels: [
+            { type: 'left', size: 100, resizable: true, minSize: 35 },
+            { type: 'main', minSize: 550, overflow: 'hidden' }
+        ]
+    },
+    sidebar: {
+        name: 'sidebar',
+        flatButton: true,
+        nodes: [
+            { id: 'general', text: 'General', group: true, expanded: true, groupShowHide: false,
+                nodes: [
+                    { id: 'grid1', text: 'Grid 1', icon: 'fa fa-list-alt', selected: true },
+                    { id: 'grid2', text: 'Grid 2', icon: 'fa fa-list-alt' },
+                ],
+                onCollapse(event) {
+                    event.preventDefault()
+                }
+            }
+        ],
+        onFlat(event) {
+            layout.sizeTo('left', (event.detail.goFlat ? 35 : 200), true)
+        },
+        onClick(event) {
+            switch (event.target) {
+                case 'grid1':
+                    layout.html('main', grid1)
+                    break
+                case 'grid2':
+                    layout.html('main', grid2)
+                    break
+            }
+        }
+    },
+    grid1: {
+        name: 'grid1',
+        columns: [
+            { field: 'completion', text: 'Completion', size: '85px' },
+            { field: 'category', text: 'Category', size: '120px' },
+            { field: 'requirements', text: 'Requirements', size: '120px' },
+            { field: 'design', text: 'Design', size: '120px' },
+            { field: 'development', text: 'Development', size: '120px' },
+            { field: 'testing', text: 'Testing', size: '120px' },
+            { field: 'results', text: 'Results', size: '120px' }
+        ],
+        records: [
+        ]
+    },
+    grid2: {
+        name: 'grid2',
+        columns: [
+        ],
+        records: [
+        ]
+    }
+}
+
+// initialization
+let layout = new w2layout(config.layout)
+let sidebar = new w2sidebar(config.sidebar)
+let grid1 = new w2grid(config.grid1)
+let grid2 = new w2grid(config.grid2)
+layout.render('#main')
+layout.html('left', sidebar)
+layout.html('main', grid1)
+</script>
+<script src="renderer.js"></script>
 </body>
 </html>
