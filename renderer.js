@@ -1,6 +1,3 @@
-//import { w2layout, w2sidebar, w2grid, query } from 'https://rawgit.com/vitmalina/w2ui/master/dist/w2ui.es6.min.js'
-//const { w2layout, w2sidebar, w2grid, query } = require('https://rawgit.com/vitmalina/w2ui/master/dist/w2ui.es6.min.js')
-
 let config = {
 	layout: {
 		name: 'layout',
