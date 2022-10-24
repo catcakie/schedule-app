@@ -172,11 +172,7 @@ readObjectsFromJSONFile(activityFileName);
 
 
 // ---------------------- ELECTRON CODE BELOW --------------------- \\
-
-/* we are importing two Electron modules with CommonJS module syntax:
- * app: controls your application's event lifecycle.
- * BrowserWindow: creates and manages app windows.
- */
+const { w2layout, w2sidebar, w2grid, query } = require('w2ui')
 const { app, BrowserWindow, ipcMain, nativeTheme, dialog } = require('electron')
 const path = require('path')
 
@@ -190,21 +186,6 @@ function createWindow () {
   })
 
   win.loadFile('index.html')
-
-  ipcMain.handle('dark-mode:toggle', () => {
-    if (nativeTheme.shouldUseDarkColors) {
-      nativeTheme.themeSource = 'light'
-    } else {
-      nativeTheme.themeSource = 'dark'
-    }
-    return nativeTheme.shouldUseDarkColors
-  })
-
-  ipcMain.handle('dark-mode:system', () => {
-    nativeTheme.themeSource = 'system'
-  })
-
-  ipcMain.handle('dialog:openFile', handleFileOpen)
 }
 
 app.whenReady().then(() => {
@@ -224,11 +205,6 @@ app.on('window-all-closed', () => {
 })
 
 // ---------------------- TEST CODE BELOW --------------------- \\
-async function handleFileOpen() {
-    const { canceled, filePaths } = await dialog.showOpenDialog()
-    if (canceled) {
-      return
-    } else {
-      return filePaths[0]
-    }
-}
+
+// const $ = jQuery = require('jquery');
+
