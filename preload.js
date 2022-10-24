@@ -6,8 +6,6 @@
 */
 const { contextBridge, ipcRenderer } = require('electron')
 
+//const { w2layout, w2sidebar, w2grid, query } = require('w2ui')
 contextBridge.exposeInMainWorld('api', {
-  // test
-  openFile: () => ipcRenderer.invoke('dialog:openFile')
-  
 })
