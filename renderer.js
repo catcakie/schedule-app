@@ -348,11 +348,15 @@ let weeklySchedule = new w2grid(config.weeklySchedule)
 layout.render('#main')
 layout.html('left', sidebar)
 layout.html('main', developmentCycle)
-
 loadData(activitiesUrl)
 
 window.api.addRow((event, value) => {
-    developmentCycle.add( { recid: developmentCycle.records.length+1 } )
+	let records = developmentCycle.records
+	for (let i=0; i<records.length; ++i) {
+		records[i].recid = i+1
+	}
+	let lineNum = records.length+1
+    developmentCycle.add( { recid: developmentCycle.getLineHTML(lineNum) } )
 	developmentCycle.refresh()
 })
 window.api.save((event, value) => {
