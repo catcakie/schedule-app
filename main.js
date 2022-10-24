@@ -12,43 +12,46 @@ class Item {
     #dateCompleted;
     #timeCompleted;
     
-    constructor(dateStarted, timeStarted) {
-        this._dateStarted = dateStarted;
-        this._timeStarted = timeStarted;
-        this._completion = "not started";
+    constructor(_dateStarted, _timeStarted) {
+        this.dateStarted = _dateStarted;
+        this.timeStarted = _timeStarted;
+        this.completion = "not started";
     }
-    get timeStarted() {
-        return this._timeStarted;
+    get _timeStarted() {
+        return this.timeStarted;
     }
-    get dateStarted() {
-        return this._dateStarted;
+    get _dateStarted() {
+        return this.dateStarted;
     }
-    get completion() {
-        return this._completion;
+    get _completion() {
+        return this.completion;
     }
-    get timeCompleted() {
-        return this._timeCompleted;
+    get _timeCompleted() {
+        return this.timeCompleted;
     }
-    get dateCompleted() {
-        return this._dateCompleted;
+    get _dateCompleted() {
+        return this.dateCompleted;
     }
-    set timeStarted(value) {
-        this._timeStarted = value;
+    set _timeStarted(value) {
+        this.timeStarted = value;
     }
-    set dateStarted(value) {
-        this._dateStarted = value;
+    set _dateStarted(value) {
+        this.dateStarted = value;
     }
-    set completion(value) {
-        this._completion = value;
+    set _completion(value) {
+        this.completion = value;
     }
-    set timeCompleted(value) {
-        this._timeCompleted = value;
+    set _timeCompleted(value) {
+        this.timeCompleted = value;
     }
-    set dateCompleted(value) {
-        this._dateCompleted = value;
+    set _dateCompleted(value) {
+        this.dateCompleted = value;
     }
 }
 class Activity extends Item {
+    static instances = 0
+    #recid
+
     #category;
     #requirement;
 
@@ -59,58 +62,60 @@ class Activity extends Item {
     #testing;
     #testing_results;
     
-    constructor(date, time) {
-        super(date, time);
-        this._category = "";
-        this._requirement = "";
-        this._frequency = "once";
-        this._design = "";
-        this._development = "";
-        this._testing = "";
-        this._testing_results = "";
+    constructor(_date, _time) {
+        super(_date, _time);
+        this.category = "";
+        this.requirement = "";
+        this.frequency = "Once";
+        this.design = "";
+        this.development = "";
+        this.testing = "";
+        this.testing_results = "";
+        this.recid = ++Activity.instances
+        
     }
-    get category() {
-        return this._category;
+    get _category() {
+        return this.category;
     }
-    get requirement() {
-        return this._requirement;
+    get _requirement() {
+        return this.requirement;
     }
-    get frequency() {
-        return this._frequency;
+    get _frequency() {
+        return this.frequency;
     }
-    get design() {
-        return this._design;
+    get _design() {
+        return this.design;
     }
-    get development() {
-        return this._development;
+    get _development() {
+        return this.development;
     }
-    get testing() {
-        return this._testing;
+    get _testing() {
+        return this.testing;
     }
-    get testing_results() {
-        return this._testing_results;
+    get _testing_results() {
+        return this.results;
     }
 
-    set category(value) {
-        this._category = value;
+    set _category(value) {
+        this.category = value;
     }
-    set requirement(value) {
-        this._requirement = value;
+    set _requirement(value) {
+        this.requirement = value;
     }
-    set frequency(value) {
-        this._frequency = value;
+    set _frequency(value) {
+        this.frequency = value;
     }
-    set design(value) {
-        this._design = value;
+    set _design(value) {
+        this.design = value;
     }
-    set development(value) {
-        this._development = value;
+    set _development(value) {
+        this.development = value;
     }
-    set testing(value) {
-        this._testing = value;
+    set _testing(value) {
+        this.testing = value;
     }
-    set testing_results(value) {
-        this._testing_results = value;
+    set _results(value) {
+        this._results = value;
     }
     
 }
@@ -156,28 +161,33 @@ function getTime() {
     return date.toLocaleTimeString().replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3");
 }
 // ---------------------- SAVE/READ FROM FILE BELOW --------------------- \\
+
 const activityFileName = "activities";
 const date = new Date();
 
 let newdate = getDate();
 let newtime = getTime();
-
+/*
 let test = new Activity(newdate, newtime);
 test._timeCompleted = "4:00pm";
 let test2 = new Activity(newdate, newtime);
 
 const testArray = [test, test2];
 saveObjectsToJSONFile(testArray, activityFileName);
+*/
+
 readObjectsFromJSONFile(activityFileName);
 
 
 // ---------------------- ELECTRON CODE BELOW --------------------- \\
 
-const { app, BrowserWindow, ipcMain, nativeTheme, dialog } = require('electron')
+const { app, BrowserWindow, ipcMain, Menu, MenuItem, dialog } = require('electron')
 const path = require('path')
 
+let win
+
 function createWindow () {
-  const win = new BrowserWindow({
+    win = new BrowserWindow({
     width: 952,
     height: 600,
     webPreferences: {
@@ -187,11 +197,42 @@ function createWindow () {
       //sandbox: false
     }
   })
+  ipcMain.on('saveToFile', (event, records) => {
+    console.log(records)
+    saveObjectsToJSONFile(records, activityFileName)
+  })
 
   win.loadFile('index.html')
 }
 
-app.whenReady().then(() => {
+const menu = new Menu()
+menu.append(new MenuItem({
+  label: 'Electron',
+  submenu: [{
+    role: 'Add row',
+    accelerator: process.platform === 'darwin' ? 'Ctrl+Enter' : 'Ctrl+Enter',
+    click: () => { 
+        win.webContents.send('addRow')
+     },
+    
+  }]
+}))
+menu.append(new MenuItem({
+  label: 'Electron',
+  submenu: [{
+    role: 'Save',
+    accelerator: process.platform === 'darwin' ? 'Ctrl+S' : 'Ctrl+S',
+    click: () => {
+        win.webContents.send('save')
+     },
+    
+  }]
+}))
+
+Menu.setApplicationMenu(menu)
+
+
+app.whenReady().then(() => {  
   createWindow()
 
   app.on('activate', () => {
@@ -209,5 +250,3 @@ app.on('window-all-closed', () => {
 
 // ---------------------- TEST CODE BELOW --------------------- \\
 
-// const $ = jQuery = require('jquery');
-//const { w2layout, w2sidebar, w2grid, query } = require('w2ui')
