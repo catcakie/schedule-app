@@ -172,7 +172,7 @@ readObjectsFromJSONFile(activityFileName);
 
 
 // ---------------------- ELECTRON CODE BELOW --------------------- \\
-const { w2layout, w2sidebar, w2grid, query } = require('w2ui')
+
 const { app, BrowserWindow, ipcMain, nativeTheme, dialog } = require('electron')
 const path = require('path')
 
@@ -181,7 +181,10 @@ function createWindow () {
     width: 952,
     height: 500,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
+      preload: path.join(__dirname, 'preload.js'),
+      //contextIsolation: false,
+      //nodeIntegration: true,
+      //sandbox: false
     }
   })
 
@@ -207,4 +210,4 @@ app.on('window-all-closed', () => {
 // ---------------------- TEST CODE BELOW --------------------- \\
 
 // const $ = jQuery = require('jquery');
-
+//const { w2layout, w2sidebar, w2grid, query } = require('w2ui')
