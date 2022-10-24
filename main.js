@@ -49,7 +49,6 @@ class Item {
     }
 }
 class Activity extends Item {
-    static instances = 0
     #recid
 
     #category;
@@ -71,7 +70,7 @@ class Activity extends Item {
         this.development = "";
         this.testing = "";
         this.testing_results = "";
-        this.recid = ++Activity.instances
+        this.recid = 0
         
     }
     get _category() {
