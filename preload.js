@@ -6,6 +6,8 @@
 */
 const { contextBridge, ipcRenderer } = require('electron')
 
-//const { w2layout, w2sidebar, w2grid, query } = require('w2ui')
 contextBridge.exposeInMainWorld('api', {
+    addRow: (callback) => ipcRenderer.on('addRow', callback),
+    save: (callback) => ipcRenderer.on('save', callback),
+    saveToFile: (records) => ipcRenderer.send('saveToFile', records)
 })
