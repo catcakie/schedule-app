@@ -1,3 +1,4 @@
+const activitiesUrl = './activities.json'
 let config = {
 	layout: {
 		name: 'layout',
@@ -60,7 +61,7 @@ let config = {
 		name: 'developmentCycle',
 		columns: [{
 				field: 'recid',
-				text: 'ID',
+				text: '<div style="text-align: center;">ID</div>',
 				size: '30px',
 				sortable: true,
 				resizable: false
@@ -149,55 +150,20 @@ let config = {
 				}
 			}
 		],
-		records: [{
-				recid: 1,
-				completion: true,
-				frequency: 'daily',
-				category: 'clean',
-				requirement: 'clean room',
-				design: 'top to bottom',
-				testing: 'none',
-				results: 'none'
-			},
-			{
-				recid: 2,
-				completion: false,
-				category: 'hw',
-				requirement: 'acting',
-				design: 'read chapters first',
-				testing: 'none',
-				results: 'none'
-			},
-			{
-				recid: 3,
-				completion: true,
-				frequency: 'weekly',
-				category: 'clean',
-				requirement: 'clean room',
-				design: 'top to bottom',
-				testing: 'none',
-				results: 'none'
-			},
-			{
-				recid: 4,
-				completion: true,
-				frequency: 'monthly',
-				category: 'clean',
-				requirement: 'clean room',
-				design: 'top to bottom',
-				testing: 'none',
-				results: 'none'
-			}
+		records: [
 		],
 		onClick(event) {
 
+		},
+		onChange: function(event) {
+			
 		}
 	},
 	tracker: {
 		name: 'tracker',
 		columns: [{
 				field: 'recid',
-				text: 'ID',
+				text: '<div style="text-align: center;">ID</div>',
 				size: '30px',
 				sortable: true,
 				resizable: false
@@ -310,7 +276,7 @@ let config = {
 		name: 'weeklySchedule',
 		columns: [{
 				field: 'recid',
-				text: 'ID',
+				text: '<div style="text-align: center;">ID</div>',
 				size: '30px',
 				sortable: true,
 				resizable: false
@@ -365,7 +331,10 @@ let config = {
 }
 
 window.advanceOnEdit = function(checked) {
-	grid.advanceOnEdit = checked
+	developmentCycle.advanceOnEdit = checked
+}
+window.loadData = function(url) {
+    developmentCycle.load(url)
 }
 
 // initialization
@@ -375,6 +344,18 @@ let developmentCycle = new w2grid(config.developmentCycle)
 let tracker = new w2grid(config.tracker)
 let weeklySchedule = new w2grid(config.weeklySchedule)
 
+
 layout.render('#main')
 layout.html('left', sidebar)
 layout.html('main', developmentCycle)
+
+loadData(activitiesUrl)
+
+window.api.addRow((event, value) => {
+    developmentCycle.add( { recid: developmentCycle.records.length+1 } )
+	developmentCycle.refresh()
+})
+window.api.save((event, value) => {
+    let records = developmentCycle.records
+	window.api.saveToFile(records)
+})
