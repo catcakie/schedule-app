@@ -214,29 +214,24 @@ menu.append(new MenuItem({
           win.webContents.send('save')
        },
       
-    }]
-}))
-menu.append(new MenuItem({
-  label: 'File',
-  submenu: [{
-    role: 'Add row',
-    accelerator: process.platform === 'darwin' ? 'Ctrl+Enter' : 'Ctrl+Enter',
-    click: () => { 
-        win.webContents.send('addRow')
-     },
-    
-  }]
-}))
-menu.append(new MenuItem({
-    label: 'File',
-    submenu: [{
-      role: 'Duplicate row',
-      accelerator: process.platform === 'darwin' ? 'Ctrl+D' : 'Ctrl+D',
-      click: () => {
-          win.webContents.send('duplicateRow')
-       },
-      
-    }]
+    },
+    {
+        role: 'Add row',
+        accelerator: process.platform === 'darwin' ? 'Ctrl+Enter' : 'Ctrl+Enter',
+        click: () => { 
+            win.webContents.send('addRow')
+         },
+        
+      },
+      {
+        role: 'Duplicate row',
+        accelerator: process.platform === 'darwin' ? 'Ctrl+D' : 'Ctrl+D',
+        click: () => {
+            win.webContents.send('duplicateRow')
+         },
+        
+      }
+    ]
 }))
 
 Menu.setApplicationMenu(menu)
