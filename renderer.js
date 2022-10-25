@@ -356,10 +356,13 @@ window.api.addRow((event, value) => {
 		records[i].recid = i+1
 	}
 	let lineNum = records.length+1
-    developmentCycle.add( { recid: developmentCycle.getLineHTML(lineNum) } )
+	let nextRecid = developmentCycle.getLineHTML(lineNum)
+	let previousRecordCategory = developmentCycle.getCellValue(records.length-1, 3)
+    developmentCycle.add( { recid: nextRecid, frequency: 'Once', category: previousRecordCategory } )
 	developmentCycle.refresh()
 })
 window.api.save((event, value) => {
     let records = developmentCycle.records
 	window.api.saveToFile(records)
+	developmentCycle.save()
 })
