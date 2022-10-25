@@ -1,251 +1,366 @@
-const fs = require('fs');
+const activitiesUrl = './activities.json'
+let config = {
+	layout: {
+		name: 'layout',
+		padding: 0,
+		panels: [{
+				type: 'left',
+				size: 100,
+				resizable: false,
+				minSize: 35
+			},
+			{
+				type: 'main',
+				size: 950,
+				minSize: 550
+			}
+		]
+	},
+	sidebar: {
+		name: 'sidebar',
+		nodes: [{
+			id: 'views',
+			text: 'Views',
+			group: true,
+			expanded: true,
+			groupShowHide: false,
+			nodes: [{
+					id: 'developmentCycle',
+					text: 'Develop',
+					selected: true
+				},
+				{
+					id: 'tracker',
+					text: 'Tracker'
+				},
+				{
+					id: 'weeklySchedule',
+					text: 'Week'
+				},
+			],
+			onCollapse(event) {
+				event.preventDefault()
+			}
+		}],
+		onClick(event) {
+			switch (event.target) {
+				case 'developmentCycle':
+					layout.html('main', developmentCycle)
+					break
+				case 'tracker':
+					layout.html('main', tracker)
+					break
 
-// ---------------------- CLASSES BELOW --------------------- \\
-class Item {
-    // # means private
+				case 'weeklySchedule':
+					layout.html('main', weeklySchedule)
+					break
+			}
+		}
+	},
+	developmentCycle: {
+		name: 'developmentCycle',
+		columns: [{
+				field: 'recid',
+				text: '<div style="text-align: center;">ID</div>',
+				size: '30px',
+				sortable: true,
+				resizable: false
+			},
+			{
+				field: 'completion',
+				text: '<div style="text-align: center;">&#10003;</div>',
+				size: '10px',
+				sortable: true,
+				resizable: false,
+				style: 'text-align: center',
+				editable: {
+					type: 'checkbox',
+					style: 'text-align: center'
+				}
+			},
+			{
+				field: 'frequency',
+				text: '<div style="text-align: center;">Freq.</div>',
+				size: '50%',
+				sortable: true,
+				resizable: false,
+				editable: {
+					type: 'combo',
+					items: ['Once', 'Daily', 'Weekly', 'Monthly']
+				}
+			},
+			{
+				field: 'category',
+				text: '<div style="text-align: center;">Category</div>',
+				size: '100',
+				sortable: true,
+				resizable: false,
+				editable: {
+					type: 'text'
+				}
+			},
+			{
+				field: 'requirement',
+				text: '<div style="text-align: center;">Requirement</div>',
+				size: '100',
+				sortable: true,
+				resizable: false,
+				editable: {
+					type: 'text'
+				}
+			},
+			{
+				field: 'design',
+				text: '<div style="text-align: center;">Design</div>',
+				size: '100',
+				sortable: true,
+				resizable: false,
+				editable: {
+					type: 'text'
+				}
+			},
+			{
+				field: 'development',
+				text: '<div style="text-align: center;">Development</div>',
+				size: '100',
+				sortable: true,
+				resizable: false,
+				editable: {
+					type: 'text'
+				}
+			},
+			{
+				field: 'testing',
+				text: '<div style="text-align: center;">Testing</div>',
+				size: '100%',
+				sortable: true,
+				resizable: false,
+				editable: {
+					type: 'text'
+				}
+			},
+			{
+				field: 'results',
+				text: '<div style="text-align: center;">Results</div>',
+				size: '100%',
+				sortable: true,
+				resizable: false,
+				editable: {
+					type: 'text'
+				}
+			}
+		],
+		records: [
+		],
+		onClick(event) {
 
-    #dateStarted;
-    #timeStarted;
-
-    #completion; // options: "success", "not started", "in-progress", "skipped", "fail"
-
-    #dateCompleted;
-    #timeCompleted;
-    
-    constructor(_dateStarted, _timeStarted) {
-        this.dateStarted = _dateStarted;
-        this.timeStarted = _timeStarted;
-        this.completion = "not started";
-    }
-    get _timeStarted() {
-        return this.timeStarted;
-    }
-    get _dateStarted() {
-        return this.dateStarted;
-    }
-    get _completion() {
-        return this.completion;
-    }
-    get _timeCompleted() {
-        return this.timeCompleted;
-    }
-    get _dateCompleted() {
-        return this.dateCompleted;
-    }
-    set _timeStarted(value) {
-        this.timeStarted = value;
-    }
-    set _dateStarted(value) {
-        this.dateStarted = value;
-    }
-    set _completion(value) {
-        this.completion = value;
-    }
-    set _timeCompleted(value) {
-        this.timeCompleted = value;
-    }
-    set _dateCompleted(value) {
-        this.dateCompleted = value;
-    }
+		},
+		onChange: function(event) {
+			
+		}
+	},
+	tracker: {
+		name: 'tracker',
+		columns: [{
+				field: 'recid',
+				text: '<div style="text-align: center;">ID</div>',
+				size: '30px',
+				sortable: true,
+				resizable: false
+			},
+			{
+				field: 'item',
+				text: '<div style="text-align: center;">Item</div>',
+				size: '100px'
+			},
+			{
+				field: 'sunday',
+				text: '<div style="text-align: center;">Sunday</div>',
+				size: '100px',
+				sortable: true,
+				resizable: false,
+				style: 'text-align: center',
+				editable: {
+					type: 'checkbox',
+					style: 'text-align: center'
+				}
+			},
+			{
+				field: 'monday',
+				text: '<div style="text-align: center;">Monday</div>',
+				size: '100px',
+				sortable: true,
+				resizable: false,
+				style: 'text-align: center',
+				editable: {
+					type: 'checkbox',
+					style: 'text-align: center'
+				}
+			},
+			{
+				field: 'tuesday',
+				text: '<div style="text-align: center;">Tuesday</div>',
+				size: '100px',
+				sortable: true,
+				resizable: false,
+				style: 'text-align: center',
+				editable: {
+					type: 'checkbox',
+					style: 'text-align: center'
+				}
+			},
+			{
+				field: 'wednesday',
+				text: '<div style="text-align: center;">Wednesday</div>',
+				size: '100px',
+				sortable: true,
+				resizable: false,
+				style: 'text-align: center',
+				editable: {
+					type: 'checkbox',
+					style: 'text-align: center'
+				}
+			},
+			{
+				field: 'thursday',
+				text: '<div style="text-align: center;">Thursday</div>',
+				size: '100px',
+				sortable: true,
+				resizable: false,
+				style: 'text-align: center',
+				editable: {
+					type: 'checkbox',
+					style: 'text-align: center'
+				}
+			},
+			{
+				field: 'friday',
+				text: '<div style="text-align: center;">Friday</div>',
+				size: '100px',
+				sortable: true,
+				resizable: false,
+				style: 'text-align: center',
+				editable: {
+					type: 'checkbox',
+					style: 'text-align: center'
+				}
+			},
+			{
+				field: 'saturday',
+				text: '<div style="text-align: center;">Saturday</div>',
+				size: '100%',
+				sortable: true,
+				resizable: false,
+				style: 'text-align: center',
+				editable: {
+					type: 'checkbox',
+					style: 'text-align: center'
+				}
+			}
+		],
+		records: [{
+			recid: 1,
+			item: 'zoloft',
+			sunday: true,
+			monday: true
+		}],
+		onClick(event) {
+			//console.log(event);
+		},
+		onChange: function(event) {
+			event.preventDefault()
+			tracker.refresh()
+		}
+	},
+	weeklySchedule: {
+		name: 'weeklySchedule',
+		columns: [{
+				field: 'recid',
+				text: '<div style="text-align: center;">ID</div>',
+				size: '30px',
+				sortable: true,
+				resizable: false
+			},
+			{
+				field: 'hour',
+				text: '<div style="text-align: center;">Hour</div>',
+				size: '100px',
+				type: 'time'
+			},
+			{
+				field: 'sunday',
+				text: '<div style="text-align: center;">Sunday</div>',
+				size: '100px'
+			},
+			{
+				field: 'monday',
+				text: '<div style="text-align: center;">Monday</div>',
+				size: '100px'
+			},
+			{
+				field: 'tuesday',
+				text: '<div style="text-align: center;">Tuesday</div>',
+				size: '100px'
+			},
+			{
+				field: 'wednesday',
+				text: '<div style="text-align: center;">Wednesday</div>',
+				size: '100px'
+			},
+			{
+				field: 'thursday',
+				text: '<div style="text-align: center;">Thursday</div>',
+				size: '100px'
+			},
+			{
+				field: 'friday',
+				text: '<div style="text-align: center;">Friday</div>',
+				size: '100px'
+			},
+			{
+				field: 'saturday',
+				text: '<div style="text-align: center;">Saturday</div>',
+				size: '100%'
+			}
+		],
+		records: [],
+		onClick(event) {
+			console.log(event);
+		}
+	}
 }
-class Activity extends Item {
-    #recid
 
-    #category;
-    #requirement;
-
-    #frequency; // options: "once", "daily", "weekly", "monthly"
-
-    #design;
-    #development;
-    #testing;
-    #results;
-    
-    constructor(_date, _time) {
-        super(_date, _time);
-        this.category = "";
-        this.requirement = "";
-        this.frequency = "Once";
-        this.design = "";
-        this.development = "";
-        this.testing = "";
-        this.results = "";
-        this.recid = 0
-        
-    }
-    get _category() {
-        return this.category;
-    }
-    get _requirement() {
-        return this.requirement;
-    }
-    get _frequency() {
-        return this.frequency;
-    }
-    get _design() {
-        return this.design;
-    }
-    get _development() {
-        return this.development;
-    }
-    get _testing() {
-        return this.testing;
-    }
-    get _results() {
-        return this.results;
-    }
-
-    set _category(value) {
-        this.category = value;
-    }
-    set _requirement(value) {
-        this.requirement = value;
-    }
-    set _frequency(value) {
-        this.frequency = value;
-    }
-    set _design(value) {
-        this.design = value;
-    }
-    set _development(value) {
-        this.development = value;
-    }
-    set _testing(value) {
-        this.testing = value;
-    }
-    set _results(value) {
-        this._results = value;
-    }
-    
+window.advanceOnEdit = function(checked) {
+	developmentCycle.advanceOnEdit = checked
 }
-class Note extends Item {
-    #summary;
-    constructor(date, time, summary) {
-        super(date, time);
-        this._summary = summary;
-    }
-    get summary() {
-        return this._summary;
-    }
-    set summary(value) {
-        this._summary = value;
-    }
-}
-// ---------------------- FUNCTIONS BELOW --------------------- \\
-function saveObjectsToJSONFile(objectsArray, fileName) {
-    const JSONArray = JSON.stringify(objectsArray, null, 4);
-    // write JSON string to a file
-    fs.writeFile(fileName+'.json', JSONArray, err => {
-        if (err) {
-            throw err
-        }
-        console.log('JSON data is saved.')
-    })
-}
-function readObjectsFromJSONFile(fileName) {
-    fs.readFile(fileName+'.json', 'utf-8', (err, data) => {
-        if (err) {
-            throw err
-        }
-        // parse JSON object (javascript array of objects)
-        const parsedJSON = JSON.parse(data.toString())
-        // print JSON object
-        parsedJSON.forEach(object => console.log(object));
-    })	
-}
-function getDate() {
-    return (date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear();
-}
-function getTime() {
-    return date.toLocaleTimeString().replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3");
-}
-// ---------------------- SAVE/READ FROM FILE BELOW --------------------- \\
-
-const activityFileName = "activities";
-const date = new Date();
-
-let newdate = getDate();
-let newtime = getTime();
-/*
-let test = new Activity(newdate, newtime);
-test._timeCompleted = "4:00pm";
-let test2 = new Activity(newdate, newtime);
-
-const testArray = [test, test2];
-saveObjectsToJSONFile(testArray, activityFileName);
-*/
-
-readObjectsFromJSONFile(activityFileName);
-
-
-// ---------------------- ELECTRON CODE BELOW --------------------- \\
-
-const { app, BrowserWindow, ipcMain, Menu, MenuItem, dialog } = require('electron')
-const path = require('path')
-
-let win
-
-function createWindow () {
-    win = new BrowserWindow({
-    width: 952,
-    height: 600,
-    webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
-      //contextIsolation: false,
-      //nodeIntegration: true,
-      //sandbox: false
-    }
-  })
-  ipcMain.on('saveToFile', (event, records) => {
-    console.log(records)
-    saveObjectsToJSONFile(records, activityFileName)
-  })
-
-  win.loadFile('index.html')
+window.loadData = function(url) {
+    developmentCycle.load(url)
 }
 
-const menu = new Menu()
-menu.append(new MenuItem({
-  label: 'Electron',
-  submenu: [{
-    role: 'Add row',
-    accelerator: process.platform === 'darwin' ? 'Ctrl+Enter' : 'Ctrl+Enter',
-    click: () => { 
-        win.webContents.send('addRow')
-     },
-    
-  }]
-}))
-menu.append(new MenuItem({
-  label: 'Electron',
-  submenu: [{
-    role: 'Save',
-    accelerator: process.platform === 'darwin' ? 'Ctrl+S' : 'Ctrl+S',
-    click: () => {
-        win.webContents.send('save')
-     },
-    
-  }]
-}))
+// initialization
+let layout = new w2layout(config.layout)
+let sidebar = new w2sidebar(config.sidebar)
+let developmentCycle = new w2grid(config.developmentCycle)
+let tracker = new w2grid(config.tracker)
+let weeklySchedule = new w2grid(config.weeklySchedule)
 
-Menu.setApplicationMenu(menu)
+layout.render('#main')
+layout.html('left', sidebar)
+layout.html('main', developmentCycle)
 
+loadData(activitiesUrl)
 
-app.whenReady().then(() => {  
-  createWindow()
-
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow()
-    }
-  })
+window.api.addRow((event, value) => {
+	let records = developmentCycle.records
+	for (let i=0; i<records.length; ++i) {
+		records[i].recid = i+1
+	}
+	let lineNum = records.length+1
+    developmentCycle.add( { recid: developmentCycle.getLineHTML(lineNum) } )
+	developmentCycle.refresh()
 })
-
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }
+window.api.save((event, value) => {
+    let records = developmentCycle.records
+	window.api.saveToFile(records)
+	developmentCycle.save()
 })
-
-// ---------------------- TEST CODE BELOW --------------------- \\
-
