@@ -59,7 +59,7 @@ class Activity extends Item {
     #design;
     #development;
     #testing;
-    #testing_results;
+    #results;
     
     constructor(_date, _time) {
         super(_date, _time);
@@ -69,7 +69,7 @@ class Activity extends Item {
         this.design = "";
         this.development = "";
         this.testing = "";
-        this.testing_results = "";
+        this.results = "";
         this.recid = 0
         
     }
@@ -91,7 +91,7 @@ class Activity extends Item {
     get _testing() {
         return this.testing;
     }
-    get _testing_results() {
+    get _results() {
         return this.results;
     }
 
