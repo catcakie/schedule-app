@@ -344,10 +344,10 @@ let developmentCycle = new w2grid(config.developmentCycle)
 let tracker = new w2grid(config.tracker)
 let weeklySchedule = new w2grid(config.weeklySchedule)
 
-
 layout.render('#main')
 layout.html('left', sidebar)
 layout.html('main', developmentCycle)
+
 loadData(activitiesUrl)
 
 window.api.addRow((event, value) => {
