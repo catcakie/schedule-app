@@ -350,19 +350,34 @@ layout.html('main', developmentCycle)
 
 loadData(activitiesUrl)
 
-window.api.addRow((event, value) => {
-	let records = developmentCycle.records
-	for (let i=0; i<records.length; ++i) {
-		records[i].recid = i+1
-	}
-	let lineNum = records.length+1
-	let nextRecid = developmentCycle.getLineHTML(lineNum)
-	let previousRecordCategory = developmentCycle.getCellValue(records.length-1, 3)
-    developmentCycle.add( { recid: nextRecid, frequency: 'Once', category: previousRecordCategory } )
-	developmentCycle.refresh()
-})
 window.api.save((event, value) => {
+	sortRecid()
     let records = developmentCycle.records
 	window.api.saveToFile(records)
 	developmentCycle.save()
 })
+window.api.addRow((event, value) => {
+	let nextLineNum = developmentCycle.records.length+1
+	let nextRecid = developmentCycle.getLineHTML(nextLineNum)
+	let previousRecordCategory = developmentCycle.getCellValue(developmentCycle.records.length-1, 3)
+    developmentCycle.add( { recid: nextRecid, frequency: 'Once', category: previousRecordCategory } )
+	sortRecid()
+})
+window.api.duplicateRow((event, value) => {
+	let nextLineNum = developmentCycle.records.length+1
+    let selectedRowRecid = developmentCycle.getSelection()-1
+	let selectedRow =  developmentCycle.records[selectedRowRecid]
+	const clone = structuredClone(selectedRow)
+	clone.recid = nextLineNum
+
+    developmentCycle.add(clone)
+	sortRecid()
+})
+
+function sortRecid() {
+	let records = developmentCycle.records
+	for (let i=0; i<records.length; ++i) {
+		records[i].recid = i+1
+	}
+	developmentCycle.refresh()
+}
