@@ -369,6 +369,9 @@ window.api.duplicateRow((event, value) => {
 	let selectedRow =  developmentCycle.records[selectedRowRecid]
 	const clone = structuredClone(selectedRow)
 	clone.recid = nextLineNum
+	clone.development = ''
+	clone.testing = ''
+	clone.results = ''
 
     developmentCycle.add(clone)
 	sortRecid()
