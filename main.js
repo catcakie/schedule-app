@@ -187,7 +187,7 @@ let win
 
 function createWindow () {
     win = new BrowserWindow({
-    width: 952,
+    width: 1200,
     height: 600,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
