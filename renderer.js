@@ -92,7 +92,7 @@ let config = {
 			{
 				field: 'category',
 				text: '<div style="text-align: center;">Category</div>',
-				size: '100',
+				size: '50%',
 				sortable: true,
 				resizable: false,
 				editable: {
@@ -112,7 +112,7 @@ let config = {
 			{
 				field: 'design',
 				text: '<div style="text-align: center;">Design</div>',
-				size: '100',
+				size: '50%',
 				sortable: true,
 				resizable: false,
 				editable: {
@@ -148,7 +148,21 @@ let config = {
 				editable: {
 					type: 'text'
 				}
-			}
+			},
+			{
+				field: 'start',
+				text: '<div style="text-align: center;">Start</div>',
+				size: '50%',
+				sortable: true,
+				resizable: false
+			},
+			{
+				field: 'end',
+				text: '<div style="text-align: center;">End</div>',
+				size: '50%',
+				sortable: true,
+				resizable: false
+			}	
 		],
 		records: [
 		],
@@ -176,7 +190,7 @@ let config = {
 			{
 				field: 'sunday',
 				text: '<div style="text-align: center;">Sunday</div>',
-				size: '100px',
+				size: '100%',
 				sortable: true,
 				resizable: false,
 				style: 'text-align: center',
@@ -188,7 +202,7 @@ let config = {
 			{
 				field: 'monday',
 				text: '<div style="text-align: center;">Monday</div>',
-				size: '100px',
+				size: '100%',
 				sortable: true,
 				resizable: false,
 				style: 'text-align: center',
@@ -200,7 +214,7 @@ let config = {
 			{
 				field: 'tuesday',
 				text: '<div style="text-align: center;">Tuesday</div>',
-				size: '100px',
+				size: '100%',
 				sortable: true,
 				resizable: false,
 				style: 'text-align: center',
@@ -212,7 +226,7 @@ let config = {
 			{
 				field: 'wednesday',
 				text: '<div style="text-align: center;">Wednesday</div>',
-				size: '100px',
+				size: '100%',
 				sortable: true,
 				resizable: false,
 				style: 'text-align: center',
@@ -224,7 +238,7 @@ let config = {
 			{
 				field: 'thursday',
 				text: '<div style="text-align: center;">Thursday</div>',
-				size: '100px',
+				size: '100%',
 				sortable: true,
 				resizable: false,
 				style: 'text-align: center',
@@ -236,7 +250,7 @@ let config = {
 			{
 				field: 'friday',
 				text: '<div style="text-align: center;">Friday</div>',
-				size: '100px',
+				size: '100%',
 				sortable: true,
 				resizable: false,
 				style: 'text-align: center',
@@ -258,12 +272,7 @@ let config = {
 				}
 			}
 		],
-		records: [{
-			recid: 1,
-			item: 'zoloft',
-			sunday: true,
-			monday: true
-		}],
+		records: [],
 		onClick(event) {
 			//console.log(event);
 		},
@@ -284,46 +293,92 @@ let config = {
 			{
 				field: 'hour',
 				text: '<div style="text-align: center;">Hour</div>',
-				size: '100px',
+				size: '50px',
 				type: 'time'
 			},
 			{
 				field: 'sunday',
 				text: '<div style="text-align: center;">Sunday</div>',
-				size: '100px'
+				size: '100%',
+				editable: {
+					type: 'text'
+				}
 			},
 			{
 				field: 'monday',
 				text: '<div style="text-align: center;">Monday</div>',
-				size: '100px'
+				size: '100%',
+				editable: {
+					type: 'text'
+				}
 			},
 			{
 				field: 'tuesday',
 				text: '<div style="text-align: center;">Tuesday</div>',
-				size: '100px'
+				size: '100%',
+				editable: {
+					type: 'text'
+				}
 			},
 			{
 				field: 'wednesday',
 				text: '<div style="text-align: center;">Wednesday</div>',
-				size: '100px'
+				size: '100%',
+				editable: {
+					type: 'text'
+				}
 			},
 			{
 				field: 'thursday',
 				text: '<div style="text-align: center;">Thursday</div>',
-				size: '100px'
+				size: '100%',
+				editable: {
+					type: 'text'
+				}
 			},
 			{
 				field: 'friday',
 				text: '<div style="text-align: center;">Friday</div>',
-				size: '100px'
+				size: '100%',
+				editable: {
+					type: 'text'
+				}
 			},
 			{
 				field: 'saturday',
 				text: '<div style="text-align: center;">Saturday</div>',
-				size: '100%'
+				size: '100%',
+				editable: {
+					type: 'text'
+				}
 			}
 		],
-		records: [],
+		records: [
+			{recid: 5, hour: '5am'},
+			{recid: 6, hour: '6am'},
+			{recid: 7, hour: '7am'},
+			{recid: 8, hour: '8am'},
+			{recid: 9, hour: '9am'},
+			{recid: 10, hour: '10am'},
+			{recid: 11, hour: '11am'},
+			{recid: 24, hour: '12pm'},
+			{recid: 13, hour: '1pm'},
+			{recid: 14, hour: '2pm'},
+			{recid: 15, hour: '3pm'},
+			{recid: 16, hour: '4pm'},
+			{recid: 17, hour: '5pm'},
+			{recid: 18, hour: '6pm'},
+			{recid: 19, hour: '7pm'},
+			{recid: 20, hour: '8pm'},
+			{recid: 21, hour: '9pm'},
+			{recid: 22, hour: '10pm'},
+			{recid: 23, hour: '11pm'},
+			{recid: 12, hour: '12am'},
+			{recid: 1, hour: '1am'},
+			{recid: 2, hour: '2am'},
+			{recid: 3, hour: '3am'},
+			{recid: 4, hour: '4am'}
+		],
 		onClick(event) {
 			console.log(event);
 		}
@@ -348,13 +403,62 @@ layout.render('#main')
 layout.html('left', sidebar)
 layout.html('main', developmentCycle)
 
+// after object creation functions
 loadData(activitiesUrl)
 
+w2ui.developmentCycle.on('change', function(event) {
+	event.onComplete = function(event2) {
+		let record = this.get(event2.detail.recid)
+		// define date/time
+		let fullDate = new Date().toLocaleTimeString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'})
+		let date = fullDate.split(", ")[0]
+		let time = fullDate.split(", ")[1]
+		const dayOfWeekName = new Date().toLocaleString('default', {weekday: 'long'}).toLowerCase()
+		
+		// set time started & time ended
+		if (time < record.start || record.start == '' || !record.start) {
+			record.start = time
+		}
+		record.end = time
+
+		// place last edited row's development into weekly schedule into corresponding day
+		if (time.slice(-2) == 'AM') {
+			const recid = parseInt(time.slice(0,2))
+
+			// if it doesn't already contain the development (prevent duplication)
+			let hourDayText = weeklySchedule.get(recid)[dayOfWeekName]
+			if (hourDayText != undefined || hourDayText) {
+				if (!hourDayText.includes(record.development))
+					hourDayText += ", " + record.development
+			} else {
+				hourDayText = record.development
+			}
+			weeklySchedule.set(recid, {[dayOfWeekName]: hourDayText})
+		} else {
+			const recid = parseInt(time.slice(0,2)) + 12
+			
+			let hourDayText = weeklySchedule.get(recid)[dayOfWeekName]
+			if (hourDayText != undefined || hourDayText) {
+				if (!hourDayText.includes(record.development))
+					hourDayText += ", " + record.development
+			} else {
+				hourDayText = record.development
+			}
+			weeklySchedule.set(recid, {[dayOfWeekName]: hourDayText})
+		}
+		
+		this.refresh()
+		weeklySchedule.refresh()
+	};
+});
+
+// preload.js
 window.api.save((event, value) => {
 	sortRecid()
     let records = developmentCycle.records
-	window.api.saveToFile(records)
+	developmentCycle.mergeChanges()
 	developmentCycle.save()
+	window.api.saveToFile(records)
 })
 window.api.addRow((event, value) => {
 	let nextLineNum = developmentCycle.records.length+1
@@ -369,6 +473,7 @@ window.api.duplicateRow((event, value) => {
 	let selectedRow =  developmentCycle.records[selectedRowRecid]
 	const clone = structuredClone(selectedRow)
 	clone.recid = nextLineNum
+	clone.completion = false
 	clone.development = ''
 	clone.testing = ''
 	clone.results = ''
@@ -376,7 +481,7 @@ window.api.duplicateRow((event, value) => {
     developmentCycle.add(clone)
 	sortRecid()
 })
-
+// functions
 function sortRecid() {
 	let records = developmentCycle.records
 	for (let i=0; i<records.length; ++i) {
