@@ -476,10 +476,13 @@ window.api.save((event, value) => {
 	window.api.saveToFile(records)
 })
 window.api.addRow((event, value) => {
+	let date = w2utils.formatDate((new Date()), 'mm-dd-yyyy')
+	let time = w2utils.formatTime((new Date()), 'hh:mi am')
+
 	let nextLineNum = developmentCycle.records.length+1
 	let nextRecid = developmentCycle.getLineHTML(nextLineNum)
 	let previousRecordCategory = developmentCycle.getCellValue(developmentCycle.records.length-1, 3)
-    developmentCycle.add( { recid: nextRecid, frequency: 'Once', category: previousRecordCategory } )
+    developmentCycle.add( { recid: nextRecid, frequency: 'Once', category: previousRecordCategory, start: time, startDate: date, end: time, endDate: date } )
 	sortRecid()
 })
 window.api.duplicateRow((event, value) => {
