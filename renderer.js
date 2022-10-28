@@ -475,9 +475,8 @@ window.api.addRow((event, value) => {
 	sortRecid()
 })
 window.api.duplicateRow((event, value) => {
-	let fullDate = new Date().toLocaleTimeString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'})
-	let date = fullDate.split(", ")[0]
-	let time = fullDate.split(", ")[1]
+	let date = w2utils.formatDate((new Date()), 'mm-dd-yyyy')
+	let time = w2utils.formatTime((new Date()), 'hh:mi am')
 
 	let nextLineNum = developmentCycle.records.length+1
     let selectedRowRecid = developmentCycle.getSelection()-1
