@@ -164,12 +164,19 @@ let config = {
 				resizable: false
 			},
 			{
-				field: 'date',
-				text: '<div style="text-align: center;">Date</div>',
+				field: 'startDate',
+				text: '<div style="text-align: center;">Start</div>',
 				size: '50%',
 				sortable: true,
 				resizable: false
-			}	
+			},
+			{
+				field: 'endDate',
+				text: '<div style="text-align: center;">End</div>',
+				size: '50%',
+				sortable: true,
+				resizable: false
+			}
 		],
 		records: [
 		],
@@ -424,9 +431,10 @@ w2ui.developmentCycle.on('change', function(event) {
 		// set time started & time ended
 		if (record.start == '' || !record.start) {
 			record.start = time
+			record.startDate = date
 		}
 		record.end = time
-		record.date = date
+		record.endDate = date
 
 		// place last edited row's development into weekly schedule into corresponding day
 		if (time.slice(-2) == 'AM') {
@@ -489,7 +497,8 @@ window.api.duplicateRow((event, value) => {
 	clone.results = ''
 	clone.start = time
 	clone.end = time
-	clone.date = date
+	clone.startDate = date
+	clone.endDate = date
 
     developmentCycle.add(clone)
 	sortRecid()
