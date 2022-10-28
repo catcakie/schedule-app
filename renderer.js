@@ -162,6 +162,13 @@ let config = {
 				size: '50%',
 				sortable: true,
 				resizable: false
+			},
+			{
+				field: 'date',
+				text: '<div style="text-align: center;">Date</div>',
+				size: '50%',
+				sortable: true,
+				resizable: false
 			}	
 		],
 		records: [
@@ -410,16 +417,16 @@ w2ui.developmentCycle.on('change', function(event) {
 	event.onComplete = function(event2) {
 		let record = this.get(event2.detail.recid)
 		// define date/time
-		let fullDate = new Date().toLocaleTimeString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'})
-		let date = fullDate.split(", ")[0]
-		let time = fullDate.split(", ")[1]
+		let date = w2utils.formatDate((new Date()), 'mm-dd-yyyy')
+		let time = w2utils.formatTime((new Date()), 'hh:mi am')
 		const dayOfWeekName = new Date().toLocaleString('default', {weekday: 'long'}).toLowerCase()
 		
 		// set time started & time ended
-		if (time < record.start || record.start == '' || !record.start) {
+		if (record.start == '' || !record.start) {
 			record.start = time
 		}
 		record.end = time
+		record.date = date
 
 		// place last edited row's development into weekly schedule into corresponding day
 		if (time.slice(-2) == 'AM') {
@@ -468,6 +475,10 @@ window.api.addRow((event, value) => {
 	sortRecid()
 })
 window.api.duplicateRow((event, value) => {
+	let fullDate = new Date().toLocaleTimeString([], {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'})
+	let date = fullDate.split(", ")[0]
+	let time = fullDate.split(", ")[1]
+
 	let nextLineNum = developmentCycle.records.length+1
     let selectedRowRecid = developmentCycle.getSelection()-1
 	let selectedRow =  developmentCycle.records[selectedRowRecid]
@@ -477,6 +488,9 @@ window.api.duplicateRow((event, value) => {
 	clone.development = ''
 	clone.testing = ''
 	clone.results = ''
+	clone.start = time
+	clone.end = time
+	clone.date = date
 
     developmentCycle.add(clone)
 	sortRecid()
