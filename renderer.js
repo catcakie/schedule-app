@@ -399,9 +399,6 @@ let config = {
 	}
 }
 
-window.advanceOnEdit = function(checked) {
-	developmentCycle.advanceOnEdit = checked
-}
 window.loadData = function(url) {
     developmentCycle.load(url)
 }
@@ -419,6 +416,7 @@ layout.html('main', developmentCycle)
 
 // after object creation functions
 loadData(activitiesUrl)
+developmentCycle.advanceOnEdit = false
 
 w2ui.developmentCycle.on('change', function(event) {
 	event.onComplete = function(event2) {
