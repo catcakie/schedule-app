@@ -154,6 +154,7 @@ let config = {
 				text: '<div style="text-align: center;">Start</div>',
 				size: '50%',
 				sortable: true,
+				sortMode: 'natural',
 				resizable: false
 			},
 			{
@@ -161,6 +162,7 @@ let config = {
 				text: '<div style="text-align: center;">End</div>',
 				size: '50%',
 				sortable: true,
+				sortMode: 'natural',
 				resizable: false
 			},
 			{
@@ -168,6 +170,7 @@ let config = {
 				text: '<div style="text-align: center;">Start</div>',
 				size: '50%',
 				sortable: true,
+				sortMode: 'natural',
 				resizable: false
 			},
 			{
@@ -175,6 +178,7 @@ let config = {
 				text: '<div style="text-align: center;">End</div>',
 				size: '50%',
 				sortable: true,
+				sortMode: 'natural',
 				resizable: false
 			}
 		],
