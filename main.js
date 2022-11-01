@@ -54,7 +54,7 @@ function createWindow () {
     }
   })
   ipcMain.on('saveToFile', (event, records) => {
-    let discordMsg = "Current Activity: "+records[0].requirement+"\nStart time: "+records[0].start
+    let discordMsg = "Current Activity: "+records[0].development+"\nStart time: "+records[0].start
     if (records[0].completion == true)
       discordMsg += "\nCompleted at "+records[0].end
     client.channels.cache.get(`496763131977007106`).send(discordMsg)
