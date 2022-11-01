@@ -1,136 +1,5 @@
 const fs = require('fs');
 
-// ---------------------- CLASSES BELOW --------------------- \\
-class Item {
-    // # means private
-
-    #dateStarted;
-    #timeStarted;
-
-    #completion; // options: "success", "not started", "in-progress", "skipped", "fail"
-
-    #dateCompleted;
-    #timeCompleted;
-    
-    constructor(_dateStarted, _timeStarted) {
-        this.dateStarted = _dateStarted;
-        this.timeStarted = _timeStarted;
-        this.completion = "not started";
-    }
-    get _timeStarted() {
-        return this.timeStarted;
-    }
-    get _dateStarted() {
-        return this.dateStarted;
-    }
-    get _completion() {
-        return this.completion;
-    }
-    get _timeCompleted() {
-        return this.timeCompleted;
-    }
-    get _dateCompleted() {
-        return this.dateCompleted;
-    }
-    set _timeStarted(value) {
-        this.timeStarted = value;
-    }
-    set _dateStarted(value) {
-        this.dateStarted = value;
-    }
-    set _completion(value) {
-        this.completion = value;
-    }
-    set _timeCompleted(value) {
-        this.timeCompleted = value;
-    }
-    set _dateCompleted(value) {
-        this.dateCompleted = value;
-    }
-}
-class Activity extends Item {
-    #recid
-
-    #category;
-    #requirement;
-
-    #frequency; // options: "once", "daily", "weekly", "monthly"
-
-    #design;
-    #development;
-    #testing;
-    #results;
-    
-    constructor(_date, _time) {
-        super(_date, _time);
-        this.category = "";
-        this.requirement = "";
-        this.frequency = "Once";
-        this.design = "";
-        this.development = "";
-        this.testing = "";
-        this.results = "";
-        this.recid = 0
-        
-    }
-    get _category() {
-        return this.category;
-    }
-    get _requirement() {
-        return this.requirement;
-    }
-    get _frequency() {
-        return this.frequency;
-    }
-    get _design() {
-        return this.design;
-    }
-    get _development() {
-        return this.development;
-    }
-    get _testing() {
-        return this.testing;
-    }
-    get _results() {
-        return this.results;
-    }
-
-    set _category(value) {
-        this.category = value;
-    }
-    set _requirement(value) {
-        this.requirement = value;
-    }
-    set _frequency(value) {
-        this.frequency = value;
-    }
-    set _design(value) {
-        this.design = value;
-    }
-    set _development(value) {
-        this.development = value;
-    }
-    set _testing(value) {
-        this.testing = value;
-    }
-    set _results(value) {
-        this._results = value;
-    }
-    
-}
-class Note extends Item {
-    #summary;
-    constructor(date, time, summary) {
-        super(date, time);
-        this._summary = summary;
-    }
-    get summary() {
-        return this._summary;
-    }
-    set summary(value) {
-        this._summary = value;
-    }
-}
 // ---------------------- FUNCTIONS BELOW --------------------- \\
 function saveObjectsToJSONFile(objectsArray, fileName) {
     const JSONArray = JSON.stringify(objectsArray, null, 4);
@@ -153,19 +22,9 @@ function readObjectsFromJSONFile(fileName) {
         parsedJSON.forEach(object => console.log(object));
     })	
 }
-function getDate() {
-    return (date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear();
-}
-function getTime() {
-    return date.toLocaleTimeString().replace(/([\d]+:[\d]{2})(:[\d]{2})(.*)/, "$1$3");
-}
 // ---------------------- SAVE/READ FROM FILE BELOW --------------------- \\
 
 const activityFileName = "activities";
-const date = new Date();
-
-let newdate = getDate();
-let newtime = getTime();
 /*
 let test = new Activity(newdate, newtime);
 test._timeCompleted = "4:00pm";
@@ -174,8 +33,6 @@ let test2 = new Activity(newdate, newtime);
 const testArray = [test, test2];
 saveObjectsToJSONFile(testArray, activityFileName);
 */
-
-readObjectsFromJSONFile(activityFileName);
 
 
 // ---------------------- ELECTRON CODE BELOW --------------------- \\
@@ -197,7 +54,10 @@ function createWindow () {
     }
   })
   ipcMain.on('saveToFile', (event, records) => {
-    console.log(records)
+    let discordMsg = "Current Activity: "+records[0].requirement+"\nStart time: "+records[0].start
+    if (records[0].completion == true)
+      discordMsg += "\nCompleted at "+records[0].end
+    client.channels.cache.get(`496763131977007106`).send(discordMsg)
     saveObjectsToJSONFile(records, activityFileName)
   })
 
@@ -252,5 +112,16 @@ app.on('window-all-closed', () => {
   }
 })
 
-// ---------------------- TEST CODE BELOW --------------------- \\
+// ---------------------- DISCORD.JS CODE BELOW --------------------- \\
+// Require the necessary discord.js classes
+const { Client, Events, GatewayIntentBits } = require('discord.js');
+const { token } = require('./config.json');
 
+const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+
+client.once(Events.ClientReady, () => {
+	console.log('Ready!');
+    //client.channels.cache.get(`496763131977007106`).send(`Text`)
+});
+
+client.login(token);
