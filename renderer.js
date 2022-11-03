@@ -182,13 +182,12 @@ let config = {
 				resizable: false
 			}
 		],
-		records: [
-		],
+		records: [],
 		onClick(event) {
 
 		},
 		onChange: function(event) {
-			
+
 		}
 	},
 	tracker: {
@@ -371,31 +370,102 @@ let config = {
 				}
 			}
 		],
-		records: [
-			{recid: 5, hour: '5am'},
-			{recid: 6, hour: '6am'},
-			{recid: 7, hour: '7am'},
-			{recid: 8, hour: '8am'},
-			{recid: 9, hour: '9am'},
-			{recid: 10, hour: '10am'},
-			{recid: 11, hour: '11am'},
-			{recid: 24, hour: '12pm'},
-			{recid: 13, hour: '1pm'},
-			{recid: 14, hour: '2pm'},
-			{recid: 15, hour: '3pm'},
-			{recid: 16, hour: '4pm'},
-			{recid: 17, hour: '5pm'},
-			{recid: 18, hour: '6pm'},
-			{recid: 19, hour: '7pm'},
-			{recid: 20, hour: '8pm'},
-			{recid: 21, hour: '9pm'},
-			{recid: 22, hour: '10pm'},
-			{recid: 23, hour: '11pm'},
-			{recid: 12, hour: '12am'},
-			{recid: 1, hour: '1am'},
-			{recid: 2, hour: '2am'},
-			{recid: 3, hour: '3am'},
-			{recid: 4, hour: '4am'}
+		records: [{
+				recid: 5,
+				hour: '5am'
+			},
+			{
+				recid: 6,
+				hour: '6am'
+			},
+			{
+				recid: 7,
+				hour: '7am'
+			},
+			{
+				recid: 8,
+				hour: '8am'
+			},
+			{
+				recid: 9,
+				hour: '9am'
+			},
+			{
+				recid: 10,
+				hour: '10am'
+			},
+			{
+				recid: 11,
+				hour: '11am'
+			},
+			{
+				recid: 24,
+				hour: '12pm'
+			},
+			{
+				recid: 13,
+				hour: '1pm'
+			},
+			{
+				recid: 14,
+				hour: '2pm'
+			},
+			{
+				recid: 15,
+				hour: '3pm'
+			},
+			{
+				recid: 16,
+				hour: '4pm'
+			},
+			{
+				recid: 17,
+				hour: '5pm'
+			},
+			{
+				recid: 18,
+				hour: '6pm'
+			},
+			{
+				recid: 19,
+				hour: '7pm'
+			},
+			{
+				recid: 20,
+				hour: '8pm'
+			},
+			{
+				recid: 21,
+				hour: '9pm'
+			},
+			{
+				recid: 22,
+				hour: '10pm'
+			},
+			{
+				recid: 23,
+				hour: '11pm'
+			},
+			{
+				recid: 12,
+				hour: '12am'
+			},
+			{
+				recid: 1,
+				hour: '1am'
+			},
+			{
+				recid: 2,
+				hour: '2am'
+			},
+			{
+				recid: 3,
+				hour: '3am'
+			},
+			{
+				recid: 4,
+				hour: '4am'
+			}
 		],
 		onClick(event) {
 			console.log(event);
@@ -404,7 +474,7 @@ let config = {
 }
 
 window.loadData = function(url) {
-    developmentCycle.load(url)
+	developmentCycle.load(url)
 }
 
 // initialization
@@ -428,8 +498,10 @@ w2ui.developmentCycle.on('change', function(event) {
 		// define date/time
 		let date = w2utils.formatDate((new Date()), 'mm-dd-yyyy')
 		let time = w2utils.formatTime((new Date()), 'hh:mi am')
-		const dayOfWeekName = new Date().toLocaleString('default', {weekday: 'long'}).toLowerCase()
-		
+		const dayOfWeekName = new Date().toLocaleString('default', {
+			weekday: 'long'
+		}).toLowerCase()
+
 		// set time started & time ended
 		if (record.start == '' || !record.start) {
 			record.start = time
@@ -440,7 +512,7 @@ w2ui.developmentCycle.on('change', function(event) {
 
 		// place last edited row's development into weekly schedule into corresponding day
 		if (time.slice(-2) == 'AM') {
-			const recid = parseInt(time.slice(0,2))
+			const recid = parseInt(time.slice(0, 2))
 
 			// if it doesn't already contain the development (prevent duplication)
 			let hourDayText = weeklySchedule.get(recid)[dayOfWeekName]
@@ -450,10 +522,12 @@ w2ui.developmentCycle.on('change', function(event) {
 			} else {
 				hourDayText = record.development
 			}
-			weeklySchedule.set(recid, {[dayOfWeekName]: hourDayText})
+			weeklySchedule.set(recid, {
+				[dayOfWeekName]: hourDayText
+			})
 		} else {
-			const recid = parseInt(time.slice(0,2)) + 12
-			
+			const recid = parseInt(time.slice(0, 2)) + 12
+
 			let hourDayText = weeklySchedule.get(recid)[dayOfWeekName]
 			if (hourDayText != undefined || hourDayText) {
 				if (!hourDayText.includes(record.development))
@@ -461,9 +535,11 @@ w2ui.developmentCycle.on('change', function(event) {
 			} else {
 				hourDayText = record.development
 			}
-			weeklySchedule.set(recid, {[dayOfWeekName]: hourDayText})
+			weeklySchedule.set(recid, {
+				[dayOfWeekName]: hourDayText
+			})
 		}
-		
+
 		this.refresh()
 		weeklySchedule.refresh()
 	};
@@ -474,7 +550,7 @@ window.api.save((event, value) => {
 	let date = w2utils.formatDate((new Date()), 'mm-dd-yyyy')
 	let time = w2utils.formatTime((new Date()), 'hh:mi am')
 
-    let records = developmentCycle.records
+	let records = developmentCycle.records
 
 	// duplicate the unique rows with frequency (daily, weekly, monthly)
 	let todayRecords = []
@@ -483,29 +559,31 @@ window.api.save((event, value) => {
 			todayRecords.push(record)
 		}
 	})
-	let todayDesigns = new Set(todayRecords.map(({design}) => design)) 
+	let todayDesigns = new Set(todayRecords.map(({
+		design
+	}) => design))
 	let uniqueRecords = [...new Map(records.map((item) => [item['design'], item])).values()]
-	uniqueRecords = uniqueRecords.filter(({design}) => !todayDesigns.has(design))
+	uniqueRecords = uniqueRecords.filter(({
+		design
+	}) => !todayDesigns.has(design))
 
 	uniqueRecords.forEach(record => {
-		if (record.completion == true) {
-			if (record.frequency === "Daily" && record.startDate != date
-			|| record.frequency === "Weekly" && w2utils.formatDate(new Date(record.startDate) + 7) == date
-			|| record.frequency === "Monthly" && record.startDate.slice(0,2) != date.slice(0,2)) {
-				let nextLineNum = developmentCycle.records.length+1
-				const clone = structuredClone(record)
-				clone.recid = nextLineNum
-				clone.completion = false
-				clone.development = ''
-				clone.testing = ''
-				clone.results = ''
-				clone.start = time
-				clone.end = time
-				clone.startDate = date
-				clone.endDate = date
+		if (record.frequency === "Daily" && record.startDate != date ||
+			record.frequency === "Weekly" && w2utils.formatDate(new Date(record.startDate) + 7) == date ||
+			record.frequency === "Monthly" && record.startDate.slice(0, 2) != date.slice(0, 2)) {
+			let nextLineNum = developmentCycle.records.length + 1
+			const clone = structuredClone(record)
+			clone.recid = nextLineNum
+			clone.completion = false
+			clone.development = ''
+			clone.testing = ''
+			clone.results = ''
+			clone.start = time
+			clone.end = time
+			clone.startDate = date
+			clone.endDate = date
 
-				developmentCycle.add(clone)
-			}
+			developmentCycle.add(clone)
 		}
 	})
 	sortRecid()
@@ -517,19 +595,27 @@ window.api.addRow((event, value) => {
 	let date = w2utils.formatDate((new Date()), 'mm-dd-yyyy')
 	let time = w2utils.formatTime((new Date()), 'hh:mi am')
 
-	let nextLineNum = developmentCycle.records.length+1
+	let nextLineNum = developmentCycle.records.length + 1
 	let nextRecid = developmentCycle.getLineHTML(nextLineNum)
-	let previousRecordCategory = developmentCycle.getCellValue(developmentCycle.records.length-1, 3)
-    developmentCycle.add( { recid: nextRecid, frequency: 'Once', category: previousRecordCategory, start: time, startDate: date, end: time, endDate: date } )
+	let previousRecordCategory = developmentCycle.getCellValue(developmentCycle.records.length - 1, 3)
+	developmentCycle.add({
+		recid: nextRecid,
+		frequency: 'Once',
+		category: previousRecordCategory,
+		start: time,
+		startDate: date,
+		end: time,
+		endDate: date
+	})
 	sortRecid()
 })
 window.api.duplicateRow((event, value) => {
 	let date = w2utils.formatDate((new Date()), 'mm-dd-yyyy')
 	let time = w2utils.formatTime((new Date()), 'hh:mi am')
 
-	let nextLineNum = developmentCycle.records.length+1
-    let selectedRowRecid = developmentCycle.getSelection()-1
-	let selectedRow =  developmentCycle.records[selectedRowRecid]
+	let nextLineNum = developmentCycle.records.length + 1
+	let selectedRowRecid = developmentCycle.getSelection() - 1
+	let selectedRow = developmentCycle.records[selectedRowRecid]
 	const clone = structuredClone(selectedRow)
 	clone.recid = nextLineNum
 	clone.completion = false
@@ -541,14 +627,14 @@ window.api.duplicateRow((event, value) => {
 	clone.startDate = date
 	clone.endDate = date
 
-    developmentCycle.add(clone)
+	developmentCycle.add(clone)
 	sortRecid()
 })
 // functions
 function sortRecid() {
 	let records = developmentCycle.records
-	for (let i=0; i<records.length; ++i) {
-		records[i].recid = i+1
+	for (let i = 0; i < records.length; ++i) {
+		records[i].recid = i + 1
 	}
 	developmentCycle.refresh()
 }
