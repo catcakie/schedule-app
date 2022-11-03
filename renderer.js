@@ -594,7 +594,9 @@ window.api.save((event, value) => {
 	let selectedRowRecid = developmentCycle.getSelection() - 1
 	let selectedRow = developmentCycle.records[selectedRowRecid]
 
-	window.api.sendSelectedRow(selectedRow)
+	if (selectedRow) {
+		window.api.sendSelectedRow(selectedRow)
+	}
 })
 window.api.addRow((event, value) => {
 	let date = w2utils.formatDate((new Date()), 'mm-dd-yyyy')
