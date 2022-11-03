@@ -45,13 +45,15 @@ function createWindow () {
     }
   })
   ipcMain.on('saveToFile', (event, records) => {
-    let discordMsg = "---\nCurrent Activity: "+records[0].development
-    if (records[0].completion == true)
-      discordMsg = "Completed: "+records[0].end+"\nResults: "+records[0].results
-    else
-      discordMsg += "\nStart time: "+records[0].start
-    client.channels.cache.get(`814647500459343892`).send(discordMsg)
     saveObjectsToJSONFile(records, activityFileName)
+  })
+  ipcMain.on('selectedRow', (event, record) => {
+    let discordMsg = "---\nCurrent Activity: "+record.development
+    discordMsg += "\nStart time: "+record.start
+    if (record.completion == true)
+      discordMsg += "\nCompleted: "+record.end+"\nResults: "+record.results
+    discordMsg += "\n---"
+    client.channels.cache.get(`814647500459343892`).send(discordMsg)
   })
 
   win.loadFile('index.html')
