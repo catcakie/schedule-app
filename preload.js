@@ -10,5 +10,6 @@ contextBridge.exposeInMainWorld('api', {
     save: (callback) => ipcRenderer.on('save', callback),
     saveToFile: (records) => ipcRenderer.send('saveToFile', records),
     addRow: (callback) => ipcRenderer.on('addRow', callback),
-    duplicateRow: (callback) => ipcRenderer.on('duplicateRow', callback)
+    duplicateRow: (callback) => ipcRenderer.on('duplicateRow', callback),
+    sendSelectedRow: (record) => ipcRenderer.send('selectedRow', record)
 })
