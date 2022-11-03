@@ -25,15 +25,6 @@ function readObjectsFromJSONFile(fileName) {
 // ---------------------- SAVE/READ FROM FILE BELOW --------------------- \\
 
 const activityFileName = "activities";
-/*
-let test = new Activity(newdate, newtime);
-test._timeCompleted = "4:00pm";
-let test2 = new Activity(newdate, newtime);
-
-const testArray = [test, test2];
-saveObjectsToJSONFile(testArray, activityFileName);
-*/
-
 
 // ---------------------- ELECTRON CODE BELOW --------------------- \\
 
@@ -118,6 +109,7 @@ app.on('window-all-closed', () => {
 // Require the necessary discord.js classes
 const { Client, Events, GatewayIntentBits } = require('discord.js');
 const { token } = require('./config.json');
+const { unique } = require('jquery');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
