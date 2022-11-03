@@ -473,34 +473,41 @@ w2ui.developmentCycle.on('change', function(event) {
 window.api.save((event, value) => {
 	let date = w2utils.formatDate((new Date()), 'mm-dd-yyyy')
 	let time = w2utils.formatTime((new Date()), 'hh:mi am')
-	let recordMonthNumbers = date.slice(0, 2)
 
     let records = developmentCycle.records
 
 	// duplicate the unique rows with frequency (daily, weekly, monthly)
-	let uniqueRecords = [...new Map(records.map((item) => [item['design'], item])).values()]
-
-	uniqueRecords.forEach(record => {
-
-		if (record.frequency === "Daily" && record.startDate != date
-		|| record.frequency === "Weekly" && w2utils.formatDate(new Date(record.startDate) + 7) == date
-		|| record.frequency === "Monthly" && record.startDate.slice(0,2) != date.slice(0,2)) {
-			let nextLineNum = developmentCycle.records.length+1
-			const clone = structuredClone(record)
-			clone.recid = nextLineNum
-			clone.completion = false
-			clone.development = ''
-			clone.testing = ''
-			clone.results = ''
-			clone.start = time
-			clone.end = time
-			clone.startDate = date
-			clone.endDate = date
-
-			developmentCycle.add(clone)
+	let todayRecords = []
+	records.forEach(record => {
+		if (record.startDate == date) {
+			todayRecords.push(record)
 		}
 	})
+	let todayDesigns = new Set(todayRecords.map(({design}) => design)) 
+	let uniqueRecords = [...new Map(records.map((item) => [item['design'], item])).values()]
+	uniqueRecords = uniqueRecords.filter(({design}) => !todayDesigns.has(design))
 
+	uniqueRecords.forEach(record => {
+		if (record.completion == true) {
+			if (record.frequency === "Daily" && record.startDate != date
+			|| record.frequency === "Weekly" && w2utils.formatDate(new Date(record.startDate) + 7) == date
+			|| record.frequency === "Monthly" && record.startDate.slice(0,2) != date.slice(0,2)) {
+				let nextLineNum = developmentCycle.records.length+1
+				const clone = structuredClone(record)
+				clone.recid = nextLineNum
+				clone.completion = false
+				clone.development = ''
+				clone.testing = ''
+				clone.results = ''
+				clone.start = time
+				clone.end = time
+				clone.startDate = date
+				clone.endDate = date
+
+				developmentCycle.add(clone)
+			}
+		}
+	})
 	sortRecid()
 	developmentCycle.mergeChanges()
 	developmentCycle.save()
