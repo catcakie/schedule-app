@@ -45,8 +45,7 @@ window.api.save((event, value) => {
 	// discord bot code below
 
 	// get the selected row
-	let selectedRowRecid = developmentCycle.getSelection() - 1
-	let selectedRow = developmentCycle.records[selectedRowRecid]
+	const selectedRow = getSelectedRow(developmentCycle)
 
 	// if a row is selected when we Ctrl + S, then it sends the selected row's content to my discord server channel
 	// I like to share what I'm doing
@@ -77,9 +76,8 @@ window.api.addRow((event, value) => {
 // Ctrl + D
 window.api.duplicateRow((event, value) => {
 	updateDateAndTime()
-
-	let selectedRowRecid = developmentCycle.getSelection() - 1
-	let selectedRow = developmentCycle.records[selectedRowRecid]
+	
+	const selectedRow = getSelectedRow(developmentCycle)
 
 	if (selectedRow) {
 		duplicateRow(developmentCycle, selectedRow)
@@ -87,7 +85,12 @@ window.api.duplicateRow((event, value) => {
 })
 
 // helper functions
-
+function getSelectedRow(grid) {
+	sortRecid(grid)
+	const selectedRowRecid = grid.getSelection()-1
+	const selectedRow = grid.records[selectedRowRecid]
+	return selectedRow
+}
 function updateDateAndTime() {
 	date = w2utils.formatDate((new Date()), 'mm-dd-yyyy')
 	time = w2utils.formatTime((new Date()), 'hh:mi am')
