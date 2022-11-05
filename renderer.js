@@ -35,7 +35,6 @@ window.api.save((event, value) => {
 		}
 	})
 
-	sortRecid(developmentCycle)
 	// w2ui saves the changes into a separate property, use .mergeChanges() to merge them into their respective properties
 	developmentCycle.mergeChanges()
 	// w2ui marks changed fields, which we can't sort unless they're saved to the grid
@@ -43,7 +42,7 @@ window.api.save((event, value) => {
 	// save the records to a local JSON file
 	window.api.saveToFile(records)
 
-	// discord bot code
+	// discord bot code below
 
 	// get the selected row
 	let selectedRowRecid = developmentCycle.getSelection() - 1
@@ -79,22 +78,12 @@ window.api.addRow((event, value) => {
 window.api.duplicateRow((event, value) => {
 	updateDateAndTime()
 
-	let nextLineNum = developmentCycle.records.length + 1
 	let selectedRowRecid = developmentCycle.getSelection() - 1
 	let selectedRow = developmentCycle.records[selectedRowRecid]
-	const clone = structuredClone(selectedRow)
-	clone.recid = nextLineNum
-	clone.completion = false
-	clone.development = ''
-	clone.testing = ''
-	clone.results = ''
-	clone.start = time
-	clone.end = time
-	clone.startDate = date
-	clone.endDate = date
 
-	developmentCycle.add(clone)
-	sortRecid(developmentCycle)
+	if (selectedRow) {
+		duplicateRow(developmentCycle, selectedRow)
+	}
 })
 
 // helper functions
@@ -117,6 +106,7 @@ function duplicateRow(grid, row) {
 	clone.endDate = date
 
 	grid.add(clone)
+	sortRecid(developmentCycle)
 }
 function sortRecid(grid) {
 	let records = grid.records
