@@ -9,39 +9,31 @@ window.api.save((event, value) => {
 	let records = developmentCycle.records
 
 	// duplicate the unique rows with frequency (daily, weekly, monthly)
+	// array for today's records
 	let todayRecords = []
+
 	records.forEach(record => {
 		if (record.startDate == date) {
 			todayRecords.push(record)
 		}
 	})
-	let todayDesigns = new Set(todayRecords.map(({
-		design
-	}) => design))
+
+	// array for unique records' designs
 	let uniqueRecords = [...new Map(records.map((item) => [item['design'], item])).values()]
-	uniqueRecords = uniqueRecords.filter(({
-		design
-	}) => !todayDesigns.has(design))
+	// array for today's records' designs
+	let todayDesigns = new Set(todayRecords.map(({design}) => design))
 
+	// filter the unique designs array so it doesn't infinitely duplicate the unique rows
+	// (removes design rows that already exist today)
+	uniqueRecords = uniqueRecords.filter(({design}) => !todayDesigns.has(design))
+
+	// duplicates records with 'daily' frequency
 	uniqueRecords.forEach(record => {
-		if (record.frequency === "Daily" && record.startDate != date ||
-			record.frequency === "Weekly" && w2utils.formatDate(new Date(record.startDate) + 7) == date ||
-			record.frequency === "Monthly" && record.startDate.slice(0, 2) != date.slice(0, 2)) {
-			let nextLineNum = developmentCycle.records.length + 1
-			const clone = structuredClone(record)
-			clone.recid = nextLineNum
-			clone.completion = false
-			clone.development = ''
-			clone.testing = ''
-			clone.results = ''
-			clone.start = time
-			clone.end = time
-			clone.startDate = date
-			clone.endDate = date
-
-			developmentCycle.add(clone)
+		if (record.frequency === "Daily") {
+			duplicateRow(developmentCycle, record)
 		}
 	})
+	
 	sortRecid(developmentCycle)
 	developmentCycle.mergeChanges()
 	developmentCycle.save()
@@ -102,7 +94,21 @@ function updateDateAndTime() {
 	date = w2utils.formatDate((new Date()), 'mm-dd-yyyy')
 	time = w2utils.formatTime((new Date()), 'hh:mi am')
 }
+function duplicateRow(grid, row) {
+	let nextLineNum = grid.records.length + 1
+	const clone = structuredClone(row)
+	clone.recid = nextLineNum
+	clone.completion = false
+	clone.development = ''
+	clone.testing = ''
+	clone.results = ''
+	clone.start = time
+	clone.end = time
+	clone.startDate = date
+	clone.endDate = date
 
+	grid.add(clone)
+}
 function sortRecid(grid) {
 	let records = grid.records
 	for (let i = 0; i < records.length; ++i) {
