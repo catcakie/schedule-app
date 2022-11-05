@@ -2,6 +2,15 @@
 
 let date, time
 
+// Ctrl + D
+window.api.duplicateRow((event, value) => {
+	const selectedRow = getSelectedRow(developmentCycle)
+
+	if (selectedRow) {
+		duplicateRow(developmentCycle, selectedRow)
+	}
+})
+
 // Ctrl + S
 window.api.save((event, value) => {
 	updateDateAndTime()
@@ -71,15 +80,6 @@ window.api.addRow((event, value) => {
 		endDate: date
 	})
 	sortRecid(developmentCycle)
-})
-
-// Ctrl + D
-window.api.duplicateRow((event, value) => {
-	const selectedRow = getSelectedRow(developmentCycle)
-
-	if (selectedRow) {
-		duplicateRow(developmentCycle, selectedRow)
-	}
 })
 
 // helper functions
