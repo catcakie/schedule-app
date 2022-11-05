@@ -1,9 +1,10 @@
 // main.js  handlers & requests
 
+let date, time
+
 // Ctrl + S
 window.api.save((event, value) => {
-	let date = w2utils.formatDate((new Date()), 'mm-dd-yyyy')
-	let time = w2utils.formatTime((new Date()), 'hh:mi am')
+	updateDateAndTime()
 
 	let records = developmentCycle.records
 
@@ -41,7 +42,7 @@ window.api.save((event, value) => {
 			developmentCycle.add(clone)
 		}
 	})
-	sortRecid()
+	sortRecid(developmentCycle)
 	developmentCycle.mergeChanges()
 	developmentCycle.save()
 	window.api.saveToFile(records)
@@ -56,8 +57,7 @@ window.api.save((event, value) => {
 
 // Ctrl + Enter
 window.api.addRow((event, value) => {
-	let date = w2utils.formatDate((new Date()), 'mm-dd-yyyy')
-	let time = w2utils.formatTime((new Date()), 'hh:mi am')
+	updateDateAndTime()
 
 	let nextLineNum = developmentCycle.records.length + 1
 	let nextRecid = developmentCycle.getLineHTML(nextLineNum)
@@ -71,13 +71,12 @@ window.api.addRow((event, value) => {
 		end: time,
 		endDate: date
 	})
-	sortRecid()
+	sortRecid(developmentCycle)
 })
 
 // Ctrl + D
 window.api.duplicateRow((event, value) => {
-	let date = w2utils.formatDate((new Date()), 'mm-dd-yyyy')
-	let time = w2utils.formatTime((new Date()), 'hh:mi am')
+	updateDateAndTime()
 
 	let nextLineNum = developmentCycle.records.length + 1
 	let selectedRowRecid = developmentCycle.getSelection() - 1
@@ -94,16 +93,22 @@ window.api.duplicateRow((event, value) => {
 	clone.endDate = date
 
 	developmentCycle.add(clone)
-	sortRecid()
+	sortRecid(developmentCycle)
 })
 
 // helper functions
-function sortRecid() {
-	let records = developmentCycle.records
+
+function updateDateAndTime() {
+	date = w2utils.formatDate((new Date()), 'mm-dd-yyyy')
+	time = w2utils.formatTime((new Date()), 'hh:mi am')
+}
+
+function sortRecid(grid) {
+	let records = grid.records
 	for (let i = 0; i < records.length; ++i) {
 		records[i].recid = i + 1
 	}
-	developmentCycle.refresh()
+	grid.refresh()
 }
 
 // w2ui code below
