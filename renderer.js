@@ -75,8 +75,6 @@ window.api.addRow((event, value) => {
 
 // Ctrl + D
 window.api.duplicateRow((event, value) => {
-	updateDateAndTime()
-	
 	const selectedRow = getSelectedRow(developmentCycle)
 
 	if (selectedRow) {
@@ -96,6 +94,7 @@ function updateDateAndTime() {
 	time = w2utils.formatTime((new Date()), 'hh:mi am')
 }
 function duplicateRow(grid, row) {
+	updateDateAndTime()
 	let nextLineNum = grid.records.length + 1
 	const clone = structuredClone(row)
 	clone.recid = nextLineNum
