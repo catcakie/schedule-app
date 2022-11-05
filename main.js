@@ -1,6 +1,6 @@
+// ---------------------- SAVE TO FILE & READ FROM FILE FUNCTIONS BELOW --------------------- \\
 const fs = require('fs');
 
-// ---------------------- FUNCTIONS BELOW --------------------- \\
 function saveObjectsToJSONFile(objectsArray, fileName) {
     const JSONArray = JSON.stringify(objectsArray, null, 4);
     // write JSON string to a file
@@ -22,9 +22,6 @@ function readObjectsFromJSONFile(fileName) {
         parsedJSON.forEach(object => console.log(object));
     })	
 }
-// ---------------------- SAVE/READ FROM FILE BELOW --------------------- \\
-
-const activityFileName = "activities";
 
 // ---------------------- ELECTRON CODE BELOW --------------------- \\
 
@@ -39,13 +36,12 @@ function createWindow () {
     height: 600,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
-      //contextIsolation: false,
-      //nodeIntegration: true,
-      //sandbox: false
     }
   })
+
+  // renderer.js event handlers
   ipcMain.on('saveToFile', (event, records) => {
-    saveObjectsToJSONFile(records, activityFileName)
+    saveObjectsToJSONFile(records, "activities")
   })
   ipcMain.on('selectedRow', (event, record) => {
     let discordMsg = "---\nCurrent Activity: "+record.development
@@ -59,6 +55,7 @@ function createWindow () {
   win.loadFile('index.html')
 }
 
+// keyboard shortcut code
 const menu = new Menu()
 menu.append(new MenuItem({
     label: 'File',
@@ -91,6 +88,7 @@ menu.append(new MenuItem({
 
 Menu.setApplicationMenu(menu)
 
+// create application window when ready
 app.whenReady().then(() => {  
   createWindow()
 
@@ -108,16 +106,14 @@ app.on('window-all-closed', () => {
 })
 
 // ---------------------- DISCORD.JS CODE BELOW --------------------- \\
-// Require the necessary discord.js classes
 const { Client, Events, GatewayIntentBits } = require('discord.js');
 const { token } = require('./config.json');
-const { unique } = require('jquery');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
+// console log when bot is ready
 client.once(Events.ClientReady, () => {
 	console.log('Ready!');
-    //client.channels.cache.get(`496763131977007106`).send(`Text`)
 });
 
 client.login(token);
