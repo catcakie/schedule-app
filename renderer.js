@@ -15,26 +15,21 @@ window.api.duplicateRow((event, value) => {
 window.api.save((event, value) => {
 	updateDateAndTime()
 
-	let dailyRows = getDailyRows()
-
-	dailyRows.forEach(row => {
-		duplicateRow(developmentCycle, row)
-	})
+	duplicateDailyRows()
 
 	// w2ui saves the changes into a separate property, use .mergeChanges() to merge them into their respective properties
 	developmentCycle.mergeChanges()
 	// w2ui marks changed fields, which we can't sort unless they're saved to the grid
 	developmentCycle.save()
 	// save the records to a local JSON file
-	window.api.saveToFile(records)
+	window.api.saveToFile(developmentCycle.records)
 
 	// discord bot code below
 
 	// get the selected row
 	const selectedRow = getSelectedRow(developmentCycle)
 
-	// if a row is selected when we Ctrl + S, then it sends the selected row's content to my discord server channel
-	// I like to share what I'm doing
+	// send the selected row's content to my discord server channel
 	if (selectedRow) {
 		window.api.sendSelectedRow(selectedRow)
 	}
@@ -94,9 +89,8 @@ function sortRecid(grid) {
 	}
 	grid.refresh()
 }
-function getDailyRows() {
+function duplicateDailyRows() {
 	let records = developmentCycle.records
-	let dailyRecordsForDuplication = []
 
 	// records created today (array)
 	let todayRecords = []
@@ -120,11 +114,9 @@ function getDailyRows() {
 	// filter the array to only include records with the 'daily' frequency
 	uniqueRecords.forEach(record => {
 		if (record.frequency === "Daily") {
-			dailyRecordsForDuplication.push(record)
+			duplicateRow(developmentCycle, record)
 		}
 	})
-
-	return dailyRecordsForDuplication
 }
 
 // w2ui code below
