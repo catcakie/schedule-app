@@ -15,33 +15,10 @@ window.api.duplicateRow((event, value) => {
 window.api.save((event, value) => {
 	updateDateAndTime()
 
-	let records = developmentCycle.records
+	let dailyRows = getDailyRows()
 
-	// duplicate the unique rows with frequency (daily, weekly, monthly)
-
-	// array for today's records
-	let todayRecords = []
-
-	records.forEach(record => {
-		if (record.startDate == date) {
-			todayRecords.push(record)
-		}
-	})
-
-	// array for unique records' designs
-	let uniqueRecords = [...new Map(records.map((item) => [item['design'], item])).values()]
-	// array for today's records' designs
-	let todayDesigns = new Set(todayRecords.map(({design}) => design))
-
-	// filter the unique designs array so it doesn't infinitely duplicate the unique rows
-	// (removes design rows that already exist today)
-	uniqueRecords = uniqueRecords.filter(({design}) => !todayDesigns.has(design))
-
-	// duplicates records with 'daily' frequency
-	uniqueRecords.forEach(record => {
-		if (record.frequency === "Daily") {
-			duplicateRow(developmentCycle, record)
-		}
+	dailyRows.forEach(row => {
+		duplicateRow(developmentCycle, row)
 	})
 
 	// w2ui saves the changes into a separate property, use .mergeChanges() to merge them into their respective properties
@@ -116,6 +93,38 @@ function sortRecid(grid) {
 		records[i].recid = i + 1
 	}
 	grid.refresh()
+}
+function getDailyRows() {
+	let records = developmentCycle.records
+	let dailyRecordsForDuplication = []
+
+	// records created today (array)
+	let todayRecords = []
+
+	records.forEach(record => {
+		if (record.startDate == date) {
+			todayRecords.push(record)
+		}
+	})
+
+	// records created today based on their design property (arary)
+	todayRecords = new Set(todayRecords.map(({design}) => design))
+
+	// unique records based on their design property (array)
+	let uniqueRecords = [...new Map(records.map((item) => [item['design'], item])).values()]
+
+	// filter the unique records array so they aren't infinitely duplicated
+	// (remove the records created today that already have the design)
+	uniqueRecords = uniqueRecords.filter(({design}) => !todayRecords.has(design))
+
+	// filter the array to only include records with the 'daily' frequency
+	uniqueRecords.forEach(record => {
+		if (record.frequency === "Daily") {
+			dailyRecordsForDuplication.push(record)
+		}
+	})
+
+	return dailyRecordsForDuplication
 }
 
 // w2ui code below
