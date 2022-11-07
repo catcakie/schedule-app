@@ -30,7 +30,7 @@ window.api.save((event, value) => {
 	const selectedRow = getSelectedRow(developmentCycle)
 
 	// send the selected row's content to my discord server channel
-	if (selectedRow) {
+	if (selectedRow && selectedRow.development != '') {
 		window.api.sendSelectedRow(selectedRow)
 	}
 })
