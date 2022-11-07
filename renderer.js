@@ -120,7 +120,6 @@ function duplicateDailyRows() {
 }
 
 // w2ui code below
-const activitiesUrl = './activities.json'
 let config = {
 	layout: {
 		name: 'layout',
@@ -611,6 +610,7 @@ layout.html('left', sidebar)
 layout.html('main', developmentCycle)
 
 // after object creation functions
+const activitiesUrl = './activities.json'
 loadData(activitiesUrl)
 developmentCycle.advanceOnEdit = false
 
