@@ -109,7 +109,7 @@ function duplicateDailyRows() {
 			record.startDate = date
 			record.endDate = date
 
-			record.w2ui = { "style": "background-color: #E1F5F3" }
+			record.w2ui = { "style": "background-color: #E6F4F1" }
 		}			
 	})
 
