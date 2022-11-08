@@ -75,10 +75,10 @@ function duplicateRow(grid, row) {
 	clone.development = ''
 	clone.testing = ''
 	clone.results = ''
-	clone.start = time
-	clone.end = time
-	clone.startDate = date
-	clone.endDate = date
+	clone.start = ''
+	clone.end = ''
+	clone.startDate = ''
+	clone.endDate = ''
 
 	grid.add(clone)
 	sortRecid(developmentCycle)
@@ -633,7 +633,9 @@ w2ui.developmentCycle.on('change', function (event) {
 		updateDateAndTime()
 
 		// set time started & time ended
-		if (record.start == '' || !record.start) {
+		let developmentChanged = this.getChanges()[0].development
+		
+		if (!record.start && developmentChanged || record.start == '' && developmentChanged) {
 			record.start = time
 			record.startDate = date
 		}
