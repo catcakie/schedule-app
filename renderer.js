@@ -100,6 +100,17 @@ function duplicateDailyRows() {
 		if (record.startDate == date) {
 			todayRecords.push(record)
 		}
+		if (record.category == "Deadline") {
+			developmentCycle.mergeChanges()
+			developmentCycle.save()
+
+			record.start = time
+			record.end = time
+			record.startDate = date
+			record.endDate = date
+
+			record.w2ui = { "style": "background-color: #E1F5F3" }
+		}			
 	})
 
 	// records created today based on their design property (arary)
