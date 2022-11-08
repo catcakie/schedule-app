@@ -221,7 +221,8 @@ let config = {
 			sortable: true,
 			resizable: false,
 			editable: {
-				type: 'text'
+				type: 'combo',
+				items: ['Appearance', 'Work', 'Relationship', 'School', 'Food', 'Break']
 			}
 		},
 		{
