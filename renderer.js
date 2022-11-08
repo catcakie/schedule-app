@@ -113,22 +113,24 @@ function duplicateDailyRows() {
 		}			
 	})
 
-	// records created today based on their design property (arary)
-	todayRecords = new Set(todayRecords.map(({design}) => design))
+	if (todayRecords) {
+		// records created today based on their design property (arary)
+		todayRecords = new Set(todayRecords.map(({design}) => design))
 
-	// unique records based on their design property (array)
-	let uniqueRecords = [...new Map(records.map((item) => [item['design'], item])).values()]
+		// unique records based on their design property (array)
+		let uniqueRecords = [...new Map(records.map((item) => [item['design'], item])).values()]
 
-	// filter the unique records array so they aren't infinitely duplicated
-	// (remove the records created today that already have the design)
-	uniqueRecords = uniqueRecords.filter(({design}) => !todayRecords.has(design))
+		// filter the unique records array so they aren't infinitely duplicated
+		// (remove the records created today that already have the design)
+		uniqueRecords = uniqueRecords.filter(({design}) => !todayRecords.has(design))
 
-	// filter the array to only include records with the 'daily' frequency
-	uniqueRecords.forEach(record => {
-		if (record.frequency === "Daily") {
-			duplicateRow(developmentCycle, record)
-		}
-	})
+		// filter the array to only include records with the 'daily' frequency
+		uniqueRecords.forEach(record => {
+			if (record.frequency === "Daily") {
+				duplicateRow(developmentCycle, record)
+			}
+		})
+	}
 }
 
 // w2ui code below
