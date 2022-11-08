@@ -23,10 +23,6 @@ window.api.save((event, value) => {
 	developmentCycle.mergeChanges()
 	// sort the rows again (by resetting to default sorting)
 	developmentCycle.stateReset()
-	// save the records to a local JSON file
-	window.api.saveToFile(developmentCycle.records)
-
-	// discord bot code below
 
 	// get the selected row
 	const selectedRow = getSelectedRow(developmentCycle)
@@ -35,6 +31,9 @@ window.api.save((event, value) => {
 	if (selectedRow && selectedRow.development != '') {
 		window.api.sendSelectedRow(selectedRow)
 	}
+
+	// save the records to a local JSON file
+	window.api.saveToFile(developmentCycle.records)
 })
 
 // Ctrl + Enter
