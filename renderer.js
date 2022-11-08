@@ -23,6 +23,8 @@ window.api.save((event, value) => {
 	developmentCycle.save()
 	// save the records to a local JSON file
 	window.api.saveToFile(developmentCycle.records)
+	// sort the rows again
+	sortDevelopmentCycleGrid()
 
 	// discord bot code below
 
@@ -118,6 +120,16 @@ function duplicateDailyRows() {
 		}
 	})
 }
+function sortDevelopmentCycleGrid() {
+
+	sort = [
+		{ field: 'completion', direction: 'asc' },
+		{ field: 'startDate', direction: 'desc' },
+		{ field: 'start', direction: 'desc' }
+	]
+
+	developmentCycle.refresh()
+}
 
 // w2ui code below
 let config = {
@@ -180,6 +192,9 @@ let config = {
 	},
 	developmentCycle: {
 		name: 'developmentCycle',
+		sortData: [ { field: 'completion', direction: 'asc' },
+		{ field: 'startDate', direction: 'desc' },
+		{ field: 'start', direction: 'desc' } ],
 		columns: [{
 			field: 'recid',
 			text: '<div style="text-align: center;">ID</div>',
@@ -594,10 +609,6 @@ let config = {
 	}
 }
 
-window.loadData = function (url) {
-	developmentCycle.load(url)
-}
-
 // initialization
 let layout = new w2layout(config.layout)
 let sidebar = new w2sidebar(config.sidebar)
@@ -611,18 +622,14 @@ layout.html('main', developmentCycle)
 
 // after object creation functions
 const activitiesUrl = './activities.json'
-loadData(activitiesUrl)
+developmentCycle.load(activitiesUrl)
 developmentCycle.advanceOnEdit = false
 
 w2ui.developmentCycle.on('change', function (event) {
 	event.onComplete = function (event2) {
 		let record = this.get(event2.detail.recid)
 		// define date/time
-		let date = w2utils.formatDate((new Date()), 'mm-dd-yyyy')
-		let time = w2utils.formatTime((new Date()), 'hh:mi am')
-		const dayOfWeekName = new Date().toLocaleString('default', {
-			weekday: 'long'
-		}).toLowerCase()
+		updateDateAndTime()
 
 		// set time started & time ended
 		if (record.start == '' || !record.start) {
@@ -632,37 +639,6 @@ w2ui.developmentCycle.on('change', function (event) {
 		record.end = time
 		record.endDate = date
 
-		// place last edited row's development into weekly schedule into corresponding day
-		if (time.slice(-2) == 'AM') {
-			const recid = parseInt(time.slice(0, 2))
-
-			// if it doesn't already contain the development (prevent duplication)
-			let hourDayText = weeklySchedule.get(recid)[dayOfWeekName]
-			if (hourDayText != undefined || hourDayText) {
-				if (!hourDayText.includes(record.development))
-					hourDayText += ", " + record.development
-			} else {
-				hourDayText = record.development
-			}
-			weeklySchedule.set(recid, {
-				[dayOfWeekName]: hourDayText
-			})
-		} else {
-			const recid = parseInt(time.slice(0, 2)) + 12
-
-			let hourDayText = weeklySchedule.get(recid)[dayOfWeekName]
-			if (hourDayText != undefined || hourDayText) {
-				if (!hourDayText.includes(record.development))
-					hourDayText += ", " + record.development
-			} else {
-				hourDayText = record.development
-			}
-			weeklySchedule.set(recid, {
-				[dayOfWeekName]: hourDayText
-			})
-		}
-
 		this.refresh()
-		weeklySchedule.refresh()
 	};
 });
