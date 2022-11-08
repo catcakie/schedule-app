@@ -23,8 +23,8 @@ window.api.save((event, value) => {
 	developmentCycle.save()
 	// save the records to a local JSON file
 	window.api.saveToFile(developmentCycle.records)
-	// sort the rows again
-	sortDevelopmentCycleGrid()
+	// sort the rows again (by resetting to default sorting)
+	developmentCycle.stateReset()
 
 	// discord bot code below
 
@@ -119,16 +119,6 @@ function duplicateDailyRows() {
 			duplicateRow(developmentCycle, record)
 		}
 	})
-}
-function sortDevelopmentCycleGrid() {
-
-	sort = [
-		{ field: 'completion', direction: 'asc' },
-		{ field: 'startDate', direction: 'desc' },
-		{ field: 'start', direction: 'desc' }
-	]
-
-	developmentCycle.refresh()
 }
 
 // w2ui code below
