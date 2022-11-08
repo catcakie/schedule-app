@@ -91,6 +91,7 @@ Menu.setApplicationMenu(menu)
 // create application window when ready
 app.whenReady().then(() => {  
   createWindow()
+  console.log("Electron App Ready!")
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
@@ -113,7 +114,7 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 // console log when bot is ready
 client.once(Events.ClientReady, () => {
-	console.log('Ready!');
+	console.log('Discord Bot Ready!');
 });
 
 client.login(token);
