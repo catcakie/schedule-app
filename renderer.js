@@ -78,7 +78,7 @@ function duplicateRow(grid, row) {
 	clone.start = ''
 	clone.end = ''
 	clone.startDate = ''
-	clone.endDate = ''
+	clone.endDate = date
 
 	grid.add(clone)
 	sortRecid(developmentCycle)
@@ -97,7 +97,7 @@ function duplicateDailyRows() {
 	let todayRecords = []
 
 	records.forEach(record => {
-		if (record.startDate == date) {
+		if (record.endDate == date) {
 			todayRecords.push(record)
 		}
 		if (record.category == "Deadline") {
