@@ -17,14 +17,14 @@ window.api.save((event, value) => {
 
 	duplicateDailyRows()
 
-	// w2ui saves the changes into a separate property, use .mergeChanges() to merge them into their respective properties
-	developmentCycle.mergeChanges()
 	// w2ui marks changed fields, which we can't sort unless they're saved to the grid
 	developmentCycle.save()
-	// save the records to a local JSON file
-	window.api.saveToFile(developmentCycle.records)
+	// w2ui saves the changes into a separate property, use .mergeChanges() to merge them into their respective properties
+	developmentCycle.mergeChanges()
 	// sort the rows again (by resetting to default sorting)
 	developmentCycle.stateReset()
+	// save the records to a local JSON file
+	window.api.saveToFile(developmentCycle.records)
 
 	// discord bot code below
 
