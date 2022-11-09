@@ -47,7 +47,7 @@ function createWindow () {
     let discordMsg = "---\nCurrent Activity: "+record.development
     discordMsg += "\nStart time: "+record.start
     if (record.completion == true)
-      discordMsg += "\nCompleted: "+record.end+"\nResults: "+record.results
+      discordMsg += "\nCompleted: "+record.end+"\nResults: "+record.testing
     discordMsg += "\n---"
     client.channels.cache.get(`814647500459343892`).send(discordMsg)
   })
