@@ -113,6 +113,7 @@ function duplicateDailyRows() {
 
 			record.w2ui = { "style": "background-color: #E6F4F1" }
 		}
+		// execute any logic needed over all rows
 	})
 
 	// records created today based on their design property (arary)
