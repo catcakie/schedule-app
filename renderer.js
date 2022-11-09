@@ -216,7 +216,8 @@ let config = {
 		{ field: 'startDate', direction: 'desc' },
 		{ field: 'start', direction: 'desc' },
 		{ field: 'category', direction: 'desc' },
-		{ field: 'requirement', direction: 'asc' } ],
+		{ field: 'requirement', direction: 'asc' },
+		{ field: 'design', direction: 'asc' } ],
 		liveSearch: true,
 		multiSearch: true,
 		show: {
