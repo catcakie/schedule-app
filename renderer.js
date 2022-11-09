@@ -191,8 +191,7 @@ let config = {
 		multiSearch: true,
 		show: {
 			toolbar: true,
-			footer: true,
-			expandColumn: true
+			footer: true
 		},
 		columns: [{
 			field: 'recid',
@@ -318,7 +317,13 @@ let config = {
 		},
 		onChange: function (event) {
 
-		}
+		},
+		onExpand: function(event) {
+			
+		},
+		onComplete: function(event) {
+			
+		}  
 	},
 	tracker: {
 		name: 'tracker',
