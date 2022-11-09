@@ -95,11 +95,17 @@ function duplicateDailyRows() {
 
 	// records created today (array)
 	let todayRecords = []
+	// records with daily frequency (array)
+	let dailyRecords = []
 
 	records.forEach(record => {
 		// push records created today
 		if (record.endDate == date) {
 			todayRecords.push(record)
+		}
+		// push records with daily frequency
+		if (record.frequency === "Daily") {
+			dailyRecords.push(record)
 		}
 		// highlight deadline rows
 		if (record.category == "Deadline") {
@@ -119,8 +125,8 @@ function duplicateDailyRows() {
 	// records created today based on their design property (arary)
 	todayRecords = new Set(todayRecords.map(({design}) => design))
 
-	// unique records based on their design property (array)
-	let uniqueRecords = [...new Map(records.map((item) => [item['design'], item])).values()]
+	// unique daily records based on their design property (array)
+	let uniqueRecords = [...new Map(dailyRecords.map((item) => [item['design'], item])).values()]
 
 	/* (code for testing purposes)
 	let test = []
