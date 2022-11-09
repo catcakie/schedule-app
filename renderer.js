@@ -97,9 +97,11 @@ function duplicateDailyRows() {
 	let todayRecords = []
 
 	records.forEach(record => {
+		// push records created today
 		if (record.endDate == date) {
 			todayRecords.push(record)
 		}
+		// highlight deadline rows
 		if (record.category == "Deadline") {
 			developmentCycle.mergeChanges()
 			developmentCycle.save()
@@ -113,21 +115,31 @@ function duplicateDailyRows() {
 		}
 	})
 
-	if (todayRecords) {
-		// records created today based on their design property (arary)
-		todayRecords = new Set(todayRecords.map(({design}) => design))
+	// records created today based on their design property (arary)
+	todayRecords = new Set(todayRecords.map(({design}) => design))
 
-		// unique records based on their design property (array)
-		let uniqueRecords = [...new Map(records.map((item) => [item['design'], item])).values()]
+	// unique records based on their design property (array)
+	let uniqueRecords = [...new Map(records.map((item) => [item['design'], item])).values()]
 
-		// filter the unique records array so they aren't infinitely duplicated
-		// (remove the records created today that already have the design)
-		uniqueRecords = uniqueRecords.filter(({design}) => !todayRecords.has(design))
+	/* (code for testing purposes)
+	let test = []
+	uniqueRecords.forEach(record => {
+		if (record.frequency === "Daily")
+			test.push(record.design+"\n")
+	})
+	document.getElementById("test").innerText = test+""
+	*/
 
+	// filter the unique records array so they aren't infinitely duplicated
+	// (remove the records created today that already have the design)
+	uniqueRecords = uniqueRecords.filter(({design}) => !todayRecords.has(design))
+
+	if (uniqueRecords.length !== 0) {
 		// filter the array to only include records with the 'daily' frequency
 		uniqueRecords.forEach(record => {
 			if (record.frequency === "Daily") {
 				duplicateRow(developmentCycle, record)
+				test.push(record.design)
 			}
 		})
 	}
