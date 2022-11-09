@@ -110,7 +110,7 @@ function duplicateDailyRows() {
 			record.endDate = date
 
 			record.w2ui = { "style": "background-color: #E6F4F1" }
-		}			
+		}
 	})
 
 	if (todayRecords) {
@@ -288,16 +288,6 @@ let config = {
 				type: 'text'
 			},
 			tooltip: 'Test the developed creation (in which we gain new info)'
-		},
-		{
-			field: 'results',
-			text: '<div style="text-align: center;">Results</div>',
-			size: '100%',
-			sortable: true,
-			resizable: false,
-			editable: {
-				type: 'text'
-			}
 		},
 		{
 			field: 'start',
