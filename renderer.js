@@ -197,6 +197,13 @@ let config = {
 		sortData: [ { field: 'completion', direction: 'asc' },
 		{ field: 'startDate', direction: 'desc' },
 		{ field: 'start', direction: 'desc' } ],
+		liveSearch: true,
+		multiSearch: true,
+		show: {
+			toolbar: true,
+			footer: true,
+			expandColumn: true
+		},
 		columns: [{
 			field: 'recid',
 			text: '<div style="text-align: center;">ID</div>',
@@ -246,7 +253,8 @@ let config = {
 			resizable: false,
 			editable: {
 				type: 'text'
-			}
+			},
+			tooltip: 'Gather, organize/clean, store info (from sources, which can include results from our own decisions)'
 		},
 		{
 			field: 'design',
@@ -256,7 +264,8 @@ let config = {
 			resizable: false,
 			editable: {
 				type: 'text'
-			}
+			},
+			tooltip: 'Generate ideas to test'
 		},
 		{
 			field: 'development',
@@ -266,7 +275,8 @@ let config = {
 			resizable: false,
 			editable: {
 				type: 'text'
-			}
+			},
+			tooltip: 'Build/execute the idea (different executions have different variations)'
 		},
 		{
 			field: 'testing',
@@ -276,7 +286,8 @@ let config = {
 			resizable: false,
 			editable: {
 				type: 'text'
-			}
+			},
+			tooltip: 'Test the developed creation (in which we gain new info)'
 		},
 		{
 			field: 'results',
