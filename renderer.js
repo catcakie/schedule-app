@@ -139,7 +139,6 @@ function duplicateDailyRows() {
 		uniqueRecords.forEach(record => {
 			if (record.frequency === "Daily") {
 				duplicateRow(developmentCycle, record)
-				test.push(record.design)
 			}
 		})
 	}
