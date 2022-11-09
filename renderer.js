@@ -214,7 +214,9 @@ let config = {
 		name: 'developmentCycle',
 		sortData: [ { field: 'completion', direction: 'asc' },
 		{ field: 'startDate', direction: 'desc' },
-		{ field: 'start', direction: 'desc' } ],
+		{ field: 'start', direction: 'desc' },
+		{ field: 'category', direction: 'desc' },
+		{ field: 'requirement', direction: 'asc' } ],
 		liveSearch: true,
 		multiSearch: true,
 		show: {
