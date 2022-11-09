@@ -133,11 +133,8 @@ function duplicateDailyRows() {
 	uniqueRecords = uniqueRecords.filter(({design}) => !todayRecords.has(design))
 
 	if (uniqueRecords.length !== 0) {
-		// filter the array to only include records with the 'daily' frequency
 		uniqueRecords.forEach(record => {
-			if (record.frequency === "Daily") {
-				duplicateRow(developmentCycle, record)
-			}
+			duplicateRow(developmentCycle, record)
 		})
 	}
 }
