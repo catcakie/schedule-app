@@ -128,15 +128,6 @@ function duplicateDailyRows() {
 	// unique daily records based on their design property (array)
 	let uniqueRecords = [...new Map(dailyRecords.map((item) => [item['design'], item])).values()]
 
-	/* (code for testing purposes)
-	let test = []
-	uniqueRecords.forEach(record => {
-		if (record.frequency === "Daily")
-			test.push(record.design+"\n")
-	})
-	document.getElementById("test").innerText = test+""
-	*/
-
 	// filter the unique records array so they aren't infinitely duplicated
 	// (remove the records created today that already have the design)
 	uniqueRecords = uniqueRecords.filter(({design}) => !todayRecords.has(design))
