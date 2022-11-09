@@ -36,25 +36,6 @@ window.api.save((event, value) => {
 	window.api.saveToFile(developmentCycle.records)
 })
 
-// Ctrl + Enter
-window.api.addRow((event, value) => {
-	updateDateAndTime()
-
-	let nextLineNum = developmentCycle.records.length + 1
-	let nextRecid = developmentCycle.getLineHTML(nextLineNum)
-	let previousRecordCategory = developmentCycle.getCellValue(developmentCycle.records.length - 1, 3)
-	developmentCycle.add({
-		recid: nextRecid,
-		frequency: 'Once',
-		category: previousRecordCategory,
-		start: time,
-		startDate: date,
-		end: time,
-		endDate: date
-	})
-	sortRecid(developmentCycle)
-})
-
 // helper functions
 function getSelectedRow(grid) {
 	sortRecid(grid)
