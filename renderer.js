@@ -294,7 +294,7 @@ let config = {
 			editable: {
 				type: 'text'
 			},
-			tooltip: 'Test the developed creation (in which we gain new info). Write every problem that comes up, feedback, thoughts, etc'
+			tooltip: 'Test the developed creation (in which we gain new info). Write every problem that comes up, feedback, thoughts, insights, etc'
 		},
 		{
 			field: 'images',
