@@ -4,5 +4,8 @@ This is my personal schedule app. I wanted a simple interface to store all of my
 
 I'm continually adding features as I keep using this. 
 
-![image](https://user-images.githubusercontent.com/60787559/201040632-8bbca2f8-20a9-4bad-907a-ff5712e729d0.png)
+Here's an example on how I'm using it:
+
+![image](https://user-images.githubusercontent.com/60787559/201041297-4346f692-daac-4a18-b77d-974e1f1991cd.png)
+
 
