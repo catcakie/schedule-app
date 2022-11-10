@@ -12,6 +12,16 @@ window.api.duplicateRow((event, value) => {
 	}
 })
 
+// Ctrl + R
+window.api.clearImages((event, value) => {
+	selectedRow = getSelectedRow(developmentCycle)
+
+	if (selectedRow) {
+		selectedRow.images = ''
+	}
+})
+
+
 // Ctrl + S
 window.api.save((event, value) => {
 	updateDateAndTime()
