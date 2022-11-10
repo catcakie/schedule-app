@@ -68,10 +68,10 @@ menu.append(new MenuItem({
       
     },
     {
-        role: 'Add row',
-        accelerator: process.platform === 'darwin' ? 'Ctrl+Enter' : 'Ctrl+Enter',
+        role: 'Clear Images',
+        accelerator: process.platform === 'darwin' ? 'Ctrl+R' : 'Ctrl+R',
         click: () => { 
-            win.webContents.send('addRow')
+            win.webContents.send('clearImages')
          },
         
       },
