@@ -117,8 +117,6 @@ const commands = [];
 // Grab all the command files from the commands directory
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
-// discord commands
-
 // Grab the SlashCommandBuilder#toJSON() output of each command's data for deployment
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
@@ -164,7 +162,7 @@ client.on(Events.InteractionCreate, async interaction => {
 
 	const command = client.commands.get(interaction.commandName);
 
-  if (!command) return;
+	if (!command) return;
 
 	try {
 		await command.execute(interaction);
