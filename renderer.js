@@ -261,7 +261,12 @@ let config = {
 			editable: {
 				type: 'text'
 			},
-			tooltip: 'Gather, organize/clean, store info (from sources, which can include results from our own decisions)'
+			tooltip: 'Gather, organize/clean, store info (from sources, which can include results from our own decisions)',
+			info: {
+                fields: ['requirement'],
+                showOn: 'mouseenter',
+                options: { position: 'top' }
+            }
 		},
 		{
 			field: 'design',
@@ -283,7 +288,12 @@ let config = {
 			editable: {
 				type: 'text'
 			},
-			tooltip: 'Build/execute the idea (different executions have different variations)'
+			tooltip: 'Build/execute the idea (different executions have different variations)',
+			info: {
+                fields: ['development'],
+                showOn: 'mouseenter',
+                options: { position: 'top' }
+            }
 		},
 		{
 			field: 'testing',
@@ -294,7 +304,12 @@ let config = {
 			editable: {
 				type: 'text'
 			},
-			tooltip: 'Test the developed creation (in which we gain new info). Write every problem that comes up, feedback, thoughts, insights, etc'
+			tooltip: 'Test the developed creation (in which we gain new info). Write every problem that comes up, feedback, thoughts, insights, etc',
+			info: {
+                fields: ['testing'],
+                showOn: 'mouseenter',
+                options: { position: 'top' }
+            }
 		},
 		{
 			field: 'images',
