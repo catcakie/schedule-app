@@ -239,6 +239,7 @@ let config = {
 			text: '<div style="text-align: center;">Requirement</div>',
 			size: '100',
 			sortable: true,
+			sortMode: 'natural',
 			resizable: false,
 			editable: {
 				type: 'text'
@@ -277,6 +278,12 @@ let config = {
 				type: 'text'
 			},
 			tooltip: 'Test the developed creation (in which we gain new info)'
+		},
+		{
+			field: 'images',
+			text: '<div style="text-align: center;">Images</div>',
+			size: '50%',
+			resizable: false
 		},
 		{
 			field: 'start',
@@ -643,3 +650,33 @@ w2ui.developmentCycle.on('change', function (event) {
 		this.refresh()
 	};
 });
+
+// drag and drop listeners
+document.addEventListener('drop', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+	const imageUrl = event.dataTransfer.getData('url')
+ 
+    for (const f of event.dataTransfer.files) {
+        // Using the path attribute to get absolute file path
+		let filePath = f.path
+		if (filePath)
+        	console.log('File Path of dragged files: ', filePath)
+		else
+			console.log(imageUrl)
+      }
+});
+ 
+document.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+});
+/*
+document.addEventListener('dragenter', (event) => {
+    console.log('File is in the Drop Space');
+});
+ 
+document.addEventListener('dragleave', (event) => {
+    console.log('File has left the Drop Space');
+});
+*/
