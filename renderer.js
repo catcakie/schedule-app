@@ -288,9 +288,8 @@ let config = {
 			info: {
                 fields: ['images'],
                 showOn: 'mouseenter',
-                options: { position: 'bottom' }
-            },
-			render: () => { '<span></span>' }
+                options: { position: 'left' }
+            }
 		},
 		{
 			field: 'start',
