@@ -283,11 +283,14 @@ let config = {
 		{
 			field: 'images',
 			text: '<div style="text-align: center;">Images</div>',
-			size: '50%',
+			size: '40%',
 			resizable: false,
-			editable: {
-				type: 'text'
-			}
+			info: {
+                fields: ['images'],
+                showOn: 'mouseenter',
+                options: { position: 'bottom' }
+            },
+			render: () => { '<span></span>' }
 		},
 		{
 			field: 'start',
@@ -671,10 +674,10 @@ document.addEventListener('drop', (event) => {
 			// Using the path attribute to get absolute file path
 			let filePath = f.path
 			if (filePath) {
-				selectedRow.images += filePath + ", "
+				selectedRow.images += "<img width='30%' src='"+filePath+"'/>"+"<span>   </span>"
 			}
 			else {
-				selectedRow.images += imageUrl + ", "
+				selectedRow.images += imageUrl
 			}
 		}
 		developmentCycle.refresh()
