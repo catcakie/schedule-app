@@ -677,7 +677,7 @@ document.addEventListener('drop', (event) => {
 				selectedRow.images += "<img width='30%' src='"+filePath+"'/>"+"<span>   </span>"
 			}
 			else {
-				selectedRow.images += imageUrl
+				selectedRow.images += "<img width='30%' src='"+imageUrl+"'/>"+"<span>   </span>"
 			}
 		}
 		developmentCycle.refresh()
