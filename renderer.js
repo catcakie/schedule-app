@@ -71,6 +71,7 @@ function duplicateRow(grid, row) {
 	clone.end = ''
 	clone.startDate = ''
 	clone.endDate = date
+	clone.w2ui.style = ''
 
 	grid.add(clone)
 	sortRecid(developmentCycle)
