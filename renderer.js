@@ -100,7 +100,7 @@ function duplicateDailyRows() {
 			dailyRecords.push(record)
 		}
 		// highlight deadline rows
-		if (record.category == "Deadline") {
+		if (record.category == "Deadline" && record.completion === false) {
 			developmentCycle.mergeChanges()
 			developmentCycle.save()
 
@@ -110,6 +110,8 @@ function duplicateDailyRows() {
 			record.endDate = date
 
 			record.w2ui = { "style": "background-color: #E6F4F1" }
+		} else if (record.category == "Deadline" && record.completion === true) {
+			record.w2ui = { "style": "background-color: #E3F2FF" }
 		}
 		// execute any logic needed over all rows
 	})
