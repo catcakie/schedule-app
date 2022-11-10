@@ -71,7 +71,8 @@ function duplicateRow(grid, row) {
 	clone.end = ''
 	clone.startDate = ''
 	clone.endDate = date
-	clone.w2ui.style = "background-color: #FFE7FF"
+	clone.images = ''
+	clone.w2ui.style = 'background-color: #FFE7FF'
 
 	grid.add(clone)
 	sortRecid(developmentCycle)
