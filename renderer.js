@@ -205,7 +205,6 @@ let config = {
 		{ field: 'requirement', direction: 'asc' },
 		{ field: 'design', direction: 'asc' } ],
 		liveSearch: true,
-		multiSearch: true,
 		show: {
 			toolbar: true,
 			footer: true
