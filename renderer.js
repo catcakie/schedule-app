@@ -672,11 +672,13 @@ document.addEventListener('drop', (event) => {
 			}
 			// Using the path attribute to get absolute file path
 			let filePath = f.path
+
+			let width = "40%"
 			if (filePath) {
-				selectedRow.images += "<img width='30%' src='"+filePath+"'/>"+"<span>   </span>"
+				selectedRow.images += "<img style='max-width: "+width+"; height: auto;' src='"+filePath+"'/>"+"<span>   </span>"
 			}
 			else {
-				selectedRow.images += "<img width='30%' src='"+imageUrl+"'/>"+"<span>   </span>"
+				selectedRow.images += "<img style='max-width: "+width+"; height: auto;' src='"+imageUrl+"'/>"+"<span>   </span>"
 			}
 		}
 		developmentCycle.refresh()
