@@ -71,7 +71,7 @@ function duplicateRow(grid, row) {
 	clone.end = ''
 	clone.startDate = ''
 	clone.endDate = date
-	clone.w2ui.style = ''
+	clone.w2ui.style = "background-color: #FFE7FF"
 
 	grid.add(clone)
 	sortRecid(developmentCycle)
@@ -113,6 +113,8 @@ function duplicateDailyRows() {
 			record.w2ui = { "style": "background-color: #E6F4F1" }
 		} else if (record.completion === true) {
 			record.w2ui = { "style": "background-color: #DADADA" }
+		} else {
+			record.w2ui = { "style": "" }
 		}
 		// execute any logic needed over all rows
 	})
