@@ -1,10 +1,11 @@
 // main.js  handlers & requests
 
 let date, time
+let selectedRow
 
 // Ctrl + D
 window.api.duplicateRow((event, value) => {
-	const selectedRow = getSelectedRow(developmentCycle)
+	selectedRow = getSelectedRow(developmentCycle)
 
 	if (selectedRow) {
 		duplicateRow(developmentCycle, selectedRow)
@@ -25,7 +26,7 @@ window.api.save((event, value) => {
 	developmentCycle.stateReset()
 
 	// get the selected row
-	const selectedRow = getSelectedRow(developmentCycle)
+	selectedRow = getSelectedRow(developmentCycle)
 
 	// send the selected row's content to my discord server channel
 	if (selectedRow && selectedRow.development != '') {
@@ -656,15 +657,23 @@ document.addEventListener('drop', (event) => {
     event.preventDefault();
     event.stopPropagation();
 	const imageUrl = event.dataTransfer.getData('url')
- 
-    for (const f of event.dataTransfer.files) {
-        // Using the path attribute to get absolute file path
-		let filePath = f.path
-		if (filePath)
-        	console.log('File Path of dragged files: ', filePath)
-		else
-			console.log(imageUrl)
-      }
+
+	selectedRow = getSelectedRow(developmentCycle)
+
+	if (selectedRow) {
+		for (const f of event.dataTransfer.files) {
+			selectedRow.images = ""
+			// Using the path attribute to get absolute file path
+			let filePath = f.path
+			if (filePath) {
+				selectedRow.images += filePath
+			}
+			else {
+				selectedRow.images += imageUrl
+			}
+		}
+		developmentCycle.refresh()
+	}
 });
  
 document.addEventListener('dragover', (e) => {
