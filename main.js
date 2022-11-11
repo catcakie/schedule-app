@@ -107,7 +107,7 @@ app.on('window-all-closed', () => {
 })
 
 // ---------------------- DISCORD.JS CODE BELOW --------------------- \\
-const { Client, GatewayIntentBits, REST, Routes, Collection, Events } = require('discord.js');
+const { Client, GatewayIntentBits, REST, Routes, Collection, Events, SlashCommandBuilder } = require('discord.js');
 const { clientId, guildId, token } = require('./config.json');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
@@ -122,6 +122,17 @@ for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
 	commands.push(command.data.toJSON());
 }
+
+// slash commands related to app here
+const test = {
+	data: new SlashCommandBuilder()
+		.setName('test')
+		.setDescription('Replies with test!'),
+	async execute(interaction) {
+		await interaction.reply("Test!");
+	},
+};
+commands.push(test.data.toJSON())
 
 // Construct and prepare an instance of the REST module
 const rest = new REST({ version: '10' }).setToken(token);
@@ -152,6 +163,9 @@ for (const file of commandFiles) {
 	const command = require(filePath);
 	client.commands.set(command.data.name, command);
 }
+
+// slash commands related to app here
+client.commands.set(test.data.name, test)
 
 client.once(Events.ClientReady, () => {
 	console.log('Ready!');
