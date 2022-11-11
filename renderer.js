@@ -256,6 +256,7 @@ let config = {
 			size: '100',
 			sortable: true,
 			sortMode: 'natural',
+			searchable: { operator: 'contains' },
 			resizable: false,
 			editable: {
 				type: 'text'
@@ -272,6 +273,7 @@ let config = {
 			text: '<div style="text-align: center;">Design</div>',
 			size: '50%',
 			sortable: true,
+			searchable: { operator: 'contains' },
 			resizable: false,
 			editable: {
 				type: 'text'
@@ -283,6 +285,7 @@ let config = {
 			text: '<div style="text-align: center;">Development</div>',
 			size: '100',
 			sortable: true,
+			searchable: { operator: 'contains' },
 			resizable: false,
 			editable: {
 				type: 'text'
@@ -299,6 +302,7 @@ let config = {
 			text: '<div style="text-align: center;">Testing</div>',
 			size: '100%',
 			sortable: true,
+			searchable: { operator: 'contains' },
 			resizable: false,
 			editable: {
 				type: 'text'
