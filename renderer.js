@@ -349,6 +349,7 @@ let config = {
 			size: '50%',
 			sortable: true,
 			sortMode: 'natural',
+			searchable: { operator: 'begins with' },
 			resizable: false
 		},
 		{
