@@ -33,6 +33,10 @@ window.api.save((event, value) => {
 	// w2ui saves the changes into a separate property, use .mergeChanges() to merge them into their respective properties
 	developmentCycle.mergeChanges()
 
+	
+	// save the records to a local JSON file
+	window.api.saveToFile(developmentCycle.records)
+
 	// get the selected row
 	selectedRow = getSelectedRow(developmentCycle)
 
@@ -40,10 +44,6 @@ window.api.save((event, value) => {
 	if (selectedRow && selectedRow.development != '') {
 		window.api.sendSelectedRow(selectedRow)
 	}
-
-	// save the records to a local JSON file
-	window.api.saveToFile(developmentCycle.records)
-
 	
 	// sort the rows again (by resetting to default sorting)
 	developmentCycle.stateReset()
