@@ -280,7 +280,12 @@ let config = {
 			editable: {
 				type: 'text'
 			},
-			tooltip: 'Generate ideas to test'
+			tooltip: 'Generate ideas to test',
+			info: {
+                fields: ['design'],
+                showOn: 'mouseenter',
+                options: { position: 'top' }
+            }
 		},
 		{
 			field: 'development',
