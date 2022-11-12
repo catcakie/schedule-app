@@ -88,6 +88,9 @@ function sortRecid(grid) {
 }
 function duplicateDailyRows() {
 	let records = developmentCycle.records
+	
+	developmentCycle.mergeChanges()
+	developmentCycle.save()
 
 	// records created today (array)
 	let todayRecords = []
@@ -105,9 +108,6 @@ function duplicateDailyRows() {
 		}
 		// highlight deadline rows
 		if (record.category == "Deadline" && record.completion === false) {
-			developmentCycle.mergeChanges()
-			developmentCycle.save()
-
 			record.start = time
 			record.end = time
 			record.startDate = date
