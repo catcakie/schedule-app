@@ -114,6 +114,8 @@ function duplicateDailyRows() {
 			record.endDate = date
 
 			record.w2ui = { "style": "background-color: #E6F4F1" }
+		} else if (record.completion === true && record.endDate == date) {
+			record.w2ui = { "style": "background-color: #BFBCCF" }
 		} else if (record.completion === true) {
 			record.w2ui = { "style": "background-color: #DADADA" }
 		} else {
