@@ -235,7 +235,7 @@ let config = {
 		{
 			field: 'frequency',
 			text: '<div style="text-align: center;">Freq.</div>',
-			size: '50%',
+			size: '40%',
 			sortable: true,
 			resizable: false,
 			editable: {
@@ -255,9 +255,45 @@ let config = {
 			}
 		},
 		{
+			field: 'reduce',
+			text: '<div style="text-align: center;">Reduce</div>',
+			size: '50%',
+			sortable: true,
+			sortMode: 'natural',
+			searchable: { operator: 'contains' },
+			resizable: false,
+			editable: {
+				type: 'text'
+			},
+			tooltip: 'Reduce unnecessary strain. Leave the channels of emotional expression open. Example methods: yoga & breathing exercises',
+			info: {
+                fields: ['reduce'],
+                showOn: 'mouseenter',
+                options: { position: 'top' }
+            }
+		},
+		{
+			field: 'inspire',
+			text: '<div style="text-align: center;">Inspire</div>',
+			size: '50%',
+			sortable: true,
+			sortMode: 'natural',
+			searchable: { operator: 'contains' },
+			resizable: false,
+			editable: {
+				type: 'text'
+			},
+			tooltip: 'Inspire emotion. Dry as dust "objectives" do not help us. Example methods: powerful given circumstances & strong, imaginative, passionate objects of desire',
+			info: {
+                fields: ['inspire'],
+                showOn: 'mouseenter',
+                options: { position: 'top' }
+            }
+		},
+		{
 			field: 'requirement',
 			text: '<div style="text-align: center;">Requirement</div>',
-			size: '100',
+			size: '100%',
 			sortable: true,
 			sortMode: 'natural',
 			searchable: { operator: 'contains' },
@@ -275,7 +311,7 @@ let config = {
 		{
 			field: 'design',
 			text: '<div style="text-align: center;">Design</div>',
-			size: '50%',
+			size: '100%',
 			sortable: true,
 			searchable: { operator: 'contains' },
 			resizable: false,
@@ -292,7 +328,7 @@ let config = {
 		{
 			field: 'development',
 			text: '<div style="text-align: center;">Development</div>',
-			size: '100',
+			size: '100%',
 			sortable: true,
 			searchable: { operator: 'contains' },
 			resizable: false,
@@ -326,7 +362,7 @@ let config = {
 		{
 			field: 'images',
 			text: '<div style="text-align: center;">Images</div>',
-			size: '40%',
+			size: '45%',
 			resizable: false,
 			info: {
                 fields: ['images'],
