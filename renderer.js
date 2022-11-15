@@ -726,9 +726,7 @@ w2ui.developmentCycle.on('change', function (event) {
 		updateDateAndTime()
 
 		// set time started & time ended
-		let developmentChanged = this.getChanges()[0].development
-		
-		if (!record.start && developmentChanged || record.start == '' && developmentChanged) {
+		if (!record.start && this.getChanges()[0].development || record.start == '' && this.getChanges()[0].development) {
 			record.start = time
 			record.startDate = date
 		}
