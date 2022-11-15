@@ -66,6 +66,8 @@ function duplicateRow(grid, row) {
 	const clone = structuredClone(row)
 	clone.recid = nextLineNum
 	clone.completion = false
+	clone.reduce = ''
+	clone.inspire = ''
 	clone.development = ''
 	clone.testing = ''
 	clone.results = ''
