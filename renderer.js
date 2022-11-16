@@ -43,6 +43,8 @@ window.api.save((event, value) => {
 	// send the selected row's content to my discord server channel
 	if (selectedRow && selectedRow.development != '') {
 		window.api.sendSelectedRow(selectedRow)
+	} else {
+		window.api.sendSelectedRow("probably reddit/yt")
 	}
 	
 	// sort the rows again (by resetting to default sorting)
