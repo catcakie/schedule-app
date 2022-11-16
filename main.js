@@ -44,25 +44,30 @@ function createWindow () {
     saveObjectsToJSONFile(records, "activities")
   })
   ipcMain.on('selectedRow', (event, record) => {
+    let discordMsg = "---\nCurrent Activity: "+record.development
+
     if (typeof record === "string" || record.completion === true) {
+      if (record.completion === true) {
+        discordMsg += "\nCompleted: "+record.end+"\nResults: "+record.testing
+        discordMsg += "\n---"
+        client.channels.cache.get(`814647500459343892`).send(discordMsg)
+      }
+    
       client.user.setPresence({
         activities: [{ name: `probably yt/reddit`, type: ActivityType.Watching }],
         status: 'idle',
       })
     } else {
-    let discordMsg = "---\nCurrent Activity: "+record.development
-    discordMsg += "\nStart time: "+record.start
-    if (record.completion == true) {
-      discordMsg += "\nCompleted: "+record.end+"\nResults: "+record.testing
-    }
-    discordMsg += "\n---"
+      discordMsg += "\nStart time: "+record.start
 
-    client.channels.cache.get(`814647500459343892`).send(discordMsg)
+      discordMsg += "\n---"
 
-    client.user.setPresence({
-      activities: [{ name: record.development, type: ActivityType.Playing }],
-      status: 'online',
-    })
+      client.channels.cache.get(`814647500459343892`).send(discordMsg)
+
+      client.user.setPresence({
+        activities: [{ name: record.development, type: ActivityType.Playing }],
+        status: 'online',
+      })
     }
   })
 
