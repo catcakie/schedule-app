@@ -175,7 +175,7 @@ client.commands.set(test.data.name, test)
 
 client.once(Events.ClientReady, () => {
 	console.log('Ready!');
-  client.user.setActivity("nothing atm")
+  client.user.setActivity("probably reddit/yt")
 });
 
 client.on(Events.InteractionCreate, async interaction => {
