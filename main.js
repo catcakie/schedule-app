@@ -46,6 +46,10 @@ function createWindow () {
   ipcMain.on('selectedRow', (event, record) => {
     let discordMsg = "---\nCurrent Activity: "+record.development
 
+    if (record.development.includes("sleep") || record.development.includes("nap")) {
+      client.channels.cache.get(`496763131977007106`).send("Danielle went to bed to try to sleep or nap")
+    }
+
     if (typeof record === "string" || record.completion === true) {
       if (record.completion === true) {
         discordMsg += "\nCompleted: "+record.end+"\nResults: "+record.testing
