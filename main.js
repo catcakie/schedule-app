@@ -44,17 +44,25 @@ function createWindow () {
     saveObjectsToJSONFile(records, "activities")
   })
   ipcMain.on('selectedRow', (event, record) => {
-    if (typeof record === "string") {
-      client.user.setActivity(record)
+    if (typeof record === "string" || record.completion === true) {
+      client.user.setPresence({
+        activities: [{ name: `probably yt/reddit`, type: ActivityType.Watching }],
+        status: 'idle',
+      })
     } else {
     let discordMsg = "---\nCurrent Activity: "+record.development
     discordMsg += "\nStart time: "+record.start
-    if (record.completion == true)
+    if (record.completion == true) {
       discordMsg += "\nCompleted: "+record.end+"\nResults: "+record.testing
+    }
     discordMsg += "\n---"
+
     client.channels.cache.get(`814647500459343892`).send(discordMsg)
 
-    client.user.setActivity(record.development)
+    client.user.setPresence({
+      activities: [{ name: record.development, type: ActivityType.Playing }],
+      status: 'online',
+    })
     }
   })
 
@@ -113,7 +121,7 @@ app.on('window-all-closed', () => {
 })
 
 // ---------------------- DISCORD.JS CODE BELOW --------------------- \\
-const { Client, GatewayIntentBits, REST, Routes, Collection, Events, SlashCommandBuilder } = require('discord.js');
+const { Client, GatewayIntentBits, REST, Routes, Collection, Events, SlashCommandBuilder, ActivityType } = require('discord.js');
 const { clientId, guildId, token } = require('./config.json');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
@@ -175,7 +183,10 @@ client.commands.set(test.data.name, test)
 
 client.once(Events.ClientReady, () => {
 	console.log('Ready!');
-  client.user.setActivity("probably reddit/yt")
+  client.user.setPresence({
+    activities: [{ name: `probably yt/reddit`, type: ActivityType.Watching }],
+    status: 'idle',
+  })
 });
 
 client.on(Events.InteractionCreate, async interaction => {
