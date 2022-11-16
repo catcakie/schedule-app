@@ -65,8 +65,8 @@ function createWindow () {
       client.channels.cache.get(`814647500459343892`).send(discordMsg)
 
       client.user.setPresence({
-        activities: [{ name: record.development, type: ActivityType.Playing }],
-        status: 'online',
+        activities: [{ name: '['+record.start+'] '+record.development, type: ActivityType.Playing }],
+        status: 'online'
       })
     }
   })
