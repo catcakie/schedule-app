@@ -44,12 +44,18 @@ function createWindow () {
     saveObjectsToJSONFile(records, "activities")
   })
   ipcMain.on('selectedRow', (event, record) => {
+    if (typeof record === "string") {
+      client.user.setActivity(record)
+    } else {
     let discordMsg = "---\nCurrent Activity: "+record.development
     discordMsg += "\nStart time: "+record.start
     if (record.completion == true)
       discordMsg += "\nCompleted: "+record.end+"\nResults: "+record.testing
     discordMsg += "\n---"
     client.channels.cache.get(`814647500459343892`).send(discordMsg)
+
+    client.user.setActivity(record.development)
+    }
   })
 
   win.loadFile('index.html')
