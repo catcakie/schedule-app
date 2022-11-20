@@ -47,7 +47,7 @@ function createWindow () {
     let discordMsg = "---\nCurrent Activity: "+record.development
 
     if (record.completion === false && record.development.includes("sleep") || record.completion === false && record.development.includes("nap")) {
-      client.channels.cache.get(`496763131977007106`).send("Danielle went to bed to try to sleep or nap")
+      client.channels.cache.get(`496763131977007106`).send("Danielle went to bed to try to sleep or nap\nGoodnight bae, I love you")
     }
 
     if (typeof record === "string" || record.completion === true) {
