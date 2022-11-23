@@ -252,6 +252,7 @@ let config = {
 			text: '<div style="text-align: center;">Category</div>',
 			size: '50%',
 			sortable: true,
+			searchable: { operator: 'begins with' },
 			resizable: false,
 			editable: {
 				type: 'combo',
