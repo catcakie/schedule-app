@@ -42,6 +42,13 @@ function createWindow () {
   // renderer.js event handlers
   ipcMain.on('saveToFile', (event, records) => {
     saveObjectsToJSONFile(records, "activities")
+
+    client.channels.cache.get(`1045591102897532958`).send({
+      files: [{
+          attachment: 'activities.json'
+      }]
+    })
+
   })
   ipcMain.on('selectedRow', (event, record) => {
     let discordMsg = "---\nCurrent Activity: "+record.development
