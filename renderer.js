@@ -270,7 +270,7 @@ let config = {
 			editable: {
 				type: 'text'
 			},
-			tooltip: 'Reduce unnecessary strain. Leave the channels of emotional expression open. Example methods: yoga & breathing exercises',
+			tooltip: '<center>Reduce unnecessary strain.<br>Leave the channels of emotional expression open.<br>Example methods: yoga & breathing exercises</center>',
 			info: {
                 fields: ['reduce'],
                 showOn: 'mouseenter',
@@ -288,9 +288,27 @@ let config = {
 			editable: {
 				type: 'text'
 			},
-			tooltip: 'Inspire emotion. Dry as dust "objectives" do not help us. Example methods: powerful given circumstances & strong, imaginative, passionate objects of desire',
+			tooltip: '<center>Inspire emotion.<br>Dry as dust "objectives" do not help us.<br>Example methods: powerful given circumstances & strong, imaginative, passionate objects of desire</center>',
 			info: {
                 fields: ['inspire'],
+                showOn: 'mouseenter',
+                options: { position: 'top' }
+            }
+		},
+		{
+			field: 'immerse',
+			text: '<div style="text-align: center;">Immerse</div>',
+			size: '55%',
+			sortable: true,
+			sortMode: 'natural',
+			searchable: { operator: 'contains' },
+			resizable: false,
+			editable: {
+				type: 'text'
+			},
+			tooltip: '<center>Incorporate elements of immersion in activities & environments that seek to engage the attention of people over time.<br>Provide clearly defined goals & challenges that can be overcome,<br>design environments that minimize distractions,<br>promote a feeling of control,<br>provide feedback,<br>emphasize stimuli that distract people from the real world,<br>and suppress stimuli that remind them of the real world.</center>',
+			info: {
+                fields: ['immerse'],
                 showOn: 'mouseenter',
                 options: { position: 'top' }
             }
