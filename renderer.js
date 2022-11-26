@@ -306,7 +306,7 @@ let config = {
 			editable: {
 				type: 'text'
 			},
-			tooltip: '<center>Incorporate elements of immersion in activities & environments that seek to engage the attention of people over time.<br>Provide clearly defined goals & challenges that can be overcome,<br>design environments that minimize distractions,<br>promote a feeling of control,<br>provide feedback,<br>emphasize stimuli that distract people from the real world,<br>and suppress stimuli that remind them of the real world.</center>',
+			tooltip: '<center>Incorporate elements of immersion in activities & environments that seek to engage the attention of people over time.<br>Provide clearly defined goals & challenges that can be overcome,<br>design environments that minimize distractions (contexts where we can focus without significant distraction),<br>promote a feeling of control (a feeling of control over actions, activities & the environment),<br>provide feedback (immediate feedback with regards to actions & overall performance),<br>emphasize stimuli that distract people from the real world (a loss of awareness of the worries & frustrations of everyday life),<br>and suppress stimuli that remind them of the real world (a loss of concern regarding matters of the self (e.g. awareness of hunger or thirst))</center>',
 			info: {
                 fields: ['immerse'],
                 showOn: 'mouseenter',
