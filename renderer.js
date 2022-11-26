@@ -262,7 +262,7 @@ let config = {
 		{
 			field: 'immerse',
 			text: '<div style="text-align: center;">Immerse</div>',
-			size: '55%',
+			size: '50%',
 			sortable: true,
 			sortMode: 'natural',
 			searchable: { operator: 'contains' },
