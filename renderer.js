@@ -260,42 +260,6 @@ let config = {
 			}
 		},
 		{
-			field: 'reduce',
-			text: '<div style="text-align: center;">Reduce</div>',
-			size: '50%',
-			sortable: true,
-			sortMode: 'natural',
-			searchable: { operator: 'contains' },
-			resizable: false,
-			editable: {
-				type: 'text'
-			},
-			tooltip: '<center>Reduce unnecessary strain.<br>Leave the channels of emotional expression open.<br>Example methods: yoga & breathing exercises</center>',
-			info: {
-                fields: ['reduce'],
-                showOn: 'mouseenter',
-                options: { position: 'top' }
-            }
-		},
-		{
-			field: 'inspire',
-			text: '<div style="text-align: center;">Inspire</div>',
-			size: '50%',
-			sortable: true,
-			sortMode: 'natural',
-			searchable: { operator: 'contains' },
-			resizable: false,
-			editable: {
-				type: 'text'
-			},
-			tooltip: '<center>Inspire emotion.<br>Dry as dust "objectives" do not help us.<br>Example methods: powerful given circumstances & strong, imaginative, passionate objects of desire</center>',
-			info: {
-                fields: ['inspire'],
-                showOn: 'mouseenter',
-                options: { position: 'top' }
-            }
-		},
-		{
 			field: 'immerse',
 			text: '<div style="text-align: center;">Immerse</div>',
 			size: '55%',
