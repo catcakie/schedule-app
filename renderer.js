@@ -12,16 +12,6 @@ window.api.duplicateRow((event, value) => {
 	}
 })
 
-// Ctrl + R
-window.api.clearImages((event, value) => {
-	selectedRow = getSelectedRow(developmentCycle)
-
-	if (selectedRow) {
-		selectedRow.images = ''
-	}
-})
-
-
 // Ctrl + S
 window.api.save((event, value) => {
 	updateDateAndTime()
@@ -118,8 +108,16 @@ function duplicateDailyRows() {
 			record.endDate = date
 
 			record.w2ui = { "style": "background-color: #E6F4F1" }
+		} else if (record.completion === false && record.category === 'Appearance') {
+			record.w2ui = { "style": "background-color: #DDD5B6" }
+		} else if (record.completion === false && record.category === 'Work') {
+			record.w2ui = { "style": "background-color: #99E1E6" }
+		} else if (record.completion === false && record.category === 'Relationship') {
+			record.w2ui = { "style": "background-color: #CCC1E7" }
+		} else if (record.completion === false && record.category === 'School') {
+			record.w2ui = { "style": "background-color: #EEC4A7" }
 		} else if (record.completion === true && record.endDate == date) {
-			record.w2ui = { "style": "background-color: #BFBCCF" }
+			record.w2ui = { "style": "background-color: #8897AF" }
 		} else if (record.completion === true) {
 			record.w2ui = { "style": "background-color: #DADADA" }
 		} else {
@@ -397,9 +395,6 @@ let config = {
 		},
 		onChange: function (event) {
 
-		},
-		onExpand: function(event) {
-			
 		},
 		onComplete: function(event) {
 			
