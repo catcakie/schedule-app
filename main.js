@@ -97,14 +97,6 @@ menu.append(new MenuItem({
        },
       
     },
-    {
-        role: 'Clear Images',
-        accelerator: process.platform === 'darwin' ? 'Ctrl+R' : 'Ctrl+R',
-        click: () => { 
-            win.webContents.send('clearImages')
-         },
-        
-      },
       {
         role: 'Duplicate row',
         accelerator: process.platform === 'darwin' ? 'Ctrl+D' : 'Ctrl+D',
