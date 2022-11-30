@@ -8,17 +8,19 @@ window.api.duplicateRow((event, value) => {
 	selectedRow = getSelectedRow(developmentCycle)
 
 	if (selectedRow) {
-		duplicateRow(developmentCycle, selectedRow)
+		duplicateRow(developmentCycle, selectedRow, '')
 	}
 })
 
 // Ctrl + E
-window.api.duplicateRowFiveTimes((event, value) => {
+const designs = ['1. Gather, organize/clean, store info', '2. Generate ideas to test', '3. Build/execute the idea', '4. Test the developed creation']
+
+window.api.duplicateRowFourTimes((event, value) => {
 	selectedRow = getSelectedRow(developmentCycle)
 
 	if (selectedRow) {
-		for (let i = 0; i < 5; ++i) {
-			duplicateRow(developmentCycle, selectedRow)
+		for (let i = 0; i < 4; ++i) {
+			duplicateRow(developmentCycle, selectedRow, designs[i])
 		}
 	}
 })
@@ -63,7 +65,7 @@ function updateDateAndTime() {
 	date = w2utils.formatDate((new Date()), 'mm-dd-yyyy')
 	time = w2utils.formatTime((new Date()), 'hh:mi am')
 }
-function duplicateRow(grid, row) {
+function duplicateRow(grid, row, design) {
 	updateDateAndTime()
 	let nextLineNum = grid.records.length + 1
 	const clone = structuredClone(row)
@@ -72,7 +74,7 @@ function duplicateRow(grid, row) {
 	clone.frequency = 'Once'
 	clone.immerse = ''
 	clone.development = ''
-	clone.design = ''
+	clone.design = design
 	clone.testing = ''
 	clone.results = ''
 	clone.start = ''
@@ -150,7 +152,7 @@ function duplicateDailyRows() {
 
 	if (uniqueRecords.length !== 0) {
 		uniqueRecords.forEach(record => {
-			duplicateRow(developmentCycle, record)
+			duplicateRow(developmentCycle, record, '')
 		})
 	}
 }
