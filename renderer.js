@@ -130,6 +130,8 @@ function duplicateDailyRows() {
 			record.w2ui = { "style": "background-color: #CCC1E7" }
 		} else if (record.completion === false && record.category === 'School') {
 			record.w2ui = { "style": "background-color: #EEC4A7" }
+		} else if (record.frequency === 'Daily') {
+			record.w2ui = { "style": "background-color: #BFD6D9" }
 		} else if (record.completion === true && record.endDate == date) {
 			record.w2ui = { "style": "background-color: #8897AF" }
 		} else if (record.completion === true) {
