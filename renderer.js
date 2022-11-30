@@ -143,14 +143,14 @@ function duplicateDailyRows() {
 	})
 
 	// records created today based on their design property (arary)
-	todayRecords = new Set(todayRecords.map(({design}) => design))
+	todayRecords = new Set(todayRecords.map(({requirement}) => requirement))
 
 	// unique daily records based on their design property (array)
-	let uniqueRecords = [...new Map(dailyRecords.map((item) => [item['design'], item])).values()]
+	let uniqueRecords = [...new Map(dailyRecords.map((item) => [item['requirement'], item])).values()]
 
 	// filter the unique records array so they aren't infinitely duplicated
 	// (remove the records created today that already have the design)
-	uniqueRecords = uniqueRecords.filter(({design}) => !todayRecords.has(design))
+	uniqueRecords = uniqueRecords.filter(({requirement}) => !todayRecords.has(requirement))
 
 	if (uniqueRecords.length !== 0) {
 		uniqueRecords.forEach(record => {
