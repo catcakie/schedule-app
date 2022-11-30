@@ -12,6 +12,17 @@ window.api.duplicateRow((event, value) => {
 	}
 })
 
+// Ctrl + E
+window.api.duplicateRowFiveTimes((event, value) => {
+	selectedRow = getSelectedRow(developmentCycle)
+
+	if (selectedRow) {
+		for (let i = 0; i < 5; ++i) {
+			duplicateRow(developmentCycle, selectedRow)
+		}
+	}
+})
+
 // Ctrl + S
 window.api.save((event, value) => {
 	updateDateAndTime()
@@ -58,9 +69,10 @@ function duplicateRow(grid, row) {
 	const clone = structuredClone(row)
 	clone.recid = nextLineNum
 	clone.completion = false
-	clone.reduce = ''
-	clone.inspire = ''
+	clone.frequency = 'Once'
+	clone.immerse = ''
 	clone.development = ''
+	clone.design = ''
 	clone.testing = ''
 	clone.results = ''
 	clone.start = ''
