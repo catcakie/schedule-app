@@ -104,6 +104,14 @@ menu.append(new MenuItem({
             win.webContents.send('duplicateRow')
          },
         
+      },
+      {
+        role: 'Duplicate row 5 times',
+        accelerator: process.platform === 'darwin' ? 'Ctrl+E' : 'Ctrl+E',
+        click: () => {
+            win.webContents.send('duplicateRowFiveTimes')
+         },
+        
       }
     ]
 }))
