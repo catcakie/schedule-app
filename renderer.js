@@ -231,6 +231,19 @@ let config = {
 			toolbar: true,
 			footer: true
 		},
+		toolbar: {
+			items: [
+				{ type: 'html',  id: 'item2',
+					html() {
+						let html =
+							'<div style="padding: 3px 10px;">'+
+							''+ new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"long", day:"numeric"}) +
+							'</div>'
+						return html
+					}
+				}
+			]
+		},
 		columns: [{
 			field: 'recid',
 			text: '<div style="text-align: center;">ID</div>',
