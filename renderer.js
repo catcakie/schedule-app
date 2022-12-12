@@ -283,7 +283,7 @@ let config = {
 			resizable: false,
 			editable: {
 				type: 'combo',
-				items: ['Journal', 'Info', 'Appearance', 'Work', 'Deadline', 'Relationship', 'School', 'Nutrition', 'Break']
+				items: ['Journal', 'Mindset', 'Info', 'Appearance', 'Work', 'Deadline', 'Relationship', 'School', 'Nutrition', 'Break']
 			}
 		},
 		{
