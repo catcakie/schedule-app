@@ -114,8 +114,15 @@ function duplicateDailyRows() {
 		if (record.frequency === "Daily") {
 			dailyRecords.push(record)
 		}
-		// highlight deadline rows
-		if (record.category == "Deadline" && record.completion === false) {
+		// row styles
+		if (record.category == "Mindset" && record.completion === false) {
+			record.start = time
+			record.end = time
+			record.startDate = date
+			record.endDate = date
+			record.w2ui = { "style": "background-color: #C6FFD5" }
+		}
+		else if (record.category == "Deadline" && record.completion === false) {
 			record.start = time
 			record.end = time
 			record.startDate = date
