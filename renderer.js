@@ -133,7 +133,7 @@ function duplicateDailyRows() {
 			record.w2ui = { "style": "background-color: #DDD5B6" }
 		} else if (record.completion === false && record.category === 'Work') {
 			record.w2ui = { "style": "background-color: #99E1E6" }
-		} else if (record.completion === false && (record.category === 'Relationship' || record.category === 'Care-taking')) {
+		} else if (record.completion === false && record.category === 'Care-taking') {
 			record.w2ui = { "style": "background-color: #CCC1E7" }
 		} else if (record.completion === false && record.category === 'School') {
 			record.w2ui = { "style": "background-color: #EEC4A7" }
@@ -290,7 +290,7 @@ let config = {
 			resizable: false,
 			editable: {
 				type: 'combo',
-				items: ['Journal', 'Mindset', 'Info', 'Clean', 'Generosity', 'Care-taking', 'Appearance', 'Work', 'Deadline', 'Relationship', 'School', 'Nutrition', 'Break']
+				items: ['Journal', 'Mindset', 'Info', 'Clean', 'Generosity', 'Care-taking', 'Appearance', 'Work', 'Deadline', 'School', 'Nutrition', 'Break']
 			}
 		},
 		{
