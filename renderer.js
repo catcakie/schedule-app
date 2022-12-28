@@ -129,7 +129,7 @@ function duplicateDailyRows() {
 			record.endDate = date
 
 			record.w2ui = { "style": "background-color: #E6F4F1" }
-		} else if (record.completion === false && record.category === 'Appearance') {
+		} else if (record.completion === false && record.category === 'Hobby') {
 			record.w2ui = { "style": "background-color: #DDD5B6" }
 		} else if (record.completion === false && record.category === 'Work') {
 			record.w2ui = { "style": "background-color: #99E1E6" }
