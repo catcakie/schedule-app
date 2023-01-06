@@ -96,7 +96,15 @@ menu.append(new MenuItem({
           win.webContents.send('save')
        },
       
-    },
+      },
+      {
+        role: 'Add row',
+        accelerator: process.platform === 'darwin' ? 'Ctrl+Enter' : 'Ctrl+Enter',
+        click: () => { 
+            win.webContents.send('addRow')
+         },
+        
+      },
       {
         role: 'Duplicate row',
         accelerator: process.platform === 'darwin' ? 'Ctrl+D' : 'Ctrl+D',
