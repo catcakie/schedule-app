@@ -25,6 +25,23 @@ window.api.duplicateRowFourTimes((event, value) => {
 	}
 })
 
+// Ctrl + Enter
+window.api.addRow((event, value) => {
+	updateDateAndTime()
+
+	let nextLineNum = developmentCycle.records.length + 1
+	let nextRecid = developmentCycle.getLineHTML(nextLineNum)
+	developmentCycle.add({
+		recid: nextRecid,
+		frequency: 'Once',
+		start: time,
+		startDate: date,
+		end: time,
+		endDate: date
+	})
+	sortRecid(developmentCycle)
+})
+
 // Ctrl + S
 window.api.save((event, value) => {
 	updateDateAndTime()
