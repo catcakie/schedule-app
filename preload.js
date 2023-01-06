@@ -9,6 +9,7 @@ const { contextBridge, ipcRenderer } = require('electron')
 contextBridge.exposeInMainWorld('api', {
     save: (callback) => ipcRenderer.on('save', callback),
     saveToFile: (records) => ipcRenderer.send('saveToFile', records),
+    addRow: (callback) => ipcRenderer.on('addRow', callback),
     duplicateRow: (callback) => ipcRenderer.on('duplicateRow', callback),
     duplicateRowFourTimes: (callback) => ipcRenderer.on('duplicateRowFourTimes', callback),
     sendSelectedRow: (record) => ipcRenderer.send('selectedRow', record)
