@@ -71,7 +71,7 @@ window.api.save((event, value) => {
 	developmentCycle.stateReset()
 })
 
-// helper functions
+// grid helper functions
 function getSelectedRow(grid) {
 	sortRecid(grid)
 	const selectedRowRecid = grid.getSelection()-1
@@ -215,13 +215,9 @@ let config = {
 				selected: true
 			},
 			{
-				id: 'tracker',
-				text: 'Tracker'
-			},
-			{
-				id: 'weeklySchedule',
-				text: 'Week'
-			},
+				id: 'notes',
+				text: 'Notes'
+			}
 			],
 			onCollapse(event) {
 				event.preventDefault()
@@ -232,12 +228,8 @@ let config = {
 				case 'developmentCycle':
 					layout.html('main', developmentCycle)
 					break
-				case 'tracker':
-					layout.html('main', tracker)
-					break
-
-				case 'weeklySchedule':
-					layout.html('main', weeklySchedule)
+				case 'notes':
+					layout.html('main', notes)
 					break
 			}
 		}
@@ -435,286 +427,21 @@ let config = {
 			
 		}  
 	},
-	tracker: {
-		name: 'tracker',
-		columns: [{
-			field: 'recid',
-			text: '<div style="text-align: center;">ID</div>',
-			size: '30px',
-			sortable: true,
-			resizable: false
-		},
-		{
-			field: 'item',
-			text: '<div style="text-align: center;">Item</div>',
-			size: '100px'
-		},
-		{
-			field: 'sunday',
-			text: '<div style="text-align: center;">Sunday</div>',
-			size: '100%',
-			sortable: true,
-			resizable: false,
-			style: 'text-align: center',
-			editable: {
-				type: 'checkbox',
-				style: 'text-align: center'
+	notes: {
+
+		box: '#form',
+		name: 'form',
+		focus: 0,
+		fields : [
+			{ field: 'div', type: 'textarea',
+				html: {
+					label: 'Textbox',
+					span: -1,
+					attr: `
+						style="width: 1050px; height: 470px; font-family: Verdana, Arial, Helvetica"`
+				}
 			}
-		},
-		{
-			field: 'monday',
-			text: '<div style="text-align: center;">Monday</div>',
-			size: '100%',
-			sortable: true,
-			resizable: false,
-			style: 'text-align: center',
-			editable: {
-				type: 'checkbox',
-				style: 'text-align: center'
-			}
-		},
-		{
-			field: 'tuesday',
-			text: '<div style="text-align: center;">Tuesday</div>',
-			size: '100%',
-			sortable: true,
-			resizable: false,
-			style: 'text-align: center',
-			editable: {
-				type: 'checkbox',
-				style: 'text-align: center'
-			}
-		},
-		{
-			field: 'wednesday',
-			text: '<div style="text-align: center;">Wednesday</div>',
-			size: '100%',
-			sortable: true,
-			resizable: false,
-			style: 'text-align: center',
-			editable: {
-				type: 'checkbox',
-				style: 'text-align: center'
-			}
-		},
-		{
-			field: 'thursday',
-			text: '<div style="text-align: center;">Thursday</div>',
-			size: '100%',
-			sortable: true,
-			resizable: false,
-			style: 'text-align: center',
-			editable: {
-				type: 'checkbox',
-				style: 'text-align: center'
-			}
-		},
-		{
-			field: 'friday',
-			text: '<div style="text-align: center;">Friday</div>',
-			size: '100%',
-			sortable: true,
-			resizable: false,
-			style: 'text-align: center',
-			editable: {
-				type: 'checkbox',
-				style: 'text-align: center'
-			}
-		},
-		{
-			field: 'saturday',
-			text: '<div style="text-align: center;">Saturday</div>',
-			size: '100%',
-			sortable: true,
-			resizable: false,
-			style: 'text-align: center',
-			editable: {
-				type: 'checkbox',
-				style: 'text-align: center'
-			}
-		}
-		],
-		records: [],
-		onClick(event) {
-			//console.log(event);
-		},
-		onChange: function (event) {
-			event.preventDefault()
-			tracker.refresh()
-		}
-	},
-	weeklySchedule: {
-		name: 'weeklySchedule',
-		columns: [{
-			field: 'recid',
-			text: '<div style="text-align: center;">ID</div>',
-			size: '30px',
-			sortable: true,
-			resizable: false
-		},
-		{
-			field: 'hour',
-			text: '<div style="text-align: center;">Hour</div>',
-			size: '50px',
-			type: 'time'
-		},
-		{
-			field: 'sunday',
-			text: '<div style="text-align: center;">Sunday</div>',
-			size: '100%',
-			editable: {
-				type: 'text'
-			}
-		},
-		{
-			field: 'monday',
-			text: '<div style="text-align: center;">Monday</div>',
-			size: '100%',
-			editable: {
-				type: 'text'
-			}
-		},
-		{
-			field: 'tuesday',
-			text: '<div style="text-align: center;">Tuesday</div>',
-			size: '100%',
-			editable: {
-				type: 'text'
-			}
-		},
-		{
-			field: 'wednesday',
-			text: '<div style="text-align: center;">Wednesday</div>',
-			size: '100%',
-			editable: {
-				type: 'text'
-			}
-		},
-		{
-			field: 'thursday',
-			text: '<div style="text-align: center;">Thursday</div>',
-			size: '100%',
-			editable: {
-				type: 'text'
-			}
-		},
-		{
-			field: 'friday',
-			text: '<div style="text-align: center;">Friday</div>',
-			size: '100%',
-			editable: {
-				type: 'text'
-			}
-		},
-		{
-			field: 'saturday',
-			text: '<div style="text-align: center;">Saturday</div>',
-			size: '100%',
-			editable: {
-				type: 'text'
-			}
-		}
-		],
-		records: [{
-			recid: 5,
-			hour: '5am'
-		},
-		{
-			recid: 6,
-			hour: '6am'
-		},
-		{
-			recid: 7,
-			hour: '7am'
-		},
-		{
-			recid: 8,
-			hour: '8am'
-		},
-		{
-			recid: 9,
-			hour: '9am'
-		},
-		{
-			recid: 10,
-			hour: '10am'
-		},
-		{
-			recid: 11,
-			hour: '11am'
-		},
-		{
-			recid: 24,
-			hour: '12pm'
-		},
-		{
-			recid: 13,
-			hour: '1pm'
-		},
-		{
-			recid: 14,
-			hour: '2pm'
-		},
-		{
-			recid: 15,
-			hour: '3pm'
-		},
-		{
-			recid: 16,
-			hour: '4pm'
-		},
-		{
-			recid: 17,
-			hour: '5pm'
-		},
-		{
-			recid: 18,
-			hour: '6pm'
-		},
-		{
-			recid: 19,
-			hour: '7pm'
-		},
-		{
-			recid: 20,
-			hour: '8pm'
-		},
-		{
-			recid: 21,
-			hour: '9pm'
-		},
-		{
-			recid: 22,
-			hour: '10pm'
-		},
-		{
-			recid: 23,
-			hour: '11pm'
-		},
-		{
-			recid: 12,
-			hour: '12am'
-		},
-		{
-			recid: 1,
-			hour: '1am'
-		},
-		{
-			recid: 2,
-			hour: '2am'
-		},
-		{
-			recid: 3,
-			hour: '3am'
-		},
-		{
-			recid: 4,
-			hour: '4am'
-		}
-		],
-		onClick(event) {
-			console.log(event);
-		}
+   		]
 	}
 }
 
@@ -722,8 +449,7 @@ let config = {
 let layout = new w2layout(config.layout)
 let sidebar = new w2sidebar(config.sidebar)
 let developmentCycle = new w2grid(config.developmentCycle)
-let tracker = new w2grid(config.tracker)
-let weeklySchedule = new w2grid(config.weeklySchedule)
+let notes = new w2form(config.notes)
 
 layout.render('#main')
 layout.html('left', sidebar)
