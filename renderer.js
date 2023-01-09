@@ -438,7 +438,15 @@ let config = {
 					label: 'Textbox',
 					span: -1,
 					attr: `
-						style="width: 1050px; height: 470px; font-family: Verdana, Arial, Helvetica"`
+						style="width: 1050px; height: 300px; font-family: Verdana, Arial, Helvetica"`
+				}
+			},
+			{ field: 'div2', type: 'textarea',
+				html: {
+					label: 'Textbox',
+					span: -1,
+					attr: `
+						style="width: 1050px; height: 150px; font-family: Verdana, Arial, Helvetica"`
 				}
 			}
    		]
