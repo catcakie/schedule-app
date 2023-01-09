@@ -204,8 +204,8 @@ let config = {
 	sidebar: {
 		name: 'sidebar',
 		nodes: [{
-			id: 'views',
-			text: 'Views',
+			id: 'tools',
+			text: 'Tools',
 			group: true,
 			expanded: true,
 			groupShowHide: false,
