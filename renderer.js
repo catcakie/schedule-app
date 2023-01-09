@@ -79,7 +79,7 @@ function getSelectedRow(grid) {
 	return selectedRow
 }
 function updateDateAndTime() {
-	date = w2utils.formatDate((new Date()), 'mm-dd-yyyy').replace(/(^|-)0+/g, "$1")
+	date = w2utils.formatDate((new Date()), 'yyyy-mm-dd').replace(/(^|-|\/)0+/g, "$1")
 	time = w2utils.formatTime((new Date()), 'hh:mi am')
 }
 function duplicateRow(grid, row, design) {
