@@ -217,6 +217,10 @@ let config = {
 			{
 				id: 'notes',
 				text: 'Notes'
+			},
+			{
+				id: 'table',
+				text: 'Table'
 			}
 			],
 			onCollapse(event) {
@@ -230,6 +234,10 @@ let config = {
 					break
 				case 'notes':
 					layout.html('main', notes)
+					break
+				
+				case 'table':
+					layout.html('main', table)
 					break
 			}
 		}
@@ -435,7 +443,7 @@ let config = {
 		fields : [
 			{ field: 'div', type: 'textarea',
 				html: {
-					label: 'Textbox',
+					label: 'Private Thoughts',
 					span: -1,
 					attr: `
 						style="width: 1050px; height: 300px; font-family: Verdana, Arial, Helvetica"`
@@ -443,14 +451,50 @@ let config = {
 			},
 			{ field: 'div2', type: 'textarea',
 				html: {
-					label: 'Textbox',
+					label: 'Public Material',
 					span: -1,
 					attr: `
 						style="width: 1050px; height: 150px; font-family: Verdana, Arial, Helvetica"`
 				}
 			}
    		]
-	}
+
+	}, 
+
+	table: {
+        name: 'table',
+        selectType: 'cell',
+        recordHeight: 23,
+        show: {
+            footer: true,
+            lineNumbers: true
+        },
+        onColumnClick(event) {
+            this.selectNone(true);
+            let sel = [];
+            let column = this.getColumn(event.detail.field, true);
+            for (let i = 0; i < this.total; i++) {
+                sel.push({ recid: this.records[i].recid, column: column });
+            }
+            this.select(sel);
+            event.preventDefault();
+        },
+        onSelectionExtend(event) {
+            // do not use on done() as it would add many done handlers
+            event.onComplete = () => {
+                console.log('Original:', event.detail.originalRange[0], '-', event.detail.originalRange[1]);
+                console.log('New:', event.detail.newRange[0], '-', event.detail.newRange[1]);
+                w2alert('Selection expanded (see more details in the console).');
+            }
+        },
+        onDelete(event) {
+            event.detail.force = true;
+        },
+        async onSelect(event) {
+            await event.complete
+            console.log('select', event.detail, this.getSelection())
+        }
+    }
 }
 
 // initialization
@@ -458,10 +502,69 @@ let layout = new w2layout(config.layout)
 let sidebar = new w2sidebar(config.sidebar)
 let developmentCycle = new w2grid(config.developmentCycle)
 let notes = new w2form(config.notes)
+let table = new w2grid(config.table)
 
 layout.render('#main')
 layout.html('left', sidebar)
 layout.html('main', developmentCycle)
+
+// -- table grid code
+
+// create columns
+let tmp = 'abcdefghijklmnoprst'
+let values = {}
+for (let i = 0; i < tmp.length; i++) {
+    table.columns.push({
+        field: tmp[i],
+        text: '<div style="text-align: center">' + tmp[i].toUpperCase() + '</div>',
+        size: '15%',
+        resizable: true,
+        sortable: true,
+        editable: { type: 'text', inTag: 'placeholder="Type..."' }
+    })
+    values[tmp[i]] = ''
+}
+// insert  records
+for (let i = 0; i < 100; i++) {
+    table.records.push(w2utils.extend({ recid: i+1 }, values))
+}
+table.total = table.records.length
+table.buffered = table.total
+
+window.mark = function() {
+    table.addRange({
+        name  : 'range',
+        range : [{ "recid": 3, "column": 2 }, { "recid": 7, "column": 3 }],
+        style : "border: 2px dotted green; background-color: rgba(100,400,100,0.2)"
+    })
+}
+
+window.removeRange = function() {
+    table.removeRange('range')
+}
+
+window.cellFormat = function(flag) {
+    let style = ''
+    let rec1 = table.get(3)
+    let rec2 = table.get(4)
+    rec1.w2ui = rec1.w2ui || {}
+    rec2.w2ui = rec2.w2ui || {}
+    if (flag) {
+        rec1.w2ui.style = { 5: 'color: white; background-color: #8BC386', 6: 'color: black; background-color: #BFE6FF' }
+        rec2.w2ui.style = { 5: 'color: white; background-color: #8BC386', 6: 'color: black; background-color: #BFE6FF' }
+    } else {
+        rec1.w2ui.style = { 5: '', 6: '' }
+        rec2.w2ui.style = { 5: '', 6: '' }
+    }
+    table.refreshRow(rec1.recid)
+    table.refreshRow(rec2.recid)
+}
+
+window.frozenToggle = function(fields) {
+    table.updateColumn(fields, { frozen(col) { return !col.frozen } })
+}
+
+// -- table grid code
 
 // after object creation functions
 const activitiesUrl = './activities.json'
