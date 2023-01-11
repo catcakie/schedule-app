@@ -219,8 +219,8 @@ let config = {
 				text: 'Notes'
 			},
 			{
-				id: 'table',
-				text: 'Table'
+				id: 'grid',
+				text: 'Grid'
 			}
 			],
 			onCollapse(event) {
@@ -236,8 +236,8 @@ let config = {
 					layout.html('main', notes)
 					break
 				
-				case 'table':
-					layout.html('main', table)
+				case 'grid':
+					layout.html('main', grid)
 					break
 			}
 		}
@@ -461,8 +461,8 @@ let config = {
 
 	}, 
 
-	table: {
-        name: 'table',
+	grid: {
+        name: 'grid',
         selectType: 'cell',
         recordHeight: 23,
         show: {
@@ -502,7 +502,7 @@ let layout = new w2layout(config.layout)
 let sidebar = new w2sidebar(config.sidebar)
 let developmentCycle = new w2grid(config.developmentCycle)
 let notes = new w2form(config.notes)
-let table = new w2grid(config.table)
+let grid = new w2grid(config.grid)
 
 layout.render('#main')
 layout.html('left', sidebar)
@@ -514,7 +514,7 @@ layout.html('main', developmentCycle)
 let tmp = 'abcdefghijklmnoprst'
 let values = {}
 for (let i = 0; i < tmp.length; i++) {
-    table.columns.push({
+    grid.columns.push({
         field: tmp[i],
         text: '<div style="text-align: center">' + tmp[i].toUpperCase() + '</div>',
         size: '15%',
@@ -526,13 +526,13 @@ for (let i = 0; i < tmp.length; i++) {
 }
 // insert  records
 for (let i = 0; i < 100; i++) {
-    table.records.push(w2utils.extend({ recid: i+1 }, values))
+    grid.records.push(w2utils.extend({ recid: i+1 }, values))
 }
-table.total = table.records.length
-table.buffered = table.total
+grid.total = grid.records.length
+grid.buffered = grid.total
 
 window.mark = function() {
-    table.addRange({
+    grid.addRange({
         name  : 'range',
         range : [{ "recid": 3, "column": 2 }, { "recid": 7, "column": 3 }],
         style : "border: 2px dotted green; background-color: rgba(100,400,100,0.2)"
@@ -545,8 +545,8 @@ window.removeRange = function() {
 
 window.cellFormat = function(flag) {
     let style = ''
-    let rec1 = table.get(3)
-    let rec2 = table.get(4)
+    let rec1 = grid.get(3)
+    let rec2 = grid.get(4)
     rec1.w2ui = rec1.w2ui || {}
     rec2.w2ui = rec2.w2ui || {}
     if (flag) {
@@ -556,12 +556,12 @@ window.cellFormat = function(flag) {
         rec1.w2ui.style = { 5: '', 6: '' }
         rec2.w2ui.style = { 5: '', 6: '' }
     }
-    table.refreshRow(rec1.recid)
-    table.refreshRow(rec2.recid)
+    grid.refreshRow(rec1.recid)
+    grid.refreshRow(rec2.recid)
 }
 
 window.frozenToggle = function(fields) {
-    table.updateColumn(fields, { frozen(col) { return !col.frozen } })
+    grid.updateColumn(fields, { frozen(col) { return !col.frozen } })
 }
 
 // -- table grid code
