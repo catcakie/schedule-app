@@ -132,7 +132,7 @@ function duplicateDailyRows() {
 			dailyRecords.push(record)
 		}
 		// row styles
-		if (record.category == "Mindset" && record.completion === false) {
+		if (record.category == "Info" && record.completion === false) {
 			record.start = time
 			record.end = time
 			record.startDate = date
@@ -307,7 +307,7 @@ let config = {
 			resizable: false,
 			editable: {
 				type: 'combo',
-				items: ['Journal', 'Mindset', 'Info', 'Generosity', 'Care-taking', 'Hobby', 'Work', 'Deadline', 'School', 'Break']
+				items: ['Journal', 'Info', 'Generosity', 'Care-taking', 'Hobby', 'Work', 'Deadline', 'School', 'Break']
 			}
 		},
 		{
