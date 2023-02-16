@@ -120,6 +120,14 @@ menu.append(new MenuItem({
             win.webContents.send('duplicateRowFourTimes')
          },
         
+      },
+      {
+        role: 'Clear Grid',
+        accelerator: process.platform === 'darwin' ? 'Ctrl+N' : 'Ctrl+N',
+        click: () => {
+            win.webContents.send('refreshGrid')
+         },
+        
       }
     ]
 }))
