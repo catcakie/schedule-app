@@ -266,7 +266,7 @@ async function notifyGoodwillFindsItems(link) {
         if (!linkCache.includes(link)) {
           linkCache.push(link)
 
-          client.channels.cache.get(`496763131977007106`).send('🍀 $'+price+': '+link)
+          client.channels.cache.get(`496763131977007106`).send('(◡‿◡✿)\n$'+price+': '+link)
         }
       }).get()
 
