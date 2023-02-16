@@ -237,3 +237,51 @@ client.on(Events.InteractionCreate, async interaction => {
 });
 
 client.login(token);
+
+// ---------------------- WEBSCRAPING CODE BELOW --------------------- \\
+
+let linkCache = []
+
+const axios = require("axios");
+const cheerio = require("cheerio");
+
+const keywords = ["3.75", "spinel", "vintage", "gold", "14k"]
+
+const goodwillFindsLink = "https://www.goodwillfinds.com/new-finds/jewelry-new-finds/?sz=100"
+
+async function notifyGoodwillFindsItems(link) {
+  try {
+    const response = await axios.get(link)
+    // lets us use $ like in jquery
+    const $ = cheerio.load(response.data)
+
+    for (let i=0; i<keywords.length; ++i) {
+      const keyword = keywords[i]
+
+      $('a:contains('+keyword+')').map( function() {
+
+        const link = 'https://www.goodwillfinds.com'+$(this).attr('href')
+        const price = JSON.parse($(this).attr('data-analytics'))["price"]
+        
+        if (!linkCache.includes(link)) {
+          linkCache.push(link)
+
+          client.channels.cache.get(`496763131977007106`).send('🍀 $'+price+': '+link)
+        }
+      }).get()
+
+    }
+
+  } catch (error) {
+    console.log("failed to retrieve "+link)
+  }
+}
+
+// first execution of notifying
+notifyGoodwillFindsItems(goodwillFindsLink)
+
+// loop searching every 5 mins
+setInterval(async () => {
+  await notifyGoodwillFindsItems(goodwillFindsLink)
+}, 300000)
+
