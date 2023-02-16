@@ -42,6 +42,13 @@ window.api.addRow((event, value) => {
 	sortRecid(developmentCycle)
 })
 
+// Ctrl + R
+window.api.refreshGrid((event, value) => {
+	grid.clear()
+	generateGrid()
+	grid.refresh()
+})
+
 // Ctrl + S
 window.api.save((event, value) => {
 	updateDateAndTime()
@@ -509,60 +516,65 @@ layout.html('left', sidebar)
 layout.html('main', developmentCycle)
 
 // -- table grid code
-
-// create columns
 let tmp = 'abcdefghijklmnoprst'
 let values = {}
+
+// create columns
 for (let i = 0; i < tmp.length; i++) {
-    grid.columns.push({
-        field: tmp[i],
-        text: '<div style="text-align: center">' + tmp[i].toUpperCase() + '</div>',
-        size: '15%',
-        resizable: true,
-        sortable: true,
-        editable: { type: 'text', inTag: 'placeholder="Type..."' }
-    })
-    values[tmp[i]] = ''
-}
-// insert  records
-for (let i = 0; i < 100; i++) {
-    grid.records.push(w2utils.extend({ recid: i+1 }, values))
-}
-grid.total = grid.records.length
-grid.buffered = grid.total
-
-window.mark = function() {
-    grid.addRange({
-        name  : 'range',
-        range : [{ "recid": 3, "column": 2 }, { "recid": 7, "column": 3 }],
-        style : "border: 2px dotted green; background-color: rgba(100,400,100,0.2)"
-    })
+	grid.columns.push({
+		field: tmp[i],
+		text: '<div style="text-align: center">' + tmp[i].toUpperCase() + '</div>',
+		size: '15%',
+		resizable: true,
+		sortable: true,
+		editable: { type: 'text', inTag: 'placeholder="Type..."' }
+	})
+	values[tmp[i]] = ''
 }
 
-window.removeRange = function() {
-    table.removeRange('range')
+function generateGrid() {
+	// insert  records
+	for (let i = 0; i < 100; i++) {
+		grid.records.push(w2utils.extend({ recid: i+1 }, values))
+	}
+	grid.total = grid.records.length
+	grid.buffered = grid.total
+
+	window.mark = function() {
+		grid.addRange({
+			name  : 'range',
+			range : [{ "recid": 3, "column": 2 }, { "recid": 7, "column": 3 }],
+			style : "border: 2px dotted green; background-color: rgba(100,400,100,0.2)"
+		})
+	}
+
+	window.removeRange = function() {
+		table.removeRange('range')
+	}
+
+	window.cellFormat = function(flag) {
+		let style = ''
+		let rec1 = grid.get(3)
+		let rec2 = grid.get(4)
+		rec1.w2ui = rec1.w2ui || {}
+		rec2.w2ui = rec2.w2ui || {}
+		if (flag) {
+			rec1.w2ui.style = { 5: 'color: white; background-color: #8BC386', 6: 'color: black; background-color: #BFE6FF' }
+			rec2.w2ui.style = { 5: 'color: white; background-color: #8BC386', 6: 'color: black; background-color: #BFE6FF' }
+		} else {
+			rec1.w2ui.style = { 5: '', 6: '' }
+			rec2.w2ui.style = { 5: '', 6: '' }
+		}
+		grid.refreshRow(rec1.recid)
+		grid.refreshRow(rec2.recid)
+	}
+
+	window.frozenToggle = function(fields) {
+		grid.updateColumn(fields, { frozen(col) { return !col.frozen } })
+	}
 }
 
-window.cellFormat = function(flag) {
-    let style = ''
-    let rec1 = grid.get(3)
-    let rec2 = grid.get(4)
-    rec1.w2ui = rec1.w2ui || {}
-    rec2.w2ui = rec2.w2ui || {}
-    if (flag) {
-        rec1.w2ui.style = { 5: 'color: white; background-color: #8BC386', 6: 'color: black; background-color: #BFE6FF' }
-        rec2.w2ui.style = { 5: 'color: white; background-color: #8BC386', 6: 'color: black; background-color: #BFE6FF' }
-    } else {
-        rec1.w2ui.style = { 5: '', 6: '' }
-        rec2.w2ui.style = { 5: '', 6: '' }
-    }
-    grid.refreshRow(rec1.recid)
-    grid.refreshRow(rec2.recid)
-}
-
-window.frozenToggle = function(fields) {
-    grid.updateColumn(fields, { frozen(col) { return !col.frozen } })
-}
+generateGrid()
 
 // -- table grid code
 
