@@ -302,7 +302,7 @@ puppeteer
     let grabPosts = await page.evaluate (() => {
     // find the very first element's classes. scroll to the right to try to find an english word
 
-    const keywords = ["3.75", "spinel", "vintage", "gold", "14K", "14k", "Louis Vuitton", "Dior", "Chanel", "Tiffany", "Prada", "Celine", "Hermes", "Gucci"]
+    const keywords = ["3.75", "Spinel", "Vintage", "Gold", "14K", "14k", "Louis Vuitton", "Dior", "Chanel", "Tiffany", "Prada", "Celine", "Hermes", "Gucci"]
     let linkCache = []
     let allSearches = []
 
