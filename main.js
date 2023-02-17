@@ -354,7 +354,7 @@ puppeteer
                         let postTitle = item.text
                         let postLink = "https://shopgoodwill.com" + item.getAttribute('href')
 
-                        if (!linkCache.includes(postLink)) {
+                        if (!linkCache.includes(postLink) && postPrice < 30) {
 
                             linkCache.push(postLink)
 
