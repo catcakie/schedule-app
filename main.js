@@ -240,12 +240,14 @@ client.login(token);
 
 // ---------------------- WEBSCRAPING CODE BELOW --------------------- \\
 
+const keywords = ["3.75", "spinel", "vintage", "gold", "14K", "14k", "Louis Vuitton", "Dior", "Chanel", "Tiffany", "Prada", "Celine", "Hermes", "Gucci"]
 let linkCache = []
 
-const axios = require("axios");
-const cheerio = require("cheerio");
+const axios = require("axios")
+const cheerio = require("cheerio")
+const puppeteer = require("puppeteer")
 
-const keywords = ["3.75", "spinel", "vintage", "gold", "14k", "Louis Vuitton", "Dior", "Chanel", "Tiffany", "Prada", "Celine", "Hermes", "Gucci"]
+
 
 const goodwillNewJewelryLink = "https://www.goodwillfinds.com/jewelry/rings/?sz=5000"
 const goodwillDesignerLinks = ["https://www.goodwillfinds.com/search/?q=celine&srule=price-low-to-high",
@@ -257,6 +259,7 @@ const goodwillDesignerLinks = ["https://www.goodwillfinds.com/search/?q=celine&s
 "https://www.goodwillfinds.com/search/?q=hermes&srule=price-low-to-high",
 "https://www.goodwillfinds.com/search/?q=gucci&srule=price-low-to-high"
 ]
+const shopgoodwillLink = "https://shopgoodwill.com/categories/rings"
 
 async function notifyGoodwillFindsItems(link) {
   try {
@@ -272,7 +275,7 @@ async function notifyGoodwillFindsItems(link) {
         const link = 'https://www.goodwillfinds.com'+$(this).attr('href')
         const price = JSON.parse($(this).attr('data-analytics'))["price"]
         
-        if (!linkCache.includes(link) && price < 30) {
+        if (!linkCache.includes(link) && price < 50) {
           linkCache.push(link)
 
           client.channels.cache.get(`496763131977007106`).send('(◡‿◡✿)\n$'+price+': '+link)
@@ -286,13 +289,96 @@ async function notifyGoodwillFindsItems(link) {
   }
 }
 
+//initiating Puppeteer
+puppeteer
+  .launch ()
+  .then (async browser => {
+    //open a new page for puppeteer, go to the website, then wait for the site's body contents to load
+    const page = await browser.newPage ();
+    await page.goto (shopgoodwillLink);
+    await page.waitForSelector ('.feat-item_price');
+  
+    //Get the "viewport" of the page, as reported by the page (page.evaluate)
+    let grabPosts = await page.evaluate (() => {
+    // find the very first element's classes. scroll to the right to try to find an english word
+
+    const keywords = ["3.75", "spinel", "vintage", "gold", "14K", "14k", "Louis Vuitton", "Dior", "Chanel", "Tiffany", "Prada", "Celine", "Hermes", "Gucci"]
+    let linkCache = []
+    let allSearches = []
+
+    for (let i=0; i<keywords.length; ++i) {
+
+      let allPosts = document.body.querySelectorAll ('a[title*="'+keywords[i]+'"]')
+      
+      //store the post items in an array then select to get the descriptions from each
+      scrapeItems = [];
+
+      if (allPosts.length != 0) {
+        allPosts.forEach (item => {
+          let postPrice = parseFloat(item.nextElementSibling.innerHTML.replace(/[^0-9\.]+/g,""))
+          let postTitle = item.text
+          let postLink = "https://shopgoodwill.com"+item.getAttribute('href')
+          
+          if (!linkCache.includes(postLink)) {
+
+            linkCache.push(postLink)
+
+            scrapeItems.push ({
+              price: '$'+postPrice,
+              title: postTitle,
+              link: postLink
+            });
+          }
+          });
+      }
+      if (scrapeItems.length != 0) {
+        let items = {
+          [keywords[i]]: scrapeItems,
+        }
+        allSearches.push(items)
+      }
+      }
+
+      return allSearches
+    })
+    //output the scraped data
+
+    let gatheredInfo = []
+
+    grabPosts.forEach(item => {
+      gatheredInfo.push(item)
+    })
+
+    await Promise.all(gatheredInfo).then((results) => {
+      results.forEach(result => {
+        client.channels.cache.get(`496763131977007106`).send(JSON.stringify(result, null, 2))
+      })
+    })
+
+    setInterval(async () => {
+      await Promise.all(gatheredInfo).then((results) => {
+        results.forEach(result => {
+          client.channels.cache.get(`496763131977007106`).send(JSON.stringify(result, null, 2))
+        })
+      })
+    }, 300000)
+
+    //closs the browser
+    await browser.close ();
+  })
+  //handling any errors
+  .catch (function (err) {
+    console.error (err);
+  });
+
 // first execution of notifying
-notifyGoodwillFindsItems(goodwillNewJewelryLink)
-goodwillDesignerLinks.forEach(link => notifyGoodwillFindsItems(link))
+//notifyGoodwillFindsItems(goodwillNewJewelryLink)
+//goodwillDesignerLinks.forEach(link => notifyGoodwillFindsItems(link))
 
 // loop searching every 5 mins
+/*
 setInterval(async () => {
   await notifyGoodwillFindsItems(goodwillNewJewelryLink)
   goodwillDesignerLinks.forEach(link => notifyGoodwillFindsItems(link))
 }, 300000)
-
+*/
