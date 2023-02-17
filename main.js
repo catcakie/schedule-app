@@ -281,7 +281,7 @@ const cheerio = require("cheerio")
 const puppeteer = require("puppeteer")
 const YAML = require('yaml')
 
-const keywords = ["3.75", "Spinel", "Vintage", "14K", "14k", "Louis Vuitton", "Dior", "Chanel", "Tiffany", "Prada", "Celine", "Hermes", "Gucci"]
+const keywords = ["3.75", "Spinel", "14K", "14k", "Louis Vuitton", "Dior", "Chanel", "Tiffany", "Prada", "Celine", "Hermes", "Gucci"]
 let linkCache = []
 
 const goodwillNewJewelryLink = "https://www.goodwillfinds.com/jewelry/rings/?sz=5000"
@@ -337,7 +337,7 @@ puppeteer
         let grabPosts = await page.evaluate(() => {
             // find the very first element's classes. scroll to the right to try to find an english word
 
-            const keywords = ["3.75", "Spinel", "Vintage", "14K", "14k", "Louis Vuitton", "Dior", "Chanel", "Tiffany", "Prada", "Celine", "Hermes", "Gucci"]
+            const keywords = ["3.75", "Spinel", "14K", "14k", "Louis Vuitton", "Dior", "Chanel", "Tiffany", "Prada", "Celine", "Hermes", "Gucci"]
             let linkCache = []
             let allSearches = []
 
