@@ -310,10 +310,10 @@ async function notifyGoodwillFindsItems(link) {
                 const link = 'https://www.goodwillfinds.com' + $(this).attr('href')
                 const price = JSON.parse($(this).attr('data-analytics'))["price"]
 
-                if (!linkCache.includes(link) && price < 50) {
+                if (!linkCache.includes(link) && price < 30) {
                     linkCache.push(link)
 
-                    client.channels.cache.get(`496763131977007106`).send('(◡‿◡✿)\n$' + price + ': ' + link)
+                    client.channels.cache.get(`893294534820257852`).send('(◡‿◡✿)\n$' + price + ': ' + link)
                 }
             }).get()
 
@@ -386,14 +386,14 @@ puppeteer
 
         await Promise.all(gatheredInfo).then((results) => {
             results.forEach(result => {
-                client.channels.cache.get(`496763131977007106`).send(YAML.stringify(result))
+                client.channels.cache.get(`893294534820257852`).send(YAML.stringify(result))
             })
         })
 
         setInterval(async () => {
             await Promise.all(gatheredInfo).then((results) => {
                 results.forEach(result => {
-                    client.channels.cache.get(`496763131977007106`).send(YAML.stringify(result))
+                    client.channels.cache.get(`893294534820257852`).send(YAML.stringify(result))
                 })
             })
         }, 300000)
@@ -407,13 +407,11 @@ puppeteer
     });
 
 // first execution of notifying
-//notifyGoodwillFindsItems(goodwillNewJewelryLink)
-//goodwillDesignerLinks.forEach(link => notifyGoodwillFindsItems(link))
+notifyGoodwillFindsItems(goodwillNewJewelryLink)
+goodwillDesignerLinks.forEach(link => notifyGoodwillFindsItems(link))
 
 // loop searching every 5 mins
-/*
 setInterval(async () => {
   await notifyGoodwillFindsItems(goodwillNewJewelryLink)
   goodwillDesignerLinks.forEach(link => notifyGoodwillFindsItems(link))
 }, 300000)
-*/
