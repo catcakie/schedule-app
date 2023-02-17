@@ -396,7 +396,7 @@ puppeteer
                     client.channels.cache.get(`893294534820257852`).send(YAML.stringify(result))
                 })
             })
-        }, 300000)
+        }, 60000)
 
         //closs the browser
         await browser.close();
