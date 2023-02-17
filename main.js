@@ -294,7 +294,7 @@ const goodwillDesignerLinks = ["https://www.goodwillfinds.com/search/?q=celine&s
     "https://www.goodwillfinds.com/search/?q=hermes&srule=price-low-to-high",
     "https://www.goodwillfinds.com/search/?q=gucci&srule=price-low-to-high"
 ]
-const shopgoodwillLink = "https://shopgoodwill.com/categories/rings"
+const shopgoodwillLink = "https://shopgoodwill.com/categories/jewelry-gemstones"
 
 async function notifyGoodwillFindsItems(link) {
     try {
