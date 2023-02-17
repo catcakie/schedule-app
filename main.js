@@ -245,9 +245,18 @@ let linkCache = []
 const axios = require("axios");
 const cheerio = require("cheerio");
 
-const keywords = ["3.75", "spinel", "vintage", "gold", "14k"]
+const keywords = ["3.75", "spinel", "vintage", "gold", "14k", "Louis Vuitton", "Dior", "Chanel", "Tiffany", "Prada", "Celine", "Hermes", "Gucci"]
 
-const goodwillFindsLink = "https://www.goodwillfinds.com/new-finds/jewelry-new-finds/?sz=100"
+const goodwillNewJewelryLink = "https://www.goodwillfinds.com/new-finds/jewelry-new-finds/?sz=100"
+const goodwillDesignerLinks = ["https://www.goodwillfinds.com/search/?q=celine&srule=price-low-to-high",
+"https://www.goodwillfinds.com/search/?q=louis%20vuitton&srule=price-low-to-high",
+"https://www.goodwillfinds.com/search/?q=dior&srule=price-low-to-high",
+"https://www.goodwillfinds.com/search/?q=chanel&srule=price-low-to-high",
+"https://www.goodwillfinds.com/search/?q=tiffany&srule=price-low-to-high",
+"https://www.goodwillfinds.com/search/?q=prada&srule=price-low-to-high",
+"https://www.goodwillfinds.com/search/?q=hermes&srule=price-low-to-high",
+"https://www.goodwillfinds.com/search/?q=gucci&srule=price-low-to-high"
+]
 
 async function notifyGoodwillFindsItems(link) {
   try {
@@ -263,7 +272,7 @@ async function notifyGoodwillFindsItems(link) {
         const link = 'https://www.goodwillfinds.com'+$(this).attr('href')
         const price = JSON.parse($(this).attr('data-analytics'))["price"]
         
-        if (!linkCache.includes(link)) {
+        if (!linkCache.includes(link) && price < 30) {
           linkCache.push(link)
 
           client.channels.cache.get(`496763131977007106`).send('(◡‿◡✿)\n$'+price+': '+link)
@@ -278,10 +287,12 @@ async function notifyGoodwillFindsItems(link) {
 }
 
 // first execution of notifying
-notifyGoodwillFindsItems(goodwillFindsLink)
+notifyGoodwillFindsItems(goodwillNewJewelryLink)
+goodwillDesignerLinks.forEach(link => notifyGoodwillFindsItems(link))
 
 // loop searching every 5 mins
 setInterval(async () => {
-  await notifyGoodwillFindsItems(goodwillFindsLink)
+  await notifyGoodwillFindsItems(goodwillNewJewelryLink)
+  goodwillDesignerLinks.forEach(link => notifyGoodwillFindsItems(link))
 }, 300000)
 
