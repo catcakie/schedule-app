@@ -247,7 +247,7 @@ const cheerio = require("cheerio");
 
 const keywords = ["3.75", "spinel", "vintage", "gold", "14k", "Louis Vuitton", "Dior", "Chanel", "Tiffany", "Prada", "Celine", "Hermes", "Gucci"]
 
-const goodwillNewJewelryLink = "https://www.goodwillfinds.com/new-finds/jewelry-new-finds/?sz=100"
+const goodwillNewJewelryLink = "https://www.goodwillfinds.com/jewelry/rings/?sz=5000"
 const goodwillDesignerLinks = ["https://www.goodwillfinds.com/search/?q=celine&srule=price-low-to-high",
 "https://www.goodwillfinds.com/search/?q=louis%20vuitton&srule=price-low-to-high",
 "https://www.goodwillfinds.com/search/?q=dior&srule=price-low-to-high",
