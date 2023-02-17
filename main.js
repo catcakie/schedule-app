@@ -313,7 +313,7 @@ async function notifyGoodwillFindsItems(link) {
                 if (!linkCache.includes(link) && price < 30) {
                     linkCache.push(link)
 
-                    client.channels.cache.get(`893294534820257852`).send('(◡‿◡✿)\n$' + price + ': ' + link)
+                    client.channels.cache.get(`893294534820257852`).send('$' + price + ': ' + link)
                 }
             }).get()
 
