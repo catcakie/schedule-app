@@ -391,6 +391,57 @@ puppeteer
         })
 
         setInterval(async () => {
+
+            let grabPosts = await page.evaluate(() => {
+                // find the very first element's classes. scroll to the right to try to find an english word
+    
+                const keywords = ["3.75", "Spinel", "14K", "14k", "Louis Vuitton", "Dior", "Chanel", "Tiffany", "Prada", "Celine", "Hermes", "Gucci"]
+                let linkCache = []
+                let allSearches = []
+    
+                for (let i = 0; i < keywords.length; ++i) {
+    
+                    let allPosts = document.body.querySelectorAll('a[title*="' + keywords[i] + '"]')
+    
+                    //store the post items in an array then select to get the descriptions from each
+                    scrapeItems = [];
+    
+                    if (allPosts.length != 0) {
+                        allPosts.forEach(item => {
+                            let postPrice = parseFloat(item.nextElementSibling.innerHTML.replace(/[^0-9\.]+/g, ""))
+                            let postTitle = item.text
+                            let postLink = "https://shopgoodwill.com" + item.getAttribute('href')
+    
+                            if (!linkCache.includes(postLink) && postPrice < 30) {
+    
+                                linkCache.push(postLink)
+    
+                                scrapeItems.push({
+                                    price: '$' + postPrice,
+                                    title: postTitle,
+                                    link: postLink
+                                });
+                            }
+                        });
+                    }
+                    if (scrapeItems.length != 0) {
+                        let items = {
+                            [keywords[i]]: scrapeItems,
+                        }
+                        allSearches.push(items)
+                    }
+                }
+    
+                return allSearches
+            })
+            //output the scraped data
+    
+            let gatheredInfo = []
+    
+            grabPosts.forEach(item => {
+                gatheredInfo.push(item)
+            })
+
             await Promise.all(gatheredInfo).then((results) => {
                 results.forEach(result => {
                     client.channels.cache.get(`893294534820257852`).send(YAML.stringify(result))
