@@ -335,10 +335,11 @@ setInterval(async () => {
   goodwillDesignerLinks.forEach(link => notifyGoodwillFindsItems(link))
 }, 300000)
 
+/*
 setInterval(async () => {
     notifyShopGoodwillItems()
   }, 1000)
-
+*/
 function notifyShopGoodwillItems() {
     puppeteer
     .launch()
@@ -355,20 +356,16 @@ function notifyShopGoodwillItems() {
 
         //Get the "viewport" of the page, as reported by the page (page.evaluate)
 
-        //output the scraped data
-
-        let gatheredInfo = []
-
         let grabPosts = await page.evaluate(async (keywords, linkCache) => {
             // find the very first element's classes. scroll to the right to try to find an english word
-            let allSearches = []
+            let postLinks = [];
 
             for (let i = 0; i < keywords.length; ++i) {
 
                 let allPosts = document.body.querySelectorAll('a[title*="' + keywords[i] + '"]')
 
                 //store the post items in an array then select to get the descriptions from each
-                scrapeItems = [];
+                
 
                 if (allPosts.length != 0) {
                     allPosts.forEach(item => {
@@ -378,39 +375,75 @@ function notifyShopGoodwillItems() {
 
                         if (!linkCache.includes(postLink) && postPrice < 35) {
 
-                            scrapeItems.push({
-                                price: '$' + postPrice,
-                                title: postTitle,
-                                link: postLink
-                            });
+                            postLinks.push(postLink)
                         }
                     });
                 }
-                if (scrapeItems.length != 0) {
-                    let items = {
-                        [keywords[i]]: scrapeItems
-                    }
-                    allSearches.push(items)
-                }
             }
 
-            return allSearches
+            return postLinks
         }, keywords, linkCache)
-        grabPosts.forEach(item => {
-            gatheredInfo.push(item)
+        
+
+        await Promise.all(grabPosts).then((results) => {
+            if (grabPosts.length > 0) {
+                results.forEach(result => linkCache.push(result))
+                client.channels.cache.get(`893294534820257852`).send(YAML.stringify(grabPosts))
+            }
         })
 
-        await Promise.all(gatheredInfo).then((results) => {
-            results.forEach(result => {
-                client.channels.cache.get(`893294534820257852`).send(YAML.stringify(result))
-                for (const property in result) {
-                    //console.log(`${result[property][0]['link']}`);
-                    linkCache.push(`${result[property][0]['link']}`)
+//
+
+        setInterval(async () => {
+            const page = await browser.newPage();
+
+            await page.goto(shopgoodwillLink);
+            await page.waitForSelector('.feat-item_price');
+    
+            await page.exposeFunction("addToLinkCache", (link) => {
+                linkCache.push(link)
+            })
+
+            grabPosts = await page.evaluate(async (keywords, linkCache) => {
+                // find the very first element's classes. scroll to the right to try to find an english word
+                let postLinks = [];
+    
+                for (let i = 0; i < keywords.length; ++i) {
+    
+                    let allPosts = document.body.querySelectorAll('a[title*="' + keywords[i] + '"]')
+    
+                    //store the post items in an array then select to get the descriptions from each
+                    
+    
+                    if (allPosts.length != 0) {
+                        allPosts.forEach(item => {
+                            let postPrice = parseFloat(item.nextElementSibling.innerHTML.replace(/[^0-9\.]+/g, ""))
+                            let postTitle = item.text
+                            let postLink = "https://shopgoodwill.com" + item.getAttribute('href')
+    
+                            if (!linkCache.includes(postLink) && postPrice < 35) {
+    
+                                postLinks.push(postLink)
+                            }
+                        });
+                    }
+                }
+    
+                return postLinks
+            }, keywords, linkCache)
+            
+    
+            await Promise.all(grabPosts).then((results) => {
+                if (grabPosts.length > 0) {
+                    results.forEach(result => linkCache.push(result))
+                    client.channels.cache.get(`893294534820257852`).send(YAML.stringify(grabPosts))
                 }
             })
-        })
+            client.channels.cache.get(`893294534820257852`).send("No new items from shopgoodwill")
+        }, 180000)
+        
 
-        await browser.close();
+        //await browser.close();
     }
     )
     //handling any errors
