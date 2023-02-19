@@ -337,6 +337,9 @@ setInterval(async () => {
   goodwillDesignerLinks.forEach(link => notifyGoodwillFindsItems(link))
 }, 300000)
 */
+notifyShopGoodwillItems(shopgoodwillJewelryLink)
+notifyShopGoodwillItems(shopgoodwillOuterwearLink)
+notifyShopGoodwillItems(shopgoodwillGenuineLeatherLink)
 
 setInterval(async () => {
     notifyShopGoodwillItems(shopgoodwillJewelryLink)
