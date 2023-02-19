@@ -281,7 +281,7 @@ const cheerio = require("cheerio")
 const puppeteer = require("puppeteer")
 const YAML = require('yaml')
 
-const keywords = ["3.75", "Spinel", "14K", "14k", "10K", "Louis Vuitton", "Dior", "Chanel", "Tiffany", "Prada", "Celine", "Hermes", "Gucci"]
+const keywords = ["3.75", "Spinel", "Platinum", "Designer", "14K", "14k", "10K", "Louis Vuitton", "Dior", "Chanel", "Tiffany", "Prada", "Celine", "Hermes", "Gucci"]
 let linkCache = []
 
 const goodwillNewJewelryLink = "https://www.goodwillfinds.com/jewelry/rings/?sz=5000"
@@ -338,7 +338,7 @@ setInterval(async () => {
 
 setInterval(async () => {
     notifyShopGoodwillItems()
-  }, 10000)
+  }, 60000)
 
 function notifyShopGoodwillItems() {
     puppeteer
