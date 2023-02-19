@@ -352,10 +352,6 @@ function notifyShopGoodwillItems() {
         await page.goto(shopgoodwillLink);
         await page.waitForSelector('.feat-item_price');
 
-        await page.exposeFunction("addToLinkCache", (link) => {
-            linkCache.push(link)
-        })
-
         //Get the "viewport" of the page, as reported by the page (page.evaluate)
 
         let grabPosts = await page.evaluate(async (keywords, linkCache) => {
@@ -365,17 +361,14 @@ function notifyShopGoodwillItems() {
             for (let i = 0; i < keywords.length; ++i) {
 
                 let allPosts = document.body.querySelectorAll('a[title*="' + keywords[i] + '"]')
-
-                //store the post items in an array then select to get the descriptions from each
                 
-
                 if (allPosts.length != 0) {
                     allPosts.forEach(item => {
                         let postPrice = parseFloat(item.nextElementSibling.innerHTML.replace(/[^0-9\.]+/g, ""))
                         let postTitle = item.text
                         let postLink = "https://shopgoodwill.com" + item.getAttribute('href')
 
-                        if (!linkCache.includes(postLink) && postPrice < 50) {
+                        if (!linkCache.includes(postLink) && postPrice < 35) {
 
                             postLinks.push(postLink)
                         }
@@ -392,7 +385,7 @@ function notifyShopGoodwillItems() {
                 results.forEach(result => linkCache.push(result))
                 client.channels.cache.get(`893294534820257852`).send(YAML.stringify(grabPosts))
             } else {
-                client.channels.cache.get(`893294534820257852`).send("No new posts from ShopGoodwill")
+                //client.channels.cache.get(`893294534820257852`).send("No new posts from ShopGoodwill")
             }
         }).catch(function(err) {
             console.error(err);
