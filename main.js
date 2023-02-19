@@ -327,25 +327,27 @@ async function notifyGoodwillFindsItems(link) {
 // first execution of notifying
 //notifyGoodwillFindsItems(goodwillNewJewelryLink)
 //goodwillDesignerLinks.forEach(link => notifyGoodwillFindsItems(link))
-notifyShopGoodwillItems()
 
 // loop searching every 5 mins
+/*
 setInterval(async () => {
   await notifyGoodwillFindsItems(goodwillNewJewelryLink)
   goodwillDesignerLinks.forEach(link => notifyGoodwillFindsItems(link))
 }, 300000)
+*/
 
-/*
 setInterval(async () => {
     notifyShopGoodwillItems()
-  }, 1000)
-*/
+  }, 10000)
+
 function notifyShopGoodwillItems() {
     puppeteer
     .launch()
     .then(async browser => {
         //open a new page for puppeteer, go to the website, then wait for the site's body contents to load
-        const page = await browser.newPage();
+        
+        setInterval(async () => {
+            const page = await browser.newPage();
 
         await page.goto(shopgoodwillLink);
         await page.waitForSelector('.feat-item_price');
@@ -373,7 +375,7 @@ function notifyShopGoodwillItems() {
                         let postTitle = item.text
                         let postLink = "https://shopgoodwill.com" + item.getAttribute('href')
 
-                        if (!linkCache.includes(postLink) && postPrice < 35) {
+                        if (!linkCache.includes(postLink) && postPrice < 50) {
 
                             postLinks.push(postLink)
                         }
@@ -389,63 +391,15 @@ function notifyShopGoodwillItems() {
             if (grabPosts.length > 0) {
                 results.forEach(result => linkCache.push(result))
                 client.channels.cache.get(`893294534820257852`).send(YAML.stringify(grabPosts))
+            } else {
+                client.channels.cache.get(`893294534820257852`).send("No new posts from ShopGoodwill")
             }
+        }).catch(function(err) {
+            console.error(err);
         })
         await browser.close();
+        }, 3000)
 
-//
-
-        setInterval(async () => {
-            const page = await browser.newPage();
-
-            await page.goto(shopgoodwillLink);
-            await page.waitForSelector('.feat-item_price');
-    
-            await page.exposeFunction("addToLinkCache", (link) => {
-                linkCache.push(link)
-            })
-
-            grabPosts = await page.evaluate(async (keywords, linkCache) => {
-                // find the very first element's classes. scroll to the right to try to find an english word
-                let postLinks = [];
-    
-                for (let i = 0; i < keywords.length; ++i) {
-    
-                    let allPosts = document.body.querySelectorAll('a[title*="' + keywords[i] + '"]')
-    
-                    //store the post items in an array then select to get the descriptions from each
-                    
-    
-                    if (allPosts.length != 0) {
-                        allPosts.forEach(item => {
-                            let postPrice = parseFloat(item.nextElementSibling.innerHTML.replace(/[^0-9\.]+/g, ""))
-                            let postTitle = item.text
-                            let postLink = "https://shopgoodwill.com" + item.getAttribute('href')
-    
-                            if (!linkCache.includes(postLink) && postPrice < 35) {
-    
-                                postLinks.push(postLink)
-                            }
-                        });
-                    }
-                }
-    
-                return postLinks
-            }, keywords, linkCache)
-            
-    
-            await Promise.all(grabPosts).then((results) => {
-                if (grabPosts.length > 0) {
-                    results.forEach(result => linkCache.push(result))
-                    client.channels.cache.get(`893294534820257852`).send(YAML.stringify(grabPosts))
-                }
-            })
-            client.channels.cache.get(`893294534820257852`).send("No new items from shopgoodwill")
-            await browser.close();
-        }, 180000)
-        
-
-        //
     }
     )
     //handling any errors
