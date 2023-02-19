@@ -281,7 +281,7 @@ const cheerio = require("cheerio")
 const puppeteer = require("puppeteer")
 const YAML = require('yaml')
 
-const keywords = ["3.75", "Spinel", "Platinum", "14K", "14k", "10K", "Louis Vuitton", "Dior", "Chanel", "Tiffany", "Prada", "Celine", "Hermes", "Gucci"]
+const keywords = ["3.75", "Spinel", "Platinum", "Genuine Leather", "Fur Coat", "14K", "14k", "10K", "Louis Vuitton", "Dior", "Chanel", "Tiffany", "Prada", "Celine", "Hermes", "Gucci"]
 let linkCache = []
 
 const goodwillNewJewelryLink = "https://www.goodwillfinds.com/jewelry/rings/?sz=5000"
@@ -294,7 +294,9 @@ const goodwillDesignerLinks = ["https://www.goodwillfinds.com/search/?q=celine&s
     "https://www.goodwillfinds.com/search/?q=hermes&srule=price-low-to-high",
     "https://www.goodwillfinds.com/search/?q=gucci&srule=price-low-to-high"
 ]
-const shopgoodwillLink = "https://shopgoodwill.com/categories/jewelry-gemstones"
+const shopgoodwillJewelryLink = "https://shopgoodwill.com/categories/jewelry-gemstones"
+const shopgoodwillOuterwearLink = "https://shopgoodwill.com/categories/womens-outerwear"
+const shopgoodwillGenuineLeatherLink = "https://shopgoodwill.com/categories/listing?st=genuine%20leather&sg=&c=&s=&lp=0&hp=999999&sbn=&spo=false&snpo=false&socs=false&sd=false&sca=false&caed=2%2F19%2F2023&cadb=7&scs=false&sis=false&col=1&p=1&ps=40&desc=false&ss=0&UseBuyerPrefs=true&sus=false&cln=1&catIds=&pn=&wc=false&mci=false&hmt=false&layout=grid&ihp=true"
 
 async function notifyGoodwillFindsItems(link) {
     try {
@@ -337,10 +339,12 @@ setInterval(async () => {
 */
 
 setInterval(async () => {
-    notifyShopGoodwillItems()
+    notifyShopGoodwillItems(shopgoodwillJewelryLink)
+    notifyShopGoodwillItems(shopgoodwillOuterwearLink)
+    notifyShopGoodwillItems(shopgoodwillGenuineLeatherLink)
   }, 60000)
 
-function notifyShopGoodwillItems() {
+function notifyShopGoodwillItems(link) {
     puppeteer
     .launch()
     .then(async browser => {
@@ -349,7 +353,7 @@ function notifyShopGoodwillItems() {
         setInterval(async () => {
             const page = await browser.newPage();
 
-        await page.goto(shopgoodwillLink);
+        await page.goto(link);
         await page.waitForSelector('.feat-item_price');
 
         //Get the "viewport" of the page, as reported by the page (page.evaluate)
