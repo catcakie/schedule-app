@@ -391,6 +391,7 @@ function notifyShopGoodwillItems() {
                 client.channels.cache.get(`893294534820257852`).send(YAML.stringify(grabPosts))
             }
         })
+        await browser.close();
 
 //
 
@@ -440,10 +441,11 @@ function notifyShopGoodwillItems() {
                 }
             })
             client.channels.cache.get(`893294534820257852`).send("No new items from shopgoodwill")
+            await browser.close();
         }, 180000)
         
 
-        //await browser.close();
+        //
     }
     )
     //handling any errors
