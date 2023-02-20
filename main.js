@@ -366,9 +366,7 @@ function notifyShopGoodwillItems(link) {
             // find the very first element's classes. scroll to the right to try to find an english word
             let postLinks = [];
 
-            for (let i = 0; i < keywords.length; ++i) {
-
-                let allPosts = document.body.querySelectorAll('a[title*="' + keywords[i] + '"]')
+                let allPosts = document.body.querySelectorAll('a.feat-item_name')
                 
                 if (allPosts.length != 0) {
                     allPosts.forEach(item => {
@@ -377,14 +375,13 @@ function notifyShopGoodwillItems(link) {
                         let postLink = "https://shopgoodwill.com" + item.getAttribute('href')
                         let postImage = item.parentElement.parentElement.previousElementSibling.firstChild.firstChild.src
 
-                        if (!linkCache.includes(postLink) && !postTitle.includes("Faux") && postPrice < 35) {
+                        if (!linkCache.includes(postLink) && !postTitle.includes("Faux") && !postTitle.includes("Costume") && postPrice < 35) {
 
                             postLinks.push(postLink)
                             postLinks.push(postImage)
                         }
                     });
                 }
-            }
 
             return postLinks
         }, keywords, linkCache)
