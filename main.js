@@ -375,7 +375,7 @@ function notifyShopGoodwillItems(link) {
                         let postLink = "https://shopgoodwill.com" + item.getAttribute('href')
                         let postImage = item.parentElement.parentElement.previousElementSibling.firstChild.firstChild.src
 
-                        if (!linkCache.includes(postLink) && !postTitle.includes("Faux") && !postTitle.includes("Costume") && !postTitle.includes("Brooch") && postPrice < 35) {
+                        if (!linkCache.includes(postLink) && !postTitle.includes("Faux") && !postTitle.includes("Costume") && !postTitle.includes("Brooch") && !postTitle.includes("Watch") && !postTitle.includes("Grab") && postPrice < 35) {
 
                             postLinks.push(postLink)
                             postLinks.push(postImage)
