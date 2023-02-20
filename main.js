@@ -374,10 +374,12 @@ function notifyShopGoodwillItems(link) {
                         let postPrice = parseFloat(item.nextElementSibling.innerHTML.replace(/[^0-9\.]+/g, ""))
                         let postTitle = item.text
                         let postLink = "https://shopgoodwill.com" + item.getAttribute('href')
+                        let postImage = item.parentElement.parentElement.previousElementSibling.firstChild.firstChild.src
 
                         if (!linkCache.includes(postLink) && postPrice < 35) {
 
                             postLinks.push(postLink)
+                            //postLinks.push(postImage)
                         }
                     });
                 }
@@ -389,8 +391,10 @@ function notifyShopGoodwillItems(link) {
 
         await Promise.all(grabPosts).then((results) => {
             if (grabPosts.length > 0) {
-                results.forEach(result => linkCache.push(result))
-                client.channels.cache.get(`893294534820257852`).send(YAML.stringify(grabPosts))
+                results.forEach(result => {
+                    linkCache.push(result)
+                    client.channels.cache.get(`893294534820257852`).send(result)
+                })
             } else {
                 //client.channels.cache.get(`893294534820257852`).send("No new posts from ShopGoodwill")
             }
