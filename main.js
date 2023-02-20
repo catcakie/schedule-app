@@ -296,6 +296,7 @@ const goodwillDesignerLinks = ["https://www.goodwillfinds.com/search/?q=celine&s
 ]
 const shopgoodwillJewelryLink = "https://shopgoodwill.com/categories/jewelry-gemstones"
 const shopgoodwillOuterwearLink = "https://shopgoodwill.com/categories/womens-outerwear"
+const shopgoodwillFurLink = "https://shopgoodwill.com/categories/listing?st=fur&sg=&c=&s=&lp=0&hp=999999&sbn=&spo=false&snpo=false&socs=false&sd=false&sca=false&caed=2%2F19%2F2023&cadb=7&scs=false&sis=false&col=1&p=1&ps=40&desc=false&ss=0&UseBuyerPrefs=true&sus=false&cln=1&catIds=&pn=&wc=false&mci=false&hmt=false&layout=grid&ihp=true"
 const shopgoodwillGenuineLeatherLink = "https://shopgoodwill.com/categories/listing?st=genuine%20leather&sg=&c=&s=&lp=0&hp=999999&sbn=&spo=false&snpo=false&socs=false&sd=false&sca=false&caed=2%2F19%2F2023&cadb=7&scs=false&sis=false&col=1&p=1&ps=40&desc=false&ss=0&UseBuyerPrefs=true&sus=false&cln=1&catIds=&pn=&wc=false&mci=false&hmt=false&layout=grid&ihp=true"
 
 async function notifyGoodwillFindsItems(link) {
@@ -339,11 +340,13 @@ setInterval(async () => {
 */
 notifyShopGoodwillItems(shopgoodwillJewelryLink)
 notifyShopGoodwillItems(shopgoodwillOuterwearLink)
+notifyShopGoodwillItems(shopgoodwillFurLink)
 notifyShopGoodwillItems(shopgoodwillGenuineLeatherLink)
 
 setInterval(async () => {
     notifyShopGoodwillItems(shopgoodwillJewelryLink)
     notifyShopGoodwillItems(shopgoodwillOuterwearLink)
+    notifyShopGoodwillItems(shopgoodwillFurLink)
     notifyShopGoodwillItems(shopgoodwillGenuineLeatherLink)
   }, 60000)
 
