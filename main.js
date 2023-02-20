@@ -380,7 +380,7 @@ function notifyShopGoodwillItems(link) {
                         if (!linkCache.includes(postLink) && postPrice < 35) {
 
                             postLinks.push(postLink)
-                            //postLinks.push(postImage)
+                            postLinks.push(postImage)
                         }
                     });
                 }
