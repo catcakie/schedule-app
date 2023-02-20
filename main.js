@@ -365,9 +365,7 @@ function notifyShopGoodwillItems(link) {
             // find the very first element's classes. scroll to the right to try to find an english word
             let postLinks = [];
 
-            for (let i = 0; i < keywords.length; ++i) {
-
-                let allPosts = document.body.querySelectorAll('a[title*="' + keywords[i] + '"]')
+            let allPosts = document.body.querySelectorAll('a.feat-item_name')
                 
                 if (allPosts.length != 0) {
                     allPosts.forEach(item => {
@@ -383,7 +381,6 @@ function notifyShopGoodwillItems(link) {
                         }
                     });
                 }
-            }
 
             return postLinks
         }, keywords, linkCache)
