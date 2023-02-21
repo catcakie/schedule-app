@@ -378,7 +378,7 @@ function notifyShopGoodwillItems(link) {
                         if (!linkCache.includes(postLink) && !postTitle.includes("Faux") 
                         && !postTitle.includes("Costume") && !postTitle.includes("Brooch") 
                         && !postTitle.includes("Watch") && !postTitle.includes("Grab") 
-                        && !postTitle.includes("Gold Tone") && !postTitle.includes("Silver Tone") 
+                        && !postTitle.includes("Tone")
                         && !postTitle.includes("CZ") && !postTitle.includes("Glass") && postPrice < 35) {
 
                             postLinks.push(postLink)
