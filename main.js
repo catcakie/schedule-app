@@ -316,7 +316,7 @@ async function notifyGoodwillFindsItems(link) {
                 if (!linkCache.includes(link) && price < 30) {
                     linkCache.push(link)
 
-                    client.channels.cache.get(`893294534820257852`).send('$' + price + ': ' + link)
+                    client.channels.cache.get(`1077663232564678686`).send('$' + price + ': ' + link)
                 }
             }).get()
 
@@ -338,6 +338,9 @@ setInterval(async () => {
   goodwillDesignerLinks.forEach(link => notifyGoodwillFindsItems(link))
 }, 300000)
 */
+
+
+
 notifyShopGoodwillItems(shopgoodwillJewelryLink)
 
 setInterval(async () => {
@@ -392,7 +395,7 @@ function notifyShopGoodwillItems(link) {
             if (grabPosts.length > 0) {
                 results.forEach(result => {
                     linkCache.push(result)
-                    client.channels.cache.get(`893294534820257852`).send(result)
+                    client.channels.cache.get(`1077663232564678686`).send(result)
                 })
             } else {
                 //client.channels.cache.get(`893294534820257852`).send("No new posts from ShopGoodwill")
