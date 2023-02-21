@@ -339,11 +339,9 @@ setInterval(async () => {
 }, 300000)
 */
 notifyShopGoodwillItems(shopgoodwillJewelryLink)
-notifyShopGoodwillItems(shopgoodwillFurLink)
 
 setInterval(async () => {
     notifyShopGoodwillItems(shopgoodwillJewelryLink)
-    notifyShopGoodwillItems(shopgoodwillFurLink)
   }, 60000)
 
 function notifyShopGoodwillItems(link) {
