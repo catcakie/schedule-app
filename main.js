@@ -379,7 +379,8 @@ function notifyShopGoodwillItems(link) {
                         && !postTitle.includes("Watch") && !postTitle.includes("Grab") 
                         && !postTitle.includes("Tone")
                         && !postTitle.includes("CZ") && !postTitle.includes("Glass")
-                        && !postTitle.includes("Silver") && postPrice < 35) {
+                        && !postTitle.includes("Silver")
+                        && (postTitle.includes("14k") || postTitle.includes("14K") || postTitle.includes("Heels")) && postPrice < 35) {
 
                             postLinks.push(postLink)
                             postLinks.push(postImage)
