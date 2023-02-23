@@ -268,7 +268,7 @@ let config = {
 					html() {
 						let html =
 							'<div style="padding: 3px 10px;">'+
-							''+ new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"long", day:"numeric"}) +
+							'Wealth is mastering your time. '+ new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"long", day:"numeric"}) +
 							'</div>'
 						return html
 					}
