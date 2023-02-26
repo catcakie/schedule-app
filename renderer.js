@@ -42,15 +42,9 @@ window.api.addRow((event, value) => {
 	sortRecid(developmentCycle)
 })
 
-preClearedGridContent = []
-
 // Ctrl + N
 window.api.refreshGrid((event, value) => {
 	getSpreadsheetTitle()
-	preClearedGridContent = [[1,2,3,5], [1,2,3,5]]
-	grid.clear()
-	generateGrid()
-	grid.refresh()
 })
 
 // Ctrl + S
@@ -104,7 +98,24 @@ function getSpreadsheetTitle() {
     })
     .ok((event) => {
         console.log('ok, value=', event.detail.value)
+
+		grid.save()
+		grid.mergeChanges()
+
+		let preClearedGridContent = []
+
+		for (let i=0; i<grid.records.length; ++i) {
+			if (grid.records[i] != null) {
+				preClearedGridContent.push(Object.values(grid.records[i]).slice(1).map(i => i.toString()))
+			}
+		}
+
 		window.api.saveToGoogleSheets([event.detail.value, preClearedGridContent])
+
+		preClearedGridContent = []
+		grid.clear()
+		generateGrid()
+		grid.refresh()
     })
     .cancel((event) => {
         console.log('cancel')
