@@ -42,9 +42,12 @@ window.api.addRow((event, value) => {
 	sortRecid(developmentCycle)
 })
 
+preClearedGridContent = []
+
 // Ctrl + N
 window.api.refreshGrid((event, value) => {
 	getSpreadsheetTitle()
+	preClearedGridContent = [[1,2,3,5], [1,2,3,5]]
 	grid.clear()
 	generateGrid()
 	grid.refresh()
@@ -60,7 +63,6 @@ window.api.save((event, value) => {
 	developmentCycle.save()
 	// w2ui saves the changes into a separate property, use .mergeChanges() to merge them into their respective properties
 	developmentCycle.mergeChanges()
-
 	
 	// save the records to a local JSON file
 	window.api.saveToFile(developmentCycle.records)
@@ -102,7 +104,7 @@ function getSpreadsheetTitle() {
     })
     .ok((event) => {
         console.log('ok, value=', event.detail.value)
-		window.api.saveToGoogleSheets(event.detail.value)
+		window.api.saveToGoogleSheets([event.detail.value, preClearedGridContent])
     })
     .cancel((event) => {
         console.log('cancel')
