@@ -42,8 +42,9 @@ window.api.addRow((event, value) => {
 	sortRecid(developmentCycle)
 })
 
-// Ctrl + R
+// Ctrl + N
 window.api.refreshGrid((event, value) => {
+	getSpreadsheetTitle()
 	grid.clear()
 	generateGrid()
 	grid.refresh()
@@ -79,6 +80,35 @@ window.api.save((event, value) => {
 })
 
 // grid helper functions
+function getSpreadsheetTitle() {
+	w2prompt({
+        title: w2utils.lang('Enter Spreadsheet Title'),
+        width: 400,
+        height: 200,
+        label: 'Spreadsheet Title',
+        value: '',
+        attrs: 'style="width: 200px" placeholder="Type here..."',
+        btn_ok: {
+            text: 'Ok',
+            class: 'ok-class',
+        },
+        btn_cancel: {
+            text: 'Cancel',
+            class: 'ok-class'
+        },
+    })
+    .change((event) => {
+        console.log('change', event.detail.originalEvent.target.value)
+    })
+    .ok((event) => {
+        console.log('ok, value=', event.detail.value)
+		window.api.saveToGoogleSheets(event.detail.value)
+    })
+    .cancel((event) => {
+        console.log('cancel')
+    })
+}
+
 function getSelectedRow(grid) {
 	sortRecid(grid)
 	const selectedRowRecid = grid.getSelection()-1
@@ -524,7 +554,7 @@ for (let i = 0; i < tmp.length; i++) {
 	grid.columns.push({
 		field: tmp[i],
 		text: '<div style="text-align: center">' + tmp[i].toUpperCase() + '</div>',
-		size: '15%',
+		size: '150px',
 		resizable: true,
 		sortable: true,
 		editable: { type: 'text', inTag: 'placeholder="Type..."' }
@@ -633,12 +663,4 @@ document.addEventListener('dragover', (e) => {
     e.preventDefault();
     e.stopPropagation();
 });
-/*
-document.addEventListener('dragenter', (event) => {
-    console.log('File is in the Drop Space');
-});
- 
-document.addEventListener('dragleave', (event) => {
-    console.log('File has left the Drop Space');
-});
-*/
+
