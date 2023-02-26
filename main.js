@@ -423,7 +423,7 @@ const {authenticate} = require('@google-cloud/local-auth');
 const {google} = require('googleapis');
 
 // If modifying these scopes, delete token.json.
-const SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
+const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first
 // time.
@@ -484,26 +484,29 @@ async function authorize() {
 }
 
 /**
- * Prints the names and majors of students in a sample spreadsheet:
- * @see https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
- * @param {google.auth.OAuth2} auth The authenticated Google OAuth client.
+ * Create a new spreadsheet
+ * @param {google.auth.OAuth2} auth The authenticated Google OAuth client
  */
-async function listMajors(auth) {
-  const sheets = google.sheets({version: 'v4', auth});
-  const res = await sheets.spreadsheets.values.get({
-    spreadsheetId: '1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms',
-    range: 'Class Data!A2:E',
-  });
-  const rows = res.data.values;
-  if (!rows || rows.length === 0) {
-    console.log('No data found.');
-    return;
+async function createSheet(auth) {
+  const service = google.sheets({version: 'v4', auth})
+  const resource = {
+    properties: {
+      title: "test?",
+    }
   }
-  console.log('Name, Major:');
-  rows.forEach((row) => {
-    // Print columns A and E, which correspond to indices 0 and 4.
-    console.log(`${row[0]}, ${row[4]}`);
-  });
+
+  try {
+    const spreadsheet = await service.spreadsheets.create({
+      resource,
+      fields: 'spreadsheetId',
+    });
+    console.log(`Spreadsheet ID: ${spreadsheet.data.spreadsheetId}`);
+    return spreadsheet.data.spreadsheetId;
+  } catch (err) {
+    // TODO (developer) - Handle exception
+    throw err;
+  }
 }
 
-authorize().then(listMajors).catch(console.error);
+authorize().then(createSheet).catch(console.error);
+
