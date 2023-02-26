@@ -50,7 +50,7 @@ function createWindow() {
     ipcMain.on('saveToGoogleSheets', (event, args) => {
         spreadsheetTitle = args[0]
         items = args[1]
-        console.log(items)
+        console.log(items[0])
         authorize().then(createSheet).catch(console.error)
 
     })
@@ -529,7 +529,7 @@ async function createSheet(auth) {
         resource:
             {
                 "values": items
-              },
+            },
           // TODO: Add desired properties to the request body.
     
       };
