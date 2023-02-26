@@ -8,7 +8,7 @@ const { contextBridge, ipcRenderer } = require('electron')
 
 contextBridge.exposeInMainWorld('api', {
     save: (callback) => ipcRenderer.on('save', callback),
-    saveToGoogleSheets: (title) => ipcRenderer.send('saveToGoogleSheets', title),
+    saveToGoogleSheets: (args) => ipcRenderer.send('saveToGoogleSheets', args),
     refreshGrid: (callback) => ipcRenderer.on('refreshGrid', callback),
     saveToFile: (records) => ipcRenderer.send('saveToFile', records),
     addRow: (callback) => ipcRenderer.on('addRow', callback),
