@@ -47,9 +47,10 @@ function createWindow() {
     })
 
     // renderer.js event handlers
-    ipcMain.on('saveToGoogleSheets', (event, userInputTitle) => {
-        spreadsheetTitle = userInputTitle
-        console.log(userInputTitle)
+    ipcMain.on('saveToGoogleSheets', (event, args) => {
+        spreadsheetTitle = args[0]
+        items = args[1]
+        console.log(items)
         authorize().then(createSheet).catch(console.error)
 
     })
@@ -490,6 +491,8 @@ async function authorize() {
 }
 
 let spreadsheetTitle = 'Untitled'
+let items = []
+
 /**
  * Create a new spreadsheet
  * @param {google.auth.OAuth2} auth The authenticated Google OAuth client
@@ -525,26 +528,7 @@ async function createSheet(auth) {
     
         resource:
             {
-                "values": [
-                  [
-                    3,
-                    3,
-                    8,
-                    3
-                  ],
-                  [
-                    436,
-                    46,
-                    54,
-                    5
-                  ],
-                  [
-                    4,
-                    36,
-                    12,
-                    65
-                  ]
-                ]
+                "values": items
               },
           // TODO: Add desired properties to the request body.
     
