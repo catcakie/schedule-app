@@ -490,7 +490,6 @@ async function authorize() {
 }
 
 let spreadsheetTitle = 'Untitled'
-
 /**
  * Create a new spreadsheet
  * @param {google.auth.OAuth2} auth The authenticated Google OAuth client
@@ -509,11 +508,59 @@ async function createSheet(auth) {
       fields: 'spreadsheetId',
     });
     console.log(`Spreadsheet ID: ${spreadsheet.data.spreadsheetId}`);
+
+    const request = {
+        // The ID of the spreadsheet to update.
+        spreadsheetId: spreadsheet.data.spreadsheetId,  // TODO: Update placeholder value.
+    
+        // The A1 notation of a range to search for a logical table of data.
+        // Values are appended after the last row of the table.
+        range: 'A:C',  // TODO: Update placeholder value.
+    
+        // How the input data should be interpreted.
+        valueInputOption: 'RAW',  // TODO: Update placeholder value.
+    
+        // How the input data should be inserted.
+        insertDataOption: 'INSERT_ROWS',  // TODO: Update placeholder value.
+    
+        resource:
+            {
+                "values": [
+                  [
+                    3,
+                    3,
+                    8,
+                    3
+                  ],
+                  [
+                    436,
+                    46,
+                    54,
+                    5
+                  ],
+                  [
+                    4,
+                    36,
+                    12,
+                    65
+                  ]
+                ]
+              },
+          // TODO: Add desired properties to the request body.
+    
+      };
+
+      try {
+        const response = (await service.spreadsheets.values.append(request)).data;
+        // TODO: Change code below to process the `response` object:
+        console.log(JSON.stringify(response, null, 2));
+      } catch (err) {
+        console.error(err);
+      }
+
     return spreadsheet.data.spreadsheetId;
   } catch (err) {
     // TODO (developer) - Handle exception
     throw err;
   }
 }
-
-//authorize().then(createSheet).catch(console.error)
