@@ -47,6 +47,12 @@ function createWindow() {
     })
 
     // renderer.js event handlers
+    ipcMain.on('saveToGoogleSheets', (event, userInputTitle) => {
+        spreadsheetTitle = userInputTitle
+        console.log(userInputTitle)
+        authorize().then(createSheet).catch(console.error)
+
+    })
     ipcMain.on('saveToFile', (event, records) => {
         saveObjectsToJSONFile(records, "activities")
 
@@ -483,6 +489,8 @@ async function authorize() {
   return client;
 }
 
+let spreadsheetTitle = 'Untitled'
+
 /**
  * Create a new spreadsheet
  * @param {google.auth.OAuth2} auth The authenticated Google OAuth client
@@ -491,7 +499,7 @@ async function createSheet(auth) {
   const service = google.sheets({version: 'v4', auth})
   const resource = {
     properties: {
-      title: "test?",
+      title: spreadsheetTitle
     }
   }
 
@@ -508,5 +516,4 @@ async function createSheet(auth) {
   }
 }
 
-authorize().then(createSheet).catch(console.error);
-
+//authorize().then(createSheet).catch(console.error)
