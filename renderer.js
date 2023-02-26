@@ -47,6 +47,53 @@ window.api.refreshGrid((event, value) => {
 	getSpreadsheetTitle()
 })
 
+window.api.sendSpreadsheetID((event, args) => {
+	// create developmentCycle record -- development: spreadsheet title, testing: spreadsheet link
+	updateDateAndTime()
+
+	let nextLineNum = developmentCycle.records.length + 1
+	let nextRecid = developmentCycle.getLineHTML(nextLineNum)
+	developmentCycle.add({
+		recid: nextRecid,
+		frequency: 'Once',
+		requirement: 'Google Sheets',
+		start: time,
+		startDate: date,
+		end: time,
+		endDate: date,
+		development: args[0],
+		testing: 'https://docs.google.com/spreadsheets/d/'+args[1],
+		completion: true
+	})
+
+	// and now save the records
+
+	updateDateAndTime()
+
+	duplicateDailyRows()
+
+	// w2ui marks changed fields, which we can't sort unless they're saved to the grid
+	developmentCycle.save()
+	// w2ui saves the changes into a separate property, use .mergeChanges() to merge them into their respective properties
+	developmentCycle.mergeChanges()
+	
+	// save the records to a local JSON file
+	window.api.saveToFile(developmentCycle.records)
+
+	// get the selected row
+	selectedRow = getSelectedRow(developmentCycle)
+
+	// send the selected row's content to my discord server channel
+	if (selectedRow && selectedRow.development != '') {
+		window.api.sendSelectedRow(selectedRow)
+	} else {
+		window.api.sendSelectedRow("probably reddit/yt")
+	}
+	
+	// sort the rows again (by resetting to default sorting)
+	developmentCycle.stateReset()
+} )
+
 // Ctrl + S
 window.api.save((event, value) => {
 	updateDateAndTime()
