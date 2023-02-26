@@ -52,7 +52,6 @@ function createWindow() {
         items = args[1]
         console.log(items[0])
         authorize().then(createSheet).catch(console.error)
-
     })
     ipcMain.on('saveToFile', (event, records) => {
         saveObjectsToJSONFile(records, "activities")
@@ -511,6 +510,7 @@ async function createSheet(auth) {
       fields: 'spreadsheetId',
     });
     console.log(`Spreadsheet ID: ${spreadsheet.data.spreadsheetId}`);
+    win.webContents.send('sendSpreadsheetID', [spreadsheetTitle, spreadsheet.data.spreadsheetId])
 
     const request = {
         // The ID of the spreadsheet to update.
