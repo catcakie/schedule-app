@@ -17,6 +17,7 @@ Keeping track of:
 
 - Live Search
 - Spreadsheet that saves to Google Sheets
+  - Also saves the title, sheet data, & link into a record in the program
 - Discord Bot functionality:
   - Displays current activity as the bot's status
   - Auto-backups on every save
