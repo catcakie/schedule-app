@@ -47,6 +47,8 @@ window.api.refreshGrid((event, value) => {
 	getSpreadsheetTitle()
 })
 
+let preClearedGridContentString = ""
+
 window.api.sendSpreadsheetID((event, args) => {
 	// create developmentCycle record -- development: spreadsheet title, testing: spreadsheet link
 	updateDateAndTime()
@@ -61,7 +63,8 @@ window.api.sendSpreadsheetID((event, args) => {
 		startDate: date,
 		end: time,
 		endDate: date,
-		development: args[0],
+		design: args[0],
+		development: preClearedGridContentString,
 		testing: 'https://docs.google.com/spreadsheets/d/'+args[1],
 		completion: true
 	})
@@ -146,6 +149,16 @@ function getSpreadsheetTitle() {
     .ok((event) => {
         console.log('ok, value=', event.detail.value)
 
+		preClearedGridContentString = ""
+
+		for (let i=0; i<grid.records.length; ++i) {
+			if (grid.records[i].w2ui != null) {
+				if (grid.records[i].w2ui.changes != null) {
+					preClearedGridContentString += Object.values(grid.records[i].w2ui.changes) + " "
+				}
+			}
+		}
+
 		grid.save()
 		grid.mergeChanges()
 
@@ -159,7 +172,6 @@ function getSpreadsheetTitle() {
 
 		window.api.saveToGoogleSheets([event.detail.value, preClearedGridContent])
 
-		preClearedGridContent = []
 		grid.clear()
 		generateGrid()
 		grid.refresh()
