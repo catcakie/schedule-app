@@ -172,9 +172,10 @@ function getSpreadsheetTitle() {
 
 		window.api.saveToGoogleSheets([event.detail.value, preClearedGridContent])
 
-		grid.clear()
-		generateGrid()
-		grid.refresh()
+		// clear grid
+		//grid.clear()
+		//generateGrid()
+		//grid.refresh()
     })
     .cancel((event) => {
         console.log('cancel')
