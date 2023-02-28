@@ -637,7 +637,7 @@ for (let i = 0; i < tmp.length; i++) {
 
 function generateGrid() {
 	// insert  records
-	for (let i = 0; i < 100; i++) {
+	for (let i = 0; i < 1000; i++) {
 		grid.records.push(w2utils.extend({ recid: i+1 }, values))
 	}
 	grid.total = grid.records.length
