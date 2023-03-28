@@ -371,7 +371,7 @@ let config = {
 					html() {
 						let html =
 							'<div style="padding: 3px 10px;">'+
-							'Power & Control. '+ new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"long", day:"numeric"}) +
+							''+ new Date().toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"long", day:"numeric"}) +
 							'</div>'
 						return html
 					}
