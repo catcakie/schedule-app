@@ -346,7 +346,7 @@ setInterval(async () => {
 */
 
 
-
+/*
 notifyShopGoodwillItems(shopgoodwillJewelryLink)
 
 setInterval(async () => {
@@ -420,6 +420,76 @@ function notifyShopGoodwillItems(link) {
         console.error(err);
     });
 }
+*/
+
+let postTitleCache = []
+
+//initiating Puppeteer
+function getNewRedditPosts() {
+  puppeteer
+  .launch ()
+  .then (async browser => {
+  
+    //open a new page for puppeteer, go to the website, then wait for the site's body contents to load
+    const page = await browser.newPage ();
+    await page.goto ('https://www.reddit.com/r/fragranceswap/new/');
+    await page.waitForSelector ('body');
+  
+    //Get the "viewport" of the page, as reported by the page (page.evaluate)
+    let grabPosts = await page.evaluate (async (postTitleCache) => {
+    // find the very first element's classes. scroll to the right to try to find an english word
+    let allPosts = document.body.querySelectorAll ('.Post');
+      
+    //store the post items in an array then select to get the descriptions from each
+    scrapeItems = [];
+    allPosts.forEach (item => {
+      let postTitle = ''
+
+      if (item.querySelector ('h3').innerText.toLocaleLowerCase().includes("wts") && 
+      item.querySelector ('h3').innerText.toLocaleLowerCase().includes("bottle")) {
+        postTitle = item.querySelector ('h3').innerText
+      }
+
+      let postDescription = '';
+        try {
+          let postDescriptions = item.querySelectorAll ('p');
+          let tempString = ""
+          
+          postDescriptions.forEach(desc => tempString += desc.innerText.match(/\$((?:\d|\,)*\.?\d+)/g) || [] )
+
+          postDescription = tempString
+        } catch (err) {}
+        
+        if (postTitle !== '' && postDescription !== '' && !postTitleCache.includes(postTitle)) {
+          scrapeItems.push ({
+            title: postTitle,
+            prices: postDescription,
+          });
+        }
+      });
+
+      return scrapeItems;
+    }, postTitleCache);
+    //output the scraped data
+    grabPosts.forEach(item => {
+        client.channels.cache.get(`1077663232564678686`).send(item.title + "\n" + item.prices)
+        postTitleCache.push(item.title)
+        console.log(item)
+    })
+    //closs the browser
+    await browser.close ();
+  })
+  //handling any errors
+  .catch (function (err) {
+    console.error (err);
+  });
+}
+
+getNewRedditPosts()
+
+setInterval(getNewRedditPosts, 600000)
+
+setInterval(() => { postTitleCache = [] }, 3600000)
 
 // ----------------------------- GOOGLE SHEETS CODE ----------------------
 
