@@ -455,7 +455,7 @@ function getNewRedditPosts() {
           let postDescriptions = item.querySelectorAll ('p');
           let tempString = ""
           
-          postDescriptions.forEach(desc => tempString += desc.innerText.match(/\$((?:\d|\,)*\.?\d+)/g) || [] )
+          postDescriptions.forEach(desc => tempString += (desc.innerText.match(/\$((?:\d|\,)*\.?\d+)/g) || []) + ", " )
 
           postDescription = tempString
         } catch (err) {}
@@ -472,7 +472,7 @@ function getNewRedditPosts() {
     }, postTitleCache);
     //output the scraped data
     grabPosts.forEach(item => {
-        client.channels.cache.get(`1077663232564678686`).send(item.title + "\n" + item.prices)
+        client.channels.cache.get(`1077663232564678686`).send("**"+ item.title + "**\n" + item.prices)
         postTitleCache.push(item.title)
         console.log(item)
     })
