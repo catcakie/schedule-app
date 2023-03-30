@@ -489,7 +489,7 @@ getNewRedditPosts()
 
 setInterval(getNewRedditPosts, 600000)
 
-setInterval(() => { postTitleCache = [] }, 3600000)
+setInterval(() => { postTitleCache = [] }, 3600000*3)
 
 // ----------------------------- GOOGLE SHEETS CODE ----------------------
 
