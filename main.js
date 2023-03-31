@@ -287,144 +287,147 @@ const cheerio = require("cheerio")
 const puppeteer = require("puppeteer")
 const YAML = require('yaml')
 
-const keywords = ["3.75", "Spinel", "Platinum", "Genuine Leather", "Fur ", "14K", "14k", "10K", "Louis Vuitton", "Dior", "Chanel", "Tiffany", "Prada", "Celine", "Hermes", "Gucci"]
-let linkCache = []
-
-const goodwillNewJewelryLink = "https://www.goodwillfinds.com/jewelry/rings/?sz=5000"
-const goodwillDesignerLinks = ["https://www.goodwillfinds.com/search/?q=celine&srule=price-low-to-high",
-    "https://www.goodwillfinds.com/search/?q=louis%20vuitton&srule=price-low-to-high",
-    "https://www.goodwillfinds.com/search/?q=dior&srule=price-low-to-high",
-    "https://www.goodwillfinds.com/search/?q=chanel&srule=price-low-to-high",
-    "https://www.goodwillfinds.com/search/?q=tiffany&srule=price-low-to-high",
-    "https://www.goodwillfinds.com/search/?q=prada&srule=price-low-to-high",
-    "https://www.goodwillfinds.com/search/?q=hermes&srule=price-low-to-high",
-    "https://www.goodwillfinds.com/search/?q=gucci&srule=price-low-to-high"
-]
-const shopgoodwillJewelryLink = "https://shopgoodwill.com/categories/jewelry-gemstones"
-const shopgoodwillOuterwearLink = "https://shopgoodwill.com/categories/womens-outerwear"
-const shopgoodwillFurLink = "https://shopgoodwill.com/categories/listing?st=fur&sg=&c=&s=&lp=0&hp=999999&sbn=&spo=false&snpo=false&socs=false&sd=false&sca=false&caed=2%2F19%2F2023&cadb=7&scs=false&sis=false&col=1&p=1&ps=40&desc=false&ss=0&UseBuyerPrefs=true&sus=false&cln=1&catIds=&pn=&wc=false&mci=false&hmt=false&layout=grid&ihp=true"
-const shopgoodwill14kLink = "https://shopgoodwill.com/categories/listing?st=14k&sg=&c=&s=&lp=0&hp=999999&sbn=&spo=false&snpo=false&socs=false&sd=false&sca=false&caed=2%2F19%2F2023&cadb=7&scs=false&sis=false&col=1&p=1&ps=40&desc=false&ss=0&UseBuyerPrefs=true&sus=false&cln=1&catIds=&pn=&wc=false&mci=false&hmt=false&layout=grid&ihp=true"
-
-async function notifyGoodwillFindsItems(link) {
-    try {
-        const response = await axios.get(link)
-        // lets us use $ like in jquery
-        const $ = cheerio.load(response.data)
-
-        for (let i = 0; i < keywords.length; ++i) {
-            const keyword = keywords[i]
-
-            $('a:contains(' + keyword + ')').map(function() {
-
-                const link = 'https://www.goodwillfinds.com' + $(this).attr('href')
-                const price = JSON.parse($(this).attr('data-analytics'))["price"]
-
-                if (!linkCache.includes(link) && price < 30) {
-                    linkCache.push(link)
-
-                    client.channels.cache.get(`1077663232564678686`).send('$' + price + ': ' + link)
-                }
-            }).get()
-
-        }
-
-    } catch (error) {
-        console.log("failed to retrieve " + link)
-    }
-}
-
-// first execution of notifying
-//notifyGoodwillFindsItems(goodwillNewJewelryLink)
-//goodwillDesignerLinks.forEach(link => notifyGoodwillFindsItems(link))
-
-// loop searching every 5 mins
-/*
-setInterval(async () => {
-  await notifyGoodwillFindsItems(goodwillNewJewelryLink)
-  goodwillDesignerLinks.forEach(link => notifyGoodwillFindsItems(link))
-}, 300000)
-*/
+const shopgoodwillBathAndBodyLink = "https://shopgoodwill.com/categories/bath-body"
+let shopgoodwillCache = []
 
 
-/*
-notifyShopGoodwillItems(shopgoodwillJewelryLink)
+getShopGoodwillPostTitles(shopgoodwillBathAndBodyLink)
 
-setInterval(async () => {
-    notifyShopGoodwillItems(shopgoodwillJewelryLink)
-  }, 60000)
-
-function notifyShopGoodwillItems(link) {
+function getAveragePrice(postTitle, currentPrice, link) {
     puppeteer
-    .launch()
-    .then(async browser => {
-        //open a new page for puppeteer, go to the website, then wait for the site's body contents to load
-        
-        setInterval(async () => {
-            const page = await browser.newPage();
-
-        await page.goto(link);
-        await page.waitForSelector('.feat-item_price');
-
-        //Get the "viewport" of the page, as reported by the page (page.evaluate)
-
-        let grabPosts = await page.evaluate(async (keywords, linkCache) => {
-            // find the very first element's classes. scroll to the right to try to find an english word
-            let postLinks = [];
-
-                let allPosts = document.body.querySelectorAll('a.feat-item_name')
-                
-                if (allPosts.length != 0) {
-                    allPosts.forEach(item => {
-                        let postPrice = parseFloat(item.nextElementSibling.innerHTML.replace(/[^0-9\.]+/g, ""))
-                        let postTitle = item.text
-                        let postLink = "https://shopgoodwill.com" + item.getAttribute('href')
-                        let postImage = item.parentElement.parentElement.previousElementSibling.firstChild.firstChild.src
-
-                        if (!linkCache.includes(postLink) && !postTitle.includes("Faux") 
-                        && !postTitle.includes("Costume") && !postTitle.includes("Brooch") 
-                        && !postTitle.includes("Watch") && !postTitle.includes("Grab") 
-                        && !postTitle.includes("Tone")
-                        && !postTitle.includes("CZ") && !postTitle.includes("Glass")
-                        && !postTitle.includes("Silver")
-                        && (((postTitle.includes("14k") || postTitle.includes("14K")) && postTitle.includes("Earring")) || postTitle.includes("Heels")) && postPrice < 35) {
-
-                            postLinks.push(postLink)
-                            postLinks.push(postImage)
-                        }
-                    });
-                }
-
-            return postLinks
-        }, keywords, linkCache)
-        
-
-        await Promise.all(grabPosts).then((results) => {
-            if (grabPosts.length > 0) {
-                results.forEach(result => {
-                    linkCache.push(result)
-                    client.channels.cache.get(`1077663232564678686`).send(result)
-                })
-            } else {
-                //client.channels.cache.get(`893294534820257852`).send("No new posts from ShopGoodwill")
-            }
-        }).catch(function(err) {
-            console.error(err);
-        })
-        await browser.close();
-        }, 3000)
-
-    }
-    )
+    .launch ()
+    .then (async browser => {
+    
+      //open a new page for puppeteer, go to the website, then wait for the site's body contents to load
+      const page = await browser.newPage ();
+      await page.goto ('https://www.google.com/search?q='+postTitle+'&tbm=shop');
+      await page.waitForSelector ('.QIrs8');
+    
+      //Get the "viewport" of the page, as reported by the page (page.evaluate)
+      let averagePrice = await page.evaluate (() => {
+      
+      let allPosts = document.body.querySelectorAll ('.QIrs8');
+      
+      let sum = 0
+        let numberOfItems = 0
+      
+      for (let i=0; i<allPosts.length; ++i) {
+  
+        let unsanitizedPrice = allPosts[i].firstChild.innerText
+    
+        if (unsanitizedPrice) {
+    
+          const currentPrice = (unsanitizedPrice.match(/\$((?:\d|\,)*\.?\d+)/g) || [])[0]
+    
+          if (currentPrice) {
+          
+            const priceValue = Number(currentPrice.replace(/[^0-9.-]+/g,""))
+          
+            sum += priceValue
+            ++numberOfItems
+            
+          }
+        }
+      }
+  
+        return (sum / numberOfItems)
+      });
+      //output the scraped data
+      
+      if (currentPrice/averagePrice < 1/3) {
+        client.channels.cache.get(`1077663232564678686`).send("\nAVG PRICE: $"+ Math.round(averagePrice) +"\nCURRENT PRICE: $"+Math.round(currentPrice)+"\n"+link)
+      }
+      //closs the browser
+      await browser.close ();
+    })
     //handling any errors
-    .catch(function(err) {
-        console.error(err);
+    .catch (function (err) {
+      console.error (err);
     });
+  }
+
+function getShopGoodwillPostTitles(link) {
+  puppeteer
+  .launch()
+  .then(async browser => {
+      //open a new page for puppeteer, go to the website, then wait for the site's body contents to load
+
+      const page = await browser.newPage();
+
+      await page.goto(link);
+      await page.waitForSelector('.feat-item_price');
+
+      //Get the "viewport" of the page, as reported by the page (page.evaluate)
+
+      let grabPosts = await page.evaluate(async (shopgoodwillCache) => {
+          // find the very first element's classes. scroll to the right to try to find an english word
+          let postLinks = [];
+
+              let allPosts = document.body.querySelectorAll('a.feat-item_name')
+              
+              if (allPosts.length != 0) {
+                  allPosts.forEach(async item => {
+                      let postPrice = parseFloat(item.nextElementSibling.innerHTML.replace(/[^0-9\.]+/g, ""))
+                      let postTitle = item.text
+                      let postLink = "https://shopgoodwill.com" + item.getAttribute('href')
+                      let postImage = item.parentElement.parentElement.previousElementSibling.firstChild.firstChild.src
+
+                      if (!shopgoodwillCache.includes(item[postTitle])) { // && postPrice/averagePrice < 1/3
+                        postLinks.push({
+                          title: postTitle,
+                          link: postLink,
+                          price: postPrice
+                        })
+                      }
+                  });
+              }
+
+          return postLinks
+      }, shopgoodwillCache)
+      
+
+      await Promise.all(grabPosts).then((results) => {
+          if (grabPosts.length > 0) {
+              results.forEach(result => {
+                shopgoodwillCache.push(result)
+                
+                //console.log(result["title"])
+
+              })
+          } else {
+              //client.channels.cache.get(`893294534820257852`).send("No new posts from ShopGoodwill")
+          }
+
+          
+      }).catch(function(err) {
+          console.error(err);
+      })
+
+      for (let i=0; i<10; ++i) {
+        let item = shopgoodwillCache[i]
+
+        getAveragePrice(item["title"], item["price"], item["link"])
+      }
+
+      setInterval(() => {
+        for (let i=0; i<10; ++i) {
+          let item = shopgoodwillCache[i]
+  
+          getAveragePrice(item["title"], item["price"])
+        }
+      }, 300000)
+      
+      await browser.close();
+    }
+  )
+  //handling any errors
+  .catch(function(err) {
+      console.error(err);
+  });
 }
-*/
 
 let postTitleCache = []
 
-//initiating Puppeteer
 function getNewRedditPosts() {
   puppeteer
   .launch ()
