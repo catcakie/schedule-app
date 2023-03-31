@@ -290,9 +290,10 @@ const YAML = require('yaml')
 const shopgoodwillBathAndBodyLink = "https://shopgoodwill.com/categories/bath-body"
 const shopgoodwillFragrancesLink = "https://shopgoodwill.com/categories/listing?st=&sg=&c=337&s=&lp=0&hp=999999&sbn=&spo=false&snpo=false&socs=false&sd=false&sca=false&caed=3%2F31%2F2023&cadb=7&scs=false&sis=false&col=1&p=1&ps=40&desc=false&ss=0&UseBuyerPrefs=true&sus=false&cln=2&catIds=-1,336,337&pn=&wc=false&mci=false&hmt=false&layout=grid&ihp="
 const shopgoodwillWomensClothingLink = "https://shopgoodwill.com/categories/listing?st=&sg=&c=27&s=&lp=0&hp=999999&sbn=&spo=false&snpo=false&socs=false&sd=false&sca=false&caed=3%2F30%2F2023&cadb=7&scs=false&sis=false&col=1&p=1&ps=40&desc=false&ss=0&UseBuyerPrefs=true&sus=false&cln=2&catIds=-1,10,27&pn=&wc=false&mci=false&hmt=false&layout=grid&ihp="
+const shopgoodwillAppliancesLink = "https://shopgoodwill.com/categories/appliances"
 let shopgoodwillCache = []
 
-getShopGoodwillPostTitles(shopgoodwillFragrancesLink)
+getShopGoodwillPostTitles(shopgoodwillAppliancesLink)
 
 function getAveragePrice(postTitle, currentPrice, link) {
     puppeteer
@@ -335,7 +336,7 @@ function getAveragePrice(postTitle, currentPrice, link) {
       });
       //output the scraped data
       
-      if (currentPrice/averagePrice < 1/3) {
+      if (currentPrice/averagePrice < 1/3 && averagePrice > 100) {
         client.channels.cache.get(`1077663232564678686`).send("\nAVG PRICE: $"+ Math.round(averagePrice) +"\nCURRENT PRICE: $"+Math.round(currentPrice)+"\n"+link)
       }
       //closs the browser
