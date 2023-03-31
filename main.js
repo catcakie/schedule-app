@@ -337,7 +337,7 @@ function getAveragePrice(postTitle, currentPrice, link) {
       //output the scraped data
       
       if (currentPrice/averagePrice < 1/3 && averagePrice > 100) {
-        client.channels.cache.get(`1077663232564678686`).send("\nAVG PRICE: $"+ Math.round(averagePrice) +"\nCURRENT PRICE: $"+Math.round(currentPrice)+"\n"+link)
+        client.channels.cache.get(`1077663232564678686`).send("\nAVG USED PRICE: $"+ Math.round(averagePrice) +"\nCURRENT PRICE: $"+Math.round(currentPrice)+"\n"+link)
       }
       //closs the browser
       await browser.close ();
