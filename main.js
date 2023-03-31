@@ -413,7 +413,7 @@ function getShopGoodwillPostTitles(link) {
         for (let i=0; i<10; ++i) {
           let item = shopgoodwillCache[i]
   
-          getAveragePrice(item["title"], item["price"])
+          getAveragePrice(item["title"], item["price"], item["link"])
         }
       }, 300000)
       
