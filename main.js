@@ -313,7 +313,7 @@ function getAveragePrice(postTitle, currentPrice, link) {
       let sum = 0
         let numberOfItems = 0
       
-      for (let i=0; i<10; ++i) {
+      for (let i=0; i<allPosts.length; ++i) {
   
         let unsanitizedPrice = allPosts[i].firstChild.innerText
     
