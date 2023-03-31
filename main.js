@@ -302,7 +302,7 @@ function getAveragePrice(postTitle, currentPrice, link) {
     
       //open a new page for puppeteer, go to the website, then wait for the site's body contents to load
       const page = await browser.newPage ();
-      await page.goto ('https://www.google.com/search?q='+postTitle+'&tbm=shop');
+      await page.goto ('https://www.google.com/search?q='+postTitle+'&tbm=shop&tbs=mr:1,new:3');
       await page.waitForSelector ('.QIrs8');
     
       //Get the "viewport" of the page, as reported by the page (page.evaluate)
