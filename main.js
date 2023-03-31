@@ -288,10 +288,11 @@ const puppeteer = require("puppeteer")
 const YAML = require('yaml')
 
 const shopgoodwillBathAndBodyLink = "https://shopgoodwill.com/categories/bath-body"
+const shopgoodwillFragrancesLink = "https://shopgoodwill.com/categories/listing?st=&sg=&c=337&s=&lp=0&hp=999999&sbn=&spo=false&snpo=false&socs=false&sd=false&sca=false&caed=3%2F31%2F2023&cadb=7&scs=false&sis=false&col=1&p=1&ps=40&desc=false&ss=0&UseBuyerPrefs=true&sus=false&cln=2&catIds=-1,336,337&pn=&wc=false&mci=false&hmt=false&layout=grid&ihp="
+const shopgoodwillWomensClothingLink = "https://shopgoodwill.com/categories/listing?st=&sg=&c=27&s=&lp=0&hp=999999&sbn=&spo=false&snpo=false&socs=false&sd=false&sca=false&caed=3%2F30%2F2023&cadb=7&scs=false&sis=false&col=1&p=1&ps=40&desc=false&ss=0&UseBuyerPrefs=true&sus=false&cln=2&catIds=-1,10,27&pn=&wc=false&mci=false&hmt=false&layout=grid&ihp="
 let shopgoodwillCache = []
 
-
-getShopGoodwillPostTitles(shopgoodwillBathAndBodyLink)
+getShopGoodwillPostTitles(shopgoodwillFragrancesLink)
 
 function getAveragePrice(postTitle, currentPrice, link) {
     puppeteer
@@ -415,7 +416,9 @@ function getShopGoodwillPostTitles(link) {
   
           getAveragePrice(item["title"], item["price"], item["link"])
         }
-      }, 300000)
+      }, 1800000)
+
+      setInterval(() => { shopgoodwillCache = [] }, 3600000*3)
       
       await browser.close();
     }
