@@ -292,9 +292,10 @@ const shopgoodwillFragrancesLink = "https://shopgoodwill.com/categories/listing?
 const shopgoodwillWomensClothingLink = "https://shopgoodwill.com/categories/listing?st=&sg=&c=27&s=&lp=0&hp=999999&sbn=&spo=false&snpo=false&socs=false&sd=false&sca=false&caed=3%2F30%2F2023&cadb=7&scs=false&sis=false&col=1&p=1&ps=40&desc=false&ss=0&UseBuyerPrefs=true&sus=false&cln=2&catIds=-1,10,27&pn=&wc=false&mci=false&hmt=false&layout=grid&ihp="
 const shopgoodwillAppliancesLink = "https://shopgoodwill.com/categories/appliances"
 const shopgoodwillScienceEducationLink = "https://shopgoodwill.com/categories/science-education"
+const shopgoodwillHeadphonesLink = "https://shopgoodwill.com/categories/listing?st=headphones&sg=&c=&s=&lp=0&hp=999999&sbn=&spo=false&snpo=false&socs=false&sd=false&sca=false&caed=4%2F1%2F2023&cadb=7&scs=false&sis=false&col=1&p=1&ps=40&desc=false&ss=0&UseBuyerPrefs=true&sus=false&cln=1&catIds=&pn=&wc=false&mci=false&hmt=false&layout=grid&ihp=true"
 let shopgoodwillCache = []
 
-getShopGoodwillPostTitles(shopgoodwillFragrancesLink)
+getShopGoodwillPostTitles(shopgoodwillWomensClothingLink)
 
 function getAveragePrice(postTitle, currentPrice, link) {
     puppeteer
@@ -479,11 +480,13 @@ function getNewRedditPosts() {
       return scrapeItems;
     }, postTitleCache);
     //output the scraped data
-    grabPosts.forEach(item => {
+    if (grabPosts !== null || grabPosts.length !== 0) {
+      grabPosts.forEach(item => {
         client.channels.cache.get(`1077663232564678686`).send("**"+ item.title + "**\n" + item.prices)
         postTitleCache.push(item.title)
         console.log(item)
     })
+    }
     //closs the browser
     await browser.close ();
   })
