@@ -495,12 +495,13 @@ function getNewRedditPosts() {
     console.error (err);
   });
 }
-
+/*
 getNewRedditPosts()
 
 setInterval(getNewRedditPosts, 60000)
 
 setInterval(() => { postTitleCache = [] }, 3600000*3)
+*/
 
 // ----------------------------- GOOGLE SHEETS CODE ----------------------
 
