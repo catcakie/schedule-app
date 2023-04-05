@@ -407,17 +407,21 @@ function getShopGoodwillPostTitles(link) {
           console.error(err);
       })
 
-      for (let i=0; i<10; ++i) {
-        let item = shopgoodwillCache[i]
-
-        getAveragePrice(item["title"], item["price"], item["link"])
-      }
-
-      setInterval(() => {
+      if (shopgoodwillCache.length > 0) {
         for (let i=0; i<10; ++i) {
           let item = shopgoodwillCache[i]
   
           getAveragePrice(item["title"], item["price"], item["link"])
+        }
+      }
+
+      setInterval(() => {
+        if (shopgoodwillCache.length > 0) {
+          for (let i=0; i<10; ++i) {
+            let item = shopgoodwillCache[i]
+    
+            getAveragePrice(item["title"], item["price"], item["link"])
+          }
         }
       }, 1800000)
 
