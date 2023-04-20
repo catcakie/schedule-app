@@ -257,15 +257,15 @@ function duplicateDailyRows() {
 
 			record.w2ui = { "style": "background-color: #E6F4F1" }
 		} else if (record.completion === false && record.category === '1. Physical') {
-			record.w2ui = { "style": "background-color: #DDD5B6" }
+			record.w2ui = { "style": "background-color: #97C0C4" }
 		} else if (record.completion === false && record.category === '2. Safety/Security') {
-			record.w2ui = { "style": "background-color: #99E1E6" }
+			record.w2ui = { "style": "background-color: #E58AA5" }
 		} else if (record.completion === false && record.category === '3. Social/Belonging') {
-			record.w2ui = { "style": "background-color: #CCC1E7" }
+			record.w2ui = { "style": "background-color: #D39C9D" }
 		} else if (record.completion === false && record.category === '4. Esteem') {
-			record.w2ui = { "style": "background-color: #EEC4A7" }
+			record.w2ui = { "style": "background-color: #9C89A9" }
 		} else if (record.completion === false && record.category === '5. Contributing') {
-			record.w2ui = { "style": "background-color: #EEC4A7" }
+			record.w2ui = { "style": "background-color: #BED883" }
 		} else if (record.frequency === 'Daily') {
 			record.w2ui = { "style": "background-color: #BFD6D9" }
 		} else if (record.completion === true && record.endDate == date) {
