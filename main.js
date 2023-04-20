@@ -284,7 +284,6 @@ client.login(token);
 // ---------------------- WEBSCRAPING CODE BELOW --------------------- \\
 const axios = require("axios")
 const cheerio = require("cheerio")
-const puppeteer = require("puppeteer")
 const YAML = require('yaml')
 
 const shopgoodwillBathAndBodyLink = "https://shopgoodwill.com/categories/bath-body"
@@ -295,7 +294,7 @@ const shopgoodwillScienceEducationLink = "https://shopgoodwill.com/categories/sc
 const shopgoodwillHeadphonesLink = "https://shopgoodwill.com/categories/listing?st=headphones&sg=&c=&s=&lp=0&hp=999999&sbn=&spo=false&snpo=false&socs=false&sd=false&sca=false&caed=4%2F1%2F2023&cadb=7&scs=false&sis=false&col=1&p=1&ps=40&desc=false&ss=0&UseBuyerPrefs=true&sus=false&cln=1&catIds=&pn=&wc=false&mci=false&hmt=false&layout=grid&ihp=true"
 let shopgoodwillCache = []
 
-getShopGoodwillPostTitles(shopgoodwillWomensClothingLink)
+//getShopGoodwillPostTitles(shopgoodwillFragrancesLink)
 
 function getAveragePrice(postTitle, currentPrice, link) {
     puppeteer
@@ -338,7 +337,7 @@ function getAveragePrice(postTitle, currentPrice, link) {
       });
       //output the scraped data
       
-      if (currentPrice/averagePrice < 1/3 && averagePrice > 100) {
+      if (currentPrice/averagePrice < 1/2 && averagePrice > 100) {
         client.channels.cache.get(`1077663232564678686`).send("\nAVG USED PRICE: $"+ Math.round(averagePrice) +"\nCURRENT PRICE: $"+Math.round(currentPrice)+"\n"+link)
       }
       //closs the browser
@@ -380,7 +379,8 @@ function getShopGoodwillPostTitles(link) {
                         postLinks.push({
                           title: postTitle,
                           link: postLink,
-                          price: postPrice
+                          price: postPrice,
+                          image: postImage
                         })
                       }
                   });
@@ -395,7 +395,7 @@ function getShopGoodwillPostTitles(link) {
               results.forEach(result => {
                 shopgoodwillCache.push(result)
                 
-                //console.log(result["title"])
+                client.channels.cache.get(`1077663232564678686`).send(result["link"]+"\n"+result["image"])
 
               })
           } else {
@@ -407,6 +407,7 @@ function getShopGoodwillPostTitles(link) {
           console.error(err);
       })
 
+      /*
       if (shopgoodwillCache.length > 0) {
         for (let i=0; i<10; ++i) {
           let item = shopgoodwillCache[i]
@@ -426,7 +427,7 @@ function getShopGoodwillPostTitles(link) {
       }, 1800000)
 
       setInterval(() => { shopgoodwillCache = [] }, 3600000*3)
-      
+      */
       await browser.close();
     }
   )
