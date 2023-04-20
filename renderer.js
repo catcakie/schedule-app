@@ -256,13 +256,15 @@ function duplicateDailyRows() {
 			record.endDate = date
 
 			record.w2ui = { "style": "background-color: #E6F4F1" }
-		} else if (record.completion === false && record.category === 'Hobby') {
+		} else if (record.completion === false && record.category === 'Physical') {
 			record.w2ui = { "style": "background-color: #DDD5B6" }
-		} else if (record.completion === false && record.category === 'Work') {
+		} else if (record.completion === false && record.category === 'Safety/Security') {
 			record.w2ui = { "style": "background-color: #99E1E6" }
-		} else if (record.completion === false && record.category === 'Care-taking') {
+		} else if (record.completion === false && record.category === 'Social/Belonging') {
 			record.w2ui = { "style": "background-color: #CCC1E7" }
-		} else if (record.completion === false && record.category === 'School') {
+		} else if (record.completion === false && record.category === 'Esteem') {
+			record.w2ui = { "style": "background-color: #EEC4A7" }
+		} else if (record.completion === false && record.category === 'Contributing') {
 			record.w2ui = { "style": "background-color: #EEC4A7" }
 		} else if (record.frequency === 'Daily') {
 			record.w2ui = { "style": "background-color: #BFD6D9" }
@@ -344,10 +346,12 @@ let config = {
 					break
 				case 'notes':
 					layout.html('main', notes)
+					//developmentCycle.selectType = 'cell'
 					break
 				
 				case 'grid':
 					layout.html('main', grid)
+					//developmentCycle.selectType = 'row'
 					break
 			}
 		}
@@ -417,7 +421,7 @@ let config = {
 			resizable: false,
 			editable: {
 				type: 'combo',
-				items: ['Journal', 'Info', 'Generosity', 'Care-taking', 'Hobby', 'Work', 'Deadline', 'School', 'Break']
+				items: ['Info', 'Physical', 'Safety/Security', 'Social/Belonging', 'Esteem', 'Contributing']
 			}
 		},
 		{
@@ -536,6 +540,8 @@ let config = {
 		],
 		records: [],
 		onClick(event) {
+			const recid = event.detail.recid
+			const column = event.detail.column
 
 		},
 		onChange: function (event) {
