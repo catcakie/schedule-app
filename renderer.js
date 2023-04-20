@@ -256,15 +256,15 @@ function duplicateDailyRows() {
 			record.endDate = date
 
 			record.w2ui = { "style": "background-color: #E6F4F1" }
-		} else if (record.completion === false && record.category === 'Physical') {
+		} else if (record.completion === false && record.category === '1. Physical') {
 			record.w2ui = { "style": "background-color: #DDD5B6" }
-		} else if (record.completion === false && record.category === 'Safety/Security') {
+		} else if (record.completion === false && record.category === '2. Safety/Security') {
 			record.w2ui = { "style": "background-color: #99E1E6" }
-		} else if (record.completion === false && record.category === 'Social/Belonging') {
+		} else if (record.completion === false && record.category === '3. Social/Belonging') {
 			record.w2ui = { "style": "background-color: #CCC1E7" }
-		} else if (record.completion === false && record.category === 'Esteem') {
+		} else if (record.completion === false && record.category === '4. Esteem') {
 			record.w2ui = { "style": "background-color: #EEC4A7" }
-		} else if (record.completion === false && record.category === 'Contributing') {
+		} else if (record.completion === false && record.category === '5. Contributing') {
 			record.w2ui = { "style": "background-color: #EEC4A7" }
 		} else if (record.frequency === 'Daily') {
 			record.w2ui = { "style": "background-color: #BFD6D9" }
@@ -361,7 +361,7 @@ let config = {
 		sortData: [ { field: 'completion', direction: 'asc' },
 		{ field: 'startDate', direction: 'desc' },
 		{ field: 'start', direction: 'desc' },
-		{ field: 'category', direction: 'desc' },
+		{ field: 'category', direction: 'asc' },
 		{ field: 'requirement', direction: 'asc' },
 		{ field: 'design', direction: 'asc' } ],
 		liveSearch: true,
@@ -421,7 +421,7 @@ let config = {
 			resizable: false,
 			editable: {
 				type: 'combo',
-				items: ['Info', 'Physical', 'Safety/Security', 'Social/Belonging', 'Esteem', 'Contributing']
+				items: ['Info', '1. Physical', '2. Safety/Security', '3. Social/Belonging', '4. Esteem', '5. Contributing']
 			}
 		},
 		{
