@@ -449,61 +449,6 @@ function getAveragePrice(postTitle, currentPrice, link) {
   });
 }
 
-// grab news from hacker news
-getHackerNewsPosts()
-
-function getHackerNewsPosts() {
-  puppeteer
-  .launch ()
-  .then (async browser => {
-  
-    //open a new page for puppeteer, go to the website, then wait for the site's body contents to load
-    const page = await browser.newPage ();
-    await page.goto ('https://news.ycombinator.com/');
-    await page.waitForSelector ('body');
-  
-    //Get the "viewport" of the page, as reported by the page (page.evaluate)
-    let grabPosts = await page.evaluate (async () => {
-    // find the very first element's classes. scroll to the right to try to find an english word
-    let allPosts = document.body.querySelectorAll ('.titleline');
-      
-    //store the post items in an array then select to get the descriptions from each
-    scrapeItems = [];
-    let recid = 0
-    allPosts.forEach (item => {
-      const postTitle = item.innerText
-      const postLink = item.firstChild['href']
-        
-        if (postTitle !== '' && postLink !== '') {
-          scrapeItems.push ({
-            recid: recid,
-            title: postTitle,
-            link: postLink,
-          });
-          ++recid
-        }
-      });
-
-      return scrapeItems;
-    });
-    //output the scraped data
-    if (grabPosts !== null || grabPosts.length !== 0) {
-      // doesn't work
-      win.webContents.send('sendHackerNewsPosts', grabPosts)
-    }
-    //closs the browser
-    await browser.close ();
-  })
-  //handling any errors
-  .catch (function (err) {
-    console.error (err);
-  });
-}
-
-
-// -------------- (end grab news)
-
-
 let postTitleCache = []
 
 function getNewRedditPosts() {
