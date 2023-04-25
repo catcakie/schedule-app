@@ -333,6 +333,10 @@ let config = {
 			{
 				id: 'grid',
 				text: 'Grid'
+			},
+			{
+				id: 'newsTab',
+				text: 'News'
 			}
 			],
 			onCollapse(event) {
@@ -346,12 +350,13 @@ let config = {
 					break
 				case 'notes':
 					layout.html('main', notes)
-					//developmentCycle.selectType = 'cell'
 					break
 				
 				case 'grid':
 					layout.html('main', grid)
-					//developmentCycle.selectType = 'row'
+					break
+				case 'newsTab':
+					layout.html('main', newsTab)
 					break
 			}
 		}
@@ -610,7 +615,54 @@ let config = {
             await event.complete
             console.log('select', event.detail, this.getSelection())
         }
-    }
+    },
+	newsTab: {
+		name: 'newsTab',
+		sortData: [ { field: 'datePosted', direction: 'desc' } ],
+		liveSearch: true,
+		show: {
+			toolbar: true,
+			footer: true
+		},
+		columns: [{
+			field: 'recid',
+			text: '<div style="text-align: center;">ID</div>',
+			size: '30px',
+			sortable: true,
+			resizable: false
+		},
+		{
+			field: 'title',
+			text: '<div style="text-align: center;">Title</div>',
+			size: '50%',
+			sortable: true,
+			resizable: false
+		},
+		{
+			field: 'link',
+			text: '<div style="text-align: center;">Link</div>',
+			size: '10%',
+			sortable: true,
+			resizable: false
+		},
+		{
+			field: 'datePosted',
+			text: '<div style="text-align: center;">Date Posted</div>',
+			size: '10%',
+			sortable: true,
+			sortMode: 'natural',
+			searchable: { operator: 'begins with' },
+			resizable: false
+		}
+		],
+		records: [],
+		onClick(event) {
+		},
+		onChange: function (event) {
+		},
+		onComplete: function(event) {
+		}  
+	}
 }
 
 // initialization
@@ -619,6 +671,7 @@ let sidebar = new w2sidebar(config.sidebar)
 let developmentCycle = new w2grid(config.developmentCycle)
 let notes = new w2form(config.notes)
 let grid = new w2grid(config.grid)
+let newsTab = new w2grid(config.newsTab)
 
 layout.render('#main')
 layout.html('left', sidebar)
