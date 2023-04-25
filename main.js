@@ -324,7 +324,7 @@ function getShopGoodwillPostTitles(link) {
                       let postTitle = item.text
                       let postLink = "https://shopgoodwill.com" + item.getAttribute('href')
                       let postImage = item.parentElement.parentElement.previousElementSibling.firstChild.firstChild.src
-                      let postTimeRemaining = item.parentElement.parentElement.parentElement.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.nextElementSibling.textContent
+                      let postTimeRemaining = item.parentElement.parentElement.parentElement.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.nextElementSibling.textContent.slice(16,-2)
 
                       if (!shopgoodwillCache.includes(item[postTitle])) { // && postPrice/averagePrice < 1/3
                         postLinks.push({
@@ -345,9 +345,16 @@ function getShopGoodwillPostTitles(link) {
       await Promise.all(grabPosts).then((results) => {
           if (grabPosts.length > 0) {
               results.forEach(result => {
-                shopgoodwillCache.push(result)
-                
-                client.channels.cache.get(`1077663232564678686`).send(result["link"]+"\n$"+result["price"]+"\n"+result["time_remaining"]+"\n"+result["image"])
+
+                const timeRemaining = result["time_remaining"]
+
+                // I only want to be notified of posts with less than 10 minutes of time left
+                // conveniently, these are only posts that have seconds in them
+
+                if (timeRemaining.includes("s")) {
+                  shopgoodwillCache.push(result)
+                  client.channels.cache.get(`1077663232564678686`).send(result["link"]+"\n$"+result["price"]+"\n Time remaining: "+result["time_remaining"]+"\n"+result["image"])
+                }
 
               })
           } else {
