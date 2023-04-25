@@ -280,6 +280,7 @@ client.login(token);
 // ---------------------- WEBSCRAPING CODE BELOW --------------------- \\
 const axios = require("axios")
 const cheerio = require("cheerio")
+const puppeteer = require("puppeteer")
 const YAML = require('yaml')
 
 const shopgoodwillBathAndBodyLink = "https://shopgoodwill.com/categories/bath-body"
@@ -294,7 +295,7 @@ let shopgoodwillCache = []
 
 getShopGoodwillPostTitles(shopgoodwill14kBraceletLink)
 
-setInterval(getShopGoodwillPostTitles(shopgoodwill14kBraceletLink), 600000)
+setInterval(() => { getShopGoodwillPostTitles(shopgoodwill14kBraceletLink) }, 600000)
 
 setInterval(() => { shopgoodwillCache = [] }, 3600000*3)
 
