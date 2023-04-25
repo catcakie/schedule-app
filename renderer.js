@@ -125,6 +125,12 @@ window.api.save((event, value) => {
 	developmentCycle.stateReset()
 })
 
+// load hacker news posts
+window.api.sendHackerNewsPosts((event, value) => {
+	//newsTab.records.push(value)
+	alert(value)
+})
+
 // grid helper functions
 function getSpreadsheetTitle() {
 	w2prompt({
@@ -618,7 +624,6 @@ let config = {
     },
 	newsTab: {
 		name: 'newsTab',
-		sortData: [ { field: 'datePosted', direction: 'desc' } ],
 		liveSearch: true,
 		show: {
 			toolbar: true,
@@ -643,15 +648,6 @@ let config = {
 			text: '<div style="text-align: center;">Link</div>',
 			size: '10%',
 			sortable: true,
-			resizable: false
-		},
-		{
-			field: 'datePosted',
-			text: '<div style="text-align: center;">Date Posted</div>',
-			size: '10%',
-			sortable: true,
-			sortMode: 'natural',
-			searchable: { operator: 'begins with' },
 			resizable: false
 		}
 		],
