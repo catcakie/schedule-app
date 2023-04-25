@@ -299,60 +299,6 @@ setInterval(() => { getShopGoodwillPostTitles(shopgoodwill14kBraceletLink) }, 60
 
 setInterval(() => { shopgoodwillCache = [] }, 3600000*3)
 
-
-function getAveragePrice(postTitle, currentPrice, link) {
-    puppeteer
-    .launch ()
-    .then (async browser => {
-    
-      //open a new page for puppeteer, go to the website, then wait for the site's body contents to load
-      const page = await browser.newPage ();
-      await page.goto ('https://www.google.com/search?q='+postTitle+'&tbm=shop&tbs=mr:1,new:3');
-      await page.waitForSelector ('.QIrs8');
-    
-      //Get the "viewport" of the page, as reported by the page (page.evaluate)
-      let averagePrice = await page.evaluate (() => {
-      
-      let allPosts = document.body.querySelectorAll ('.QIrs8');
-      
-      let sum = 0
-        let numberOfItems = 0
-      
-      for (let i=0; i<allPosts.length; ++i) {
-  
-        let unsanitizedPrice = allPosts[i].firstChild.innerText
-    
-        if (unsanitizedPrice) {
-    
-          const currentPrice = (unsanitizedPrice.match(/\$((?:\d|\,)*\.?\d+)/g) || [])[0]
-    
-          if (currentPrice) {
-          
-            const priceValue = Number(currentPrice.replace(/[^0-9.-]+/g,""))
-          
-            sum += priceValue
-            ++numberOfItems
-            
-          }
-        }
-      }
-  
-        return (sum / numberOfItems)
-      });
-      //output the scraped data
-      
-      if (currentPrice/averagePrice < 1/2 && averagePrice > 100) {
-        client.channels.cache.get(`1077663232564678686`).send("\nAVG USED PRICE: $"+ Math.round(averagePrice) +"\nCURRENT PRICE: $"+Math.round(currentPrice)+"\n"+link)
-      }
-      //closs the browser
-      await browser.close ();
-    })
-    //handling any errors
-    .catch (function (err) {
-      console.error (err);
-    });
-  }
-
 function getShopGoodwillPostTitles(link) {
   puppeteer
   .launch()
@@ -378,13 +324,15 @@ function getShopGoodwillPostTitles(link) {
                       let postTitle = item.text
                       let postLink = "https://shopgoodwill.com" + item.getAttribute('href')
                       let postImage = item.parentElement.parentElement.previousElementSibling.firstChild.firstChild.src
+                      let postTimeRemaining = item.parentElement.parentElement.parentElement.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.nextElementSibling.textContent
 
                       if (!shopgoodwillCache.includes(item[postTitle])) { // && postPrice/averagePrice < 1/3
                         postLinks.push({
                           title: postTitle,
                           link: postLink,
                           price: postPrice,
-                          image: postImage
+                          image: postImage,
+                          time_remaining: postTimeRemaining
                         })
                       }
                   });
@@ -399,7 +347,7 @@ function getShopGoodwillPostTitles(link) {
               results.forEach(result => {
                 shopgoodwillCache.push(result)
                 
-                client.channels.cache.get(`1077663232564678686`).send(result["link"]+"\n"+result["image"])
+                client.channels.cache.get(`1077663232564678686`).send(result["link"]+"\n$"+result["price"]+"\n"+result["time_remaining"]+"\n"+result["image"])
 
               })
           } else {
@@ -438,6 +386,59 @@ function getShopGoodwillPostTitles(link) {
   //handling any errors
   .catch(function(err) {
       console.error(err);
+  });
+}
+
+function getAveragePrice(postTitle, currentPrice, link) {
+  puppeteer
+  .launch ()
+  .then (async browser => {
+  
+    //open a new page for puppeteer, go to the website, then wait for the site's body contents to load
+    const page = await browser.newPage ();
+    await page.goto ('https://www.google.com/search?q='+postTitle+'&tbm=shop&tbs=mr:1,new:3');
+    await page.waitForSelector ('.QIrs8');
+  
+    //Get the "viewport" of the page, as reported by the page (page.evaluate)
+    let averagePrice = await page.evaluate (() => {
+    
+    let allPosts = document.body.querySelectorAll ('.QIrs8');
+    
+    let sum = 0
+      let numberOfItems = 0
+    
+    for (let i=0; i<allPosts.length; ++i) {
+
+      let unsanitizedPrice = allPosts[i].firstChild.innerText
+  
+      if (unsanitizedPrice) {
+  
+        const currentPrice = (unsanitizedPrice.match(/\$((?:\d|\,)*\.?\d+)/g) || [])[0]
+  
+        if (currentPrice) {
+        
+          const priceValue = Number(currentPrice.replace(/[^0-9.-]+/g,""))
+        
+          sum += priceValue
+          ++numberOfItems
+          
+        }
+      }
+    }
+
+      return (sum / numberOfItems)
+    });
+    //output the scraped data
+    
+    if (currentPrice/averagePrice < 1/2 && averagePrice > 100) {
+      client.channels.cache.get(`1077663232564678686`).send("\nAVG USED PRICE: $"+ Math.round(averagePrice) +"\nCURRENT PRICE: $"+Math.round(currentPrice)+"\n"+link)
+    }
+    //closs the browser
+    await browser.close ();
+  })
+  //handling any errors
+  .catch (function (err) {
+    console.error (err);
   });
 }
 
