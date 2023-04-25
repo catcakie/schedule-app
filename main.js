@@ -288,9 +288,16 @@ const shopgoodwillWomensClothingLink = "https://shopgoodwill.com/categories/list
 const shopgoodwillAppliancesLink = "https://shopgoodwill.com/categories/appliances"
 const shopgoodwillScienceEducationLink = "https://shopgoodwill.com/categories/science-education"
 const shopgoodwillHeadphonesLink = "https://shopgoodwill.com/categories/listing?st=headphones&sg=&c=&s=&lp=0&hp=999999&sbn=&spo=false&snpo=false&socs=false&sd=false&sca=false&caed=4%2F1%2F2023&cadb=7&scs=false&sis=false&col=1&p=1&ps=40&desc=false&ss=0&UseBuyerPrefs=true&sus=false&cln=1&catIds=&pn=&wc=false&mci=false&hmt=false&layout=grid&ihp=true"
+
+const shopgoodwill14kBraceletLink = "https://shopgoodwill.com/categories/listing?st=14k%20bracelet&sg=Keyword&c=&s=&lp=0&hp=50&sbn=&spo=false&snpo=false&socs=false&sd=false&sca=false&caed=4%2F24%2F2023&cadb=7&scs=false&sis=false&col=1&p=1&ps=40&desc=false&ss=0&UseBuyerPrefs=true&sus=false&cln=1&catIds=&pn=&wc=false&mci=false&hmt=false&layout=grid&ihp="
 let shopgoodwillCache = []
 
-//getShopGoodwillPostTitles(shopgoodwillFragrancesLink)
+getShopGoodwillPostTitles(shopgoodwill14kBraceletLink)
+
+setInterval(getShopGoodwillPostTitles(shopgoodwill14kBraceletLink), 600000)
+
+setInterval(() => { shopgoodwillCache = [] }, 3600000*3)
+
 
 function getAveragePrice(postTitle, currentPrice, link) {
     puppeteer
