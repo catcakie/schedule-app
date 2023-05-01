@@ -210,6 +210,23 @@ const test = {
 };
 commands.push(test.data.toJSON())
 
+const listings = {
+  data: new SlashCommandBuilder()
+      .setName('listings')
+      .setDescription('Posts 1 hr auction listings <$50'),
+  async execute(interaction) {
+      await interaction.reply("Command received");
+      getShopGoodwillPostTitles(shopgoodwill14kLink)
+      getShopGoodwillPostTitles(shopgoodwillWomensClothingLink)
+      getShopGoodwillPostTitles(shopgoodwillAppliancesLink)
+      getShopGoodwillPostTitles(shopgoodwillHeadphonesLink)
+      getShopGoodwillPostTitles(shopgoodwillFragrancesLink)
+      client.channels.cache.get(`1077663232564678686`).send("Script executed")
+  },
+};
+commands.push(listings.data.toJSON())
+
+
 // Construct and prepare an instance of the REST module
 const rest = new REST({
     version: '10'
@@ -245,6 +262,7 @@ for (const file of commandFiles) {
 
 // slash commands related to app here
 client.commands.set(test.data.name, test)
+client.commands.set(listings.data.name, listings)
 
 client.once(Events.ClientReady, () => {
     console.log('Ready!');
@@ -293,11 +311,12 @@ const shopgoodwillHeadphonesLink = "https://shopgoodwill.com/categories/listing?
 const shopgoodwill14kBraceletLink = "https://shopgoodwill.com/categories/listing?st=14k%20bracelet&sg=Keyword&c=&s=&lp=0&hp=50&sbn=&spo=false&snpo=false&socs=false&sd=false&sca=false&caed=4%2F24%2F2023&cadb=7&scs=false&sis=false&col=1&p=1&ps=40&desc=false&ss=0&UseBuyerPrefs=true&sus=false&cln=1&catIds=&pn=&wc=false&mci=false&hmt=false&layout=grid&ihp="
 const shopgoodwill14kLink = "https://shopgoodwill.com/categories/listing?st=14k&sg=Keyword&c=&s=&lp=0&hp=50&sbn=&spo=false&snpo=false&socs=false&sd=false&sca=false&caed=4%2F26%2F2023&cadb=7&scs=false&sis=false&col=1&p=1&ps=40&desc=false&ss=0&UseBuyerPrefs=true&sus=false&cln=1&catIds=&pn=&wc=false&mci=false&hmt=false&layout=grid&ihp="
 let shopgoodwillCache = []
-
+/*
 getShopGoodwillPostTitles(shopgoodwill14kLink)
 getShopGoodwillPostTitles(shopgoodwillWomensClothingLink)
 getShopGoodwillPostTitles(shopgoodwillAppliancesLink)
 getShopGoodwillPostTitles(shopgoodwillHeadphonesLink)
+getShopGoodwillPostTitles(shopgoodwillFragrancesLink)
 
 setInterval(() => { 
   getShopGoodwillPostTitles(shopgoodwill14kLink)
@@ -307,6 +326,7 @@ setInterval(() => {
  }, 600000)
 
 setInterval(() => { shopgoodwillCache = [] }, 3600000*3)
+*/
 
 function getShopGoodwillPostTitles(link) {
   puppeteer
