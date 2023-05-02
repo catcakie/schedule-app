@@ -220,7 +220,7 @@ const listings = {
       getShopGoodwillPostTitles(shopgoodwillWomensClothingLink)
       getShopGoodwillPostTitles(shopgoodwillAppliancesLink)
       getShopGoodwillPostTitles(shopgoodwillHeadphonesLink)
-      getShopGoodwillPostTitles(shopgoodwillFragrancesLink)
+      getShopGoodwillPostTitles(shopgoodwillBathAndBodyLink)
       client.channels.cache.get(`1077663232564678686`).send("Script executed")
   },
 };
