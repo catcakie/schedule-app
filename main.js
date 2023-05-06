@@ -355,7 +355,7 @@ function getShopGoodwillPostTitles(link) {
                       let postImage = item.parentElement.parentElement.previousElementSibling.firstChild.firstChild.src
                       let postTimeRemaining = item.parentElement.parentElement.parentElement.firstElementChild.nextElementSibling.nextElementSibling.firstElementChild.nextElementSibling.textContent.slice(16,-2)
 
-                      if (!shopgoodwillCache.includes(item[postTitle])) { // && postPrice/averagePrice < 1/3
+                      if (!shopgoodwillCache.includes(item[postTitle]) && postPrice < 50) { // && postPrice/averagePrice < 1/3
                         postLinks.push({
                           title: postTitle,
                           link: postLink,
