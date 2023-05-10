@@ -1,6 +1,6 @@
 ### My Personal Schedule App
 
-As my responsibilities grew, I needed better tools to manage everything. Most of all, my time. But everything else is also fantastic.
+As my responsibilities grew, I needed better tools to manage everything.
 
 #### What I personally use this for
 
