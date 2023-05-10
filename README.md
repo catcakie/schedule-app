@@ -27,7 +27,7 @@ Keeping track of:
 
 ###### Some Pics
 
-<img src="https://user-images.githubusercontent.com/60787559/221429296-2e8f2ebd-4afc-44d4-8645-595491f8d2e2.png" alt="image" style="zoom: 33%;" />
+<img src="https://github.com/catcakie/schedule-app/assets/60787559/309d55a7-b0b4-47fa-b356-2018c76740ed" alt="image" style="zoom: 33%;" />
 <img src="https://user-images.githubusercontent.com/60787559/221429315-8852a1fb-0c50-47ae-9e37-2b060f60af94.png" alt="image" style="zoom: 33%;" />
 <img src="https://user-images.githubusercontent.com/60787559/221429328-86bba8c3-d358-44ca-9f0d-dac442f3c1c9.png" alt="image" style="zoom: 33%;" />
 <img src="https://user-images.githubusercontent.com/60787559/221429345-ca650e98-6421-43e4-997a-59810d4690ba.png" alt="image" style="zoom: 33%;" />
