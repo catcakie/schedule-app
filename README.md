@@ -24,6 +24,17 @@ Keeping track of:
   - Item notifier
 - A simple textbox (sometimes you need it)
 
+#### How to setup
+
+1. Download the project in a zip folder
+2. Extract it
+3. Copy the filepath to the folder
+4. Download Node.js
+6. Open Command Prompt
+7. Type `cd PASTE_FILE_PATH_HERE` to navigate to the folder
+8. Type `npm install` to install the dependencies needed for the project
+9. Type `npm start electron`
+
 
 ###### Some Pics
 
