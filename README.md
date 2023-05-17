@@ -24,11 +24,11 @@ Keeping track of:
   - Item notifier
 - A simple textbox (sometimes you need it)
 
-#### How to setup
+#### How to set up
 
 1. Download the project in a zip folder
 2. Extract it
-3. Copy the filepath to the folder
+3. Copy the folder's filepath
 4. Download Node.js
 6. Open Command Prompt
 7. Type `cd PASTE_FILE_PATH_HERE` to navigate to the folder
