@@ -35,17 +35,18 @@ Keeping track of:
 8. Type `npm install` to install the dependencies needed for the project
 
 **Optional Discord Bot functionality:**
+
 10. Create a new file named `config.json` (make sure you have file extensions unhidden, especially if setting this up on a new PC)
-11. Open Discord
-12. Go to **User Settings**
-13. Scroll down to **Advanced** (under **APP SETTINGS**)
-14. Enable **Developer Mode**
-15. On your browser, go to [Developer Portal](https://discord.com/developers/applications)
-16. Click **New Application**
-17. Type any name
-18. Click **Create**
-19. Open the **config.json** file for editing
-20. Copy & paste the text below into the file:
+12. Open Discord
+13. Go to **User Settings**
+14. Scroll down to **Advanced** (under **APP SETTINGS**)
+15. Enable **Developer Mode**
+16. On your browser, go to [Developer Portal](https://discord.com/developers/applications)
+17. Click **New Application**
+18. Type any name
+19. Click **Create**
+20. Open the **config.json** file for editing
+21. Copy & paste the text below into the file:
 
 ```json
   {
