@@ -33,7 +33,7 @@ Keeping track of:
 6. Open Command Prompt
 7. Type `cd PASTE_FILE_PATH_HERE` to navigate to the folder
 8. Type `npm install` to install the dependencies needed for the project
-9. Type `npm start electron`
+9. Type `npm start electron` to run the application
 
 
 ###### Some Pics
