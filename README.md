@@ -37,7 +37,7 @@ Keeping track of:
 **Optional Discord Bot functionality:**
 
 10. Create a new file named `config.json` (make sure you have file extensions unhidden, especially if setting this up on a new PC)
-12. Open Discord
+12. Open **Discord**
 13. Go to **User Settings**
 14. Scroll down to **Advanced** (under **APP SETTINGS**)
 15. Enable **Developer Mode**
@@ -55,6 +55,21 @@ Keeping track of:
       "guildId": ""
   }
 ```
+22. Fill in between the quotation marks. Here's where to find each thing:
+
+**Client ID**
+
+- In **Developer Portal**, Click on **OAuth2**
+
+**Token**
+
+- In **Developer Portal**, Click on **Bot**
+- Click **Reset Token**
+
+**Guild ID**
+
+- On **Discord**, right-click your **Server icon**
+- Click **Copy Server ID**
 
 12. Type `npm start` to run the application
 
