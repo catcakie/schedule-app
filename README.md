@@ -37,10 +37,6 @@ Keeping track of:
 **Optional Discord Bot functionality:**
 
 10. Create a new file named `config.json` (make sure you have file extensions unhidden, especially if setting this up on a new PC)
-12. Open **Discord**
-13. Go to **User Settings**
-14. Scroll down to **Advanced** (under **APP SETTINGS**)
-15. Enable **Developer Mode**
 16. On your browser, go to [Developer Portal](https://discord.com/developers/applications)
 17. Click **New Application**
 18. Type any name
@@ -68,7 +64,12 @@ Keeping track of:
 
 **Guild ID**
 
-- On **Discord**, right-click your **Server icon**
+- Open **Discord**
+- Go to **User Settings**
+- Scroll down to **Advanced** (under **APP SETTINGS**)
+- Enable **Developer Mode**
+- Exit **User Settings**
+- Right-click your **Server icon**
 - Click **Copy Server ID**
 
 12. Type `npm start` to run the application
