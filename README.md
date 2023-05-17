@@ -26,23 +26,23 @@ Keeping track of:
 
 #### How to set up
 
-1. Download the project in a zip folder
-2. Extract it
-3. Copy the folder's filepath
-4. Download [Node.js](https://nodejs.org/en) (choose the recommended version)
-6. Open **Command Prompt**
-7. Type `cd PASTE_FILE_PATH_HERE` to navigate to the folder
-8. Type `npm install` to install the dependencies needed for the project
+1. Download [Node.js](https://nodejs.org/en) (choose the recommended version)
+2. Download the project in a zip folder
+3. Extract it
+4. Copy the folder's filepath
+5. Open **Command Prompt**
+6. Type `cd PASTE_FILE_PATH_HERE` to navigate to the folder
+7. Type `npm install` to install the dependencies needed for the project
 
 **Optional Discord Bot functionality:**
 
-9. On your browser, go to [Developer Portal](https://discord.com/developers/applications)
-10. Click **New Application**
-11. Type any name
-12. Click **Create**
-13. In the **Schedule App folder**, create a new file named `config.json`
-14. Open the **config.json** file for editing
-15. Copy & paste the text below into the file:
+8. On your browser, go to [Developer Portal](https://discord.com/developers/applications)
+9. Click **New Application**
+10. Type any name
+11. Click **Create**
+12. In the **Schedule App folder**, create a new file named `config.json`
+13. Open the **config.json** file for editing
+14. Copy & paste the text below into the file:
 
 ```json
   {
@@ -51,7 +51,7 @@ Keeping track of:
       "guildId": ""
   }
 ```
-16. Fill in between the quotation marks. Here's where to find each thing:
+15. Fill in between the quotation marks. Here's where to find each thing:
 
 **Client ID**
 
@@ -72,7 +72,7 @@ Keeping track of:
 - Right-click your **Server icon**
 - Click **Copy Server ID**
 
-17. Type `npm start` to run the application
+16. Type `npm start` to run the application
 
 
 ###### Some Pics
