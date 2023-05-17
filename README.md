@@ -35,7 +35,7 @@ Keeping track of:
 8. Type `npm install` to install the dependencies needed for the project
 9. Create a new file named `config.json` (make sure you have file extensions unhidden, especially if setting this up on a new PC)
 10. 
-11. Type `npm start electron` to run the application
+11. Type `npm start` to run the application
 
 
 ###### Some Pics
