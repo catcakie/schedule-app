@@ -12,7 +12,7 @@ Keeping track of:
 - My clothes
 - Pet health
 - Deadlines
-)
+
 #### Features
 
 - Live Search
