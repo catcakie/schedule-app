@@ -29,13 +29,33 @@ Keeping track of:
 1. Download the project in a zip folder
 2. Extract it
 3. Copy the folder's filepath
-4. Download **Node.js**
-6. Open Command Prompt
+4. Download [Node.js](https://nodejs.org/en) (choose the recommended version)
+6. Open **Command Prompt**
 7. Type `cd PASTE_FILE_PATH_HERE` to navigate to the folder
 8. Type `npm install` to install the dependencies needed for the project
-9. Create a new file named `config.json` (make sure you have file extensions unhidden, especially if setting this up on a new PC)
-10. 
-11. Type `npm start` to run the application
+
+**Optional Discord Bot functionality:**
+10. Create a new file named `config.json` (make sure you have file extensions unhidden, especially if setting this up on a new PC)
+11. Open Discord
+12. Go to **User Settings**
+13. Scroll down to **Advanced** (under **APP SETTINGS**)
+14. Enable **Developer Mode**
+15. On your browser, go to [Developer Portal](https://discord.com/developers/applications)
+16. Click **New Application**
+17. Type any name
+18. Click **Create**
+19. Open the **config.json** file for editing
+20. Copy & paste the text below into the file:
+
+```json
+  {
+      "token": "",
+      "clientId": "",
+      "guildId": ""
+  }
+```
+
+12. Type `npm start` to run the application
 
 
 ###### Some Pics
