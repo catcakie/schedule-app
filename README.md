@@ -36,13 +36,13 @@ Keeping track of:
 
 **Optional Discord Bot functionality:**
 
-10. Create a new file named `config.json` (make sure you have file extensions unhidden, especially if setting this up on a new PC)
-16. On your browser, go to [Developer Portal](https://discord.com/developers/applications)
-17. Click **New Application**
-18. Type any name
-19. Click **Create**
-20. Open the **config.json** file for editing
-21. Copy & paste the text below into the file:
+9. Create a new file named `config.json` (make sure you have file extensions unhidden, especially if setting this up on a new PC)
+10. On your browser, go to [Developer Portal](https://discord.com/developers/applications)
+11. Click **New Application**
+12. Type any name
+13. Click **Create**
+14. Open the **config.json** file for editing
+15. Copy & paste the text below into the file:
 
 ```json
   {
@@ -51,7 +51,7 @@ Keeping track of:
       "guildId": ""
   }
 ```
-22. Fill in between the quotation marks. Here's where to find each thing:
+16. Fill in between the quotation marks. Here's where to find each thing:
 
 **Client ID**
 
@@ -72,7 +72,7 @@ Keeping track of:
 - Right-click your **Server icon**
 - Click **Copy Server ID**
 
-12. Type `npm start` to run the application
+17. Type `npm start` to run the application
 
 
 ###### Some Pics
