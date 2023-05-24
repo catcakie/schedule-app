@@ -9,7 +9,7 @@ Keeping track of:
 - Skincare progress (with pics)
 - Money spent
 - My wish list
-- My clothes
+- Medication
 - Pet health
 - Deadlines
 
