@@ -217,10 +217,6 @@ const listings = {
   async execute(interaction) {
       await interaction.reply("Command received");
       getShopGoodwillPostTitles(shopgoodwill14kLink)
-      getShopGoodwillPostTitles(shopgoodwillWomensClothingLink)
-      getShopGoodwillPostTitles(shopgoodwillAppliancesLink)
-      getShopGoodwillPostTitles(shopgoodwillHeadphonesLink)
-      getShopGoodwillPostTitles(shopgoodwillBathAndBodyLink)
       client.channels.cache.get(`1077663232564678686`).send("Script executed")
   },
 };
