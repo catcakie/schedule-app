@@ -75,6 +75,9 @@ Keeping track of:
 16. Type `npm start` to run the application
 
 
+If you want to save your spreadsheets to Google Sheets, you must have a `credentials.json` file
+
+
 ###### Some Pics
 
 <img src="https://github.com/catcakie/schedule-app/assets/60787559/309d55a7-b0b4-47fa-b356-2018c76740ed" alt="image" style="zoom: 33%;" />
