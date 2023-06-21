@@ -256,6 +256,12 @@ function duplicateDailyRows() {
 			record.endDate = date
 
 			record.w2ui = { "style": "background-color: #E6F4F1" }
+
+			let currentDate = w2utils.formatDate((new Date()), 'mm/dd').replace(/(^|-|\/)0+/g, "$1")
+			
+			if ((record.requirement).includes(currentDate)) {
+				record.w2ui = { "style": "background-color: #FE5D26" }
+			}
 		} else if (record.completion === false && record.category === '1. Physical') {
 			record.w2ui = { "style": "background-color: #97C0C4" }
 		} else if (record.completion === false && record.category === '2. Safety/Security') {
