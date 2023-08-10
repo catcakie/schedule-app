@@ -199,7 +199,6 @@ function duplicateRow(grid, row, design) {
 	clone.recid = nextLineNum
 	clone.completion = false
 	clone.frequency = 'Once'
-	clone.immerse = ''
 	clone.development = ''
 	clone.design = design
 	clone.testing = ''
@@ -282,6 +281,7 @@ function duplicateDailyRows() {
 			record.w2ui = { "style": "" }
 		}
 		// execute any logic needed over all rows
+
 	})
 
 	// records created today based on their design property (arary)
@@ -425,7 +425,7 @@ let config = {
 			resizable: false,
 			editable: {
 				type: 'combo',
-				items: ['Info', '1. Physical', '2. Safety/Security', '3. Social/Belonging', '4. Esteem', '5. Contributing']
+				items: ['Info', 'Purchase', '1. Physical', '2. Safety/Security', '3. Social/Belonging', '4. Esteem', '5. Contributing']
 			}
 		},
 		{
