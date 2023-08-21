@@ -455,7 +455,7 @@ let config = {
 			resizable: false,
 			editable: {
 				type: 'combo',
-				items: ['Clean/Remove', 'Organize/Rearrange/Move', 'Add']
+				items: ['Clean/Remove', 'Organize/Rearrange/Move', 'Add/Connect']
 			},
 			tooltip: 'Generate ideas to test',
 			info: {
