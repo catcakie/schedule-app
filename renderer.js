@@ -258,7 +258,7 @@ function duplicateDailyRows() {
 
 			let currentDate = w2utils.formatDate((new Date()), 'mm/dd').replace(/(^|-|\/)0+/g, "$1")
 			
-			if ((record.requirement).includes(currentDate)) {
+			if ((record.requirement) === (currentDate)) {
 				record.w2ui = { "style": "background-color: #FE5D26" }
 			}
 		} else if (record.completion === false && record.category === '1. Physical') {
