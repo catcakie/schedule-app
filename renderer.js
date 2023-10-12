@@ -454,8 +454,11 @@ let config = {
 			searchable: { operator: 'contains' },
 			resizable: false,
 			editable: {
+				type: 'text'
+				/*
 				type: 'combo',
 				items: ['Clean/Remove', 'Organize/Rearrange/Move', 'Add/Connect']
+				*/
 			},
 			tooltip: 'Generate ideas to test',
 			info: {
