@@ -213,10 +213,11 @@ commands.push(test.data.toJSON())
 const listings = {
   data: new SlashCommandBuilder()
       .setName('listings')
-      .setDescription('Posts 1 hr auction listings <$50'),
+      .setDescription('Posts customized listings (adjust in code)'),
   async execute(interaction) {
       await interaction.reply("Command received");
-      getShopGoodwillPostTitles(shopgoodwillPetSuppliesLink)
+      //getShopGoodwillPostTitles(shopgoodwill14kLink)
+      getFacebookMarketplaceImages("https://www.facebook.com/marketplace/107357592626761/search?maxPrice=20&deliveryMethod=local_pick_up&sortBy=creation_time_descend&query=chair&exact=false&radius=10")
       client.channels.cache.get(`1077663232564678686`).send("Script executed")
   },
 };
@@ -297,50 +298,19 @@ const cheerio = require("cheerio")
 const puppeteer = require("puppeteer")
 const YAML = require('yaml')
 
-const shopgoodwillBathAndBodyLink = "https://shopgoodwill.com/categories/bath-body"
-const shopgoodwillFragrancesLink = "https://shopgoodwill.com/categories/listing?st=&sg=&c=337&s=&lp=0&hp=999999&sbn=&spo=false&snpo=false&socs=false&sd=false&sca=false&caed=3%2F31%2F2023&cadb=7&scs=false&sis=false&col=1&p=1&ps=40&desc=false&ss=0&UseBuyerPrefs=true&sus=false&cln=2&catIds=-1,336,337&pn=&wc=false&mci=false&hmt=false&layout=grid&ihp="
-const shopgoodwillWomensClothingLink = "https://shopgoodwill.com/categories/listing?st=&sg=&c=27&s=&lp=0&hp=999999&sbn=&spo=false&snpo=false&socs=false&sd=false&sca=false&caed=3%2F30%2F2023&cadb=7&scs=false&sis=false&col=1&p=1&ps=40&desc=false&ss=0&UseBuyerPrefs=true&sus=false&cln=2&catIds=-1,10,27&pn=&wc=false&mci=false&hmt=false&layout=grid&ihp="
-const shopgoodwillAppliancesLink = "https://shopgoodwill.com/categories/appliances"
-const shopgoodwillScienceEducationLink = "https://shopgoodwill.com/categories/science-education"
-const shopgoodwillHeadphonesLink = "https://shopgoodwill.com/categories/listing?st=headphones&sg=&c=&s=&lp=0&hp=999999&sbn=&spo=false&snpo=false&socs=false&sd=false&sca=false&caed=4%2F1%2F2023&cadb=7&scs=false&sis=false&col=1&p=1&ps=40&desc=false&ss=0&UseBuyerPrefs=true&sus=false&cln=1&catIds=&pn=&wc=false&mci=false&hmt=false&layout=grid&ihp=true"
-
-const shopgoodwill14kBraceletLink = "https://shopgoodwill.com/categories/listing?st=14k%20bracelet&sg=Keyword&c=&s=&lp=0&hp=50&sbn=&spo=false&snpo=false&socs=false&sd=false&sca=false&caed=4%2F24%2F2023&cadb=7&scs=false&sis=false&col=1&p=1&ps=40&desc=false&ss=0&UseBuyerPrefs=true&sus=false&cln=1&catIds=&pn=&wc=false&mci=false&hmt=false&layout=grid&ihp="
-const shopgoodwill14kLink = "https://shopgoodwill.com/categories/listing?st=14k&sg=Keyword&c=&s=&lp=0&hp=50&sbn=&spo=false&snpo=false&socs=false&sd=false&sca=false&caed=4%2F26%2F2023&cadb=7&scs=false&sis=false&col=1&p=1&ps=40&desc=false&ss=0&UseBuyerPrefs=true&sus=false&cln=1&catIds=&pn=&wc=false&mci=false&hmt=false&layout=grid&ihp="
-
-const shopgoodwillantlerLink = "https://shopgoodwill.com/categories/listing?st=antler&sg=&c=&s=&lp=0&hp=999999&sbn=&spo=false&snpo=false&socs=false&sd=false&sca=false&caed=7%2F22%2F2023&cadb=7&scs=false&sis=false&col=1&p=1&ps=40&desc=false&ss=0&UseBuyerPrefs=true&sus=false&cln=1&catIds=&pn=&wc=false&mci=false&hmt=false&layout=grid&ihp=true"
-const shopgoodwillPetSuppliesLink = "https://shopgoodwill.com/categories/pet-supplies"
-
 let shopgoodwillCache = []
-/*
-getShopGoodwillPostTitles(shopgoodwill14kLink)
-getShopGoodwillPostTitles(shopgoodwillWomensClothingLink)
-getShopGoodwillPostTitles(shopgoodwillAppliancesLink)
-getShopGoodwillPostTitles(shopgoodwillHeadphonesLink)
-getShopGoodwillPostTitles(shopgoodwillFragrancesLink)
-
-setInterval(() => { 
-  getShopGoodwillPostTitles(shopgoodwill14kLink)
-  getShopGoodwillPostTitles(shopgoodwillWomensClothingLink)
-  getShopGoodwillPostTitles(shopgoodwillAppliancesLink)
-  getShopGoodwillPostTitles(shopgoodwillHeadphonesLink)
- }, 600000)
-
-setInterval(() => { shopgoodwillCache = [] }, 3600000*3)
-*/
 
 function getShopGoodwillPostTitles(link) {
   puppeteer
   .launch()
   .then(async browser => {
       //open a new page for puppeteer, go to the website, then wait for the site's body contents to load
-
       const page = await browser.newPage();
 
       await page.goto(link);
       await page.waitForSelector('.feat-item_price');
 
       //Get the "viewport" of the page, as reported by the page (page.evaluate)
-
       let grabPosts = await page.evaluate(async (shopgoodwillCache) => {
           // find the very first element's classes. scroll to the right to try to find an english word
           let postLinks = [];
@@ -379,15 +349,12 @@ function getShopGoodwillPostTitles(link) {
 
                 // I only want to be notified of posts with less than 10 minutes of time left
                 // conveniently, these are only posts that have seconds in them
-
                 if (timeRemaining.includes("s")) {
                   shopgoodwillCache.push(result)
                   client.channels.cache.get(`1077663232564678686`).send(result["link"]+"\n$"+result["price"]+"\n Time remaining: "+result["time_remaining"]+"\n"+result["image"])
                 }
 
               })
-          } else {
-              //client.channels.cache.get(`893294534820257852`).send("No new posts from ShopGoodwill")
           }
 
           
@@ -395,27 +362,6 @@ function getShopGoodwillPostTitles(link) {
           console.error(err);
       })
 
-      /*
-      if (shopgoodwillCache.length > 0) {
-        for (let i=0; i<10; ++i) {
-          let item = shopgoodwillCache[i]
-  
-          getAveragePrice(item["title"], item["price"], item["link"])
-        }
-      }
-
-      setInterval(() => {
-        if (shopgoodwillCache.length > 0) {
-          for (let i=0; i<10; ++i) {
-            let item = shopgoodwillCache[i]
-    
-            getAveragePrice(item["title"], item["price"], item["link"])
-          }
-        }
-      }, 1800000)
-
-      setInterval(() => { shopgoodwillCache = [] }, 3600000*3)
-      */
       await browser.close();
     }
   )
@@ -425,129 +371,23 @@ function getShopGoodwillPostTitles(link) {
   });
 }
 
-function getAveragePrice(postTitle, currentPrice, link) {
-  puppeteer
-  .launch ()
-  .then (async browser => {
-  
-    //open a new page for puppeteer, go to the website, then wait for the site's body contents to load
-    const page = await browser.newPage ();
-    await page.goto ('https://www.google.com/search?q='+postTitle+'&tbm=shop&tbs=mr:1,new:3');
-    await page.waitForSelector ('.QIrs8');
-  
-    //Get the "viewport" of the page, as reported by the page (page.evaluate)
-    let averagePrice = await page.evaluate (() => {
-    
-    let allPosts = document.body.querySelectorAll ('.QIrs8');
-    
-    let sum = 0
-      let numberOfItems = 0
-    
-    for (let i=0; i<allPosts.length; ++i) {
+// >> Facebook Marketplace
 
-      let unsanitizedPrice = allPosts[i].firstChild.innerText
-  
-      if (unsanitizedPrice) {
-  
-        const currentPrice = (unsanitizedPrice.match(/\$((?:\d|\,)*\.?\d+)/g) || [])[0]
-  
-        if (currentPrice) {
-        
-          const priceValue = Number(currentPrice.replace(/[^0-9.-]+/g,""))
-        
-          sum += priceValue
-          ++numberOfItems
-          
-        }
-      }
-    }
+function getFacebookMarketplaceImages(link) {
+    puppeteer.launch({headless:true}).then(async browser => {
+        //browser new page
+        const page = await browser.newPage();
+        //launch URL
+        await page.goto(link);
+        await page.waitForSelector('.xt7dq6l.xl1xv1r.x6ikm8r.x10wlt62.xh8yej3')
 
-      return (sum / numberOfItems)
-    });
-    //output the scraped data
-    
-    if (currentPrice/averagePrice < 1/2 && averagePrice > 100) {
-      client.channels.cache.get(`1077663232564678686`).send("\nAVG USED PRICE: $"+ Math.round(averagePrice) +"\nCURRENT PRICE: $"+Math.round(currentPrice)+"\n"+link)
-    }
-    //closs the browser
-    await browser.close ();
-  })
-  //handling any errors
-  .catch (function (err) {
-    console.error (err);
-  });
+        const pageContent = await page.$$eval('.x1i10hfl.xjbqb8w.x6umtig.x1b1mbwd.xaqea5y.xav7gou.x9f619.x1ypdohk.xt0psk2.xe8uvvx.xdj266r.x11i5rnm.xat24cr.x1mh8g0r.xexx8yu.x4uap5.x18d9i69.xkhd6sd.x16tdsg8.x1hl2dhg.xggy1nq.x1a2a7pz.x1heor9g.x1lku1pv', items => {return items.map(item => item.href)} )
+
+        //pageContent.forEach(item => console.log(item))
+        pageContent.forEach(item => client.channels.cache.get(`1077663232564678686`).send(item))
+     })
+
 }
-
-let postTitleCache = []
-
-function getNewRedditPosts() {
-  puppeteer
-  .launch ()
-  .then (async browser => {
-  
-    //open a new page for puppeteer, go to the website, then wait for the site's body contents to load
-    const page = await browser.newPage ();
-    await page.goto ('https://www.reddit.com/r/fragranceswap/new/');
-    await page.waitForSelector ('body');
-  
-    //Get the "viewport" of the page, as reported by the page (page.evaluate)
-    let grabPosts = await page.evaluate (async (postTitleCache) => {
-    // find the very first element's classes. scroll to the right to try to find an english word
-    let allPosts = document.body.querySelectorAll ('.Post');
-      
-    //store the post items in an array then select to get the descriptions from each
-    scrapeItems = [];
-    allPosts.forEach (item => {
-      let postTitle = ''
-
-      if (item.querySelector ('h3').innerText.toLocaleLowerCase().includes("wts") && 
-      item.querySelector ('h3').innerText.toLocaleLowerCase().includes("bottle")) {
-        postTitle = item.querySelector ('h3').innerText
-      }
-
-      let postDescription = '';
-        try {
-          let postDescriptions = item.querySelectorAll ('p');
-          let tempString = ""
-          
-          postDescriptions.forEach(desc => tempString += (desc.innerText.match(/\$((?:\d|\,)*\.?\d+)/g) || []) + ", " )
-
-          postDescription = tempString
-        } catch (err) {}
-        
-        if (postTitle !== '' && postDescription !== '' && !postTitleCache.includes(postTitle)) {
-          scrapeItems.push ({
-            title: postTitle,
-            prices: postDescription,
-          });
-        }
-      });
-
-      return scrapeItems;
-    }, postTitleCache);
-    //output the scraped data
-    if (grabPosts !== null || grabPosts.length !== 0) {
-      grabPosts.forEach(item => {
-        client.channels.cache.get(`1077663232564678686`).send("**"+ item.title + "**\n" + item.prices)
-        postTitleCache.push(item.title)
-        console.log(item)
-    })
-    }
-    //closs the browser
-    await browser.close ();
-  })
-  //handling any errors
-  .catch (function (err) {
-    console.error (err);
-  });
-}
-/*
-getNewRedditPosts()
-
-setInterval(getNewRedditPosts, 60000)
-
-setInterval(() => { postTitleCache = [] }, 3600000*3)
-*/
 
 // ----------------------------- GOOGLE SHEETS CODE ----------------------
 
