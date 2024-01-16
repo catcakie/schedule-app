@@ -213,11 +213,14 @@ commands.push(test.data.toJSON())
 const listings = {
   data: new SlashCommandBuilder()
       .setName('listings')
-      .setDescription('Posts customized listings (adjust in code)'),
+      .setDescription('Posts customized Facebook Marketplace listings <$20')
+      .addStringOption(option =>
+        option.setName('search').setDescription('Enter a search term').setRequired(true),
+      ),
   async execute(interaction) {
       await interaction.reply("Command received");
-      //getShopGoodwillPostTitles(shopgoodwill14kLink)
-      getFacebookMarketplaceImages("https://www.facebook.com/marketplace/107357592626761/search?maxPrice=20&deliveryMethod=local_pick_up&sortBy=creation_time_descend&query=chair&exact=false&radius=10")
+      const userInputSearch = interaction.options.getString('search')
+      getFacebookMarketplaceImages("https://www.facebook.com/marketplace/107357592626761/search?maxPrice=20&deliveryMethod=local_pick_up&sortBy=creation_time_descend&query="+userInputSearch+"&exact=false&radius=10")
       client.channels.cache.get(`1077663232564678686`).send("Script executed")
   },
 };
