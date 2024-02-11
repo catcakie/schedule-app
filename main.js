@@ -210,9 +210,9 @@ const test = {
 };
 commands.push(test.data.toJSON())
 
-const listings = {
+const listingsFBM = {
   data: new SlashCommandBuilder()
-      .setName('listings')
+      .setName('listings_facebook_marketplace')
       .setDescription('Posts customized Facebook Marketplace listings <$40')
       .addStringOption(option =>
         option.setName('search').setDescription('Enter a search term').setRequired(true),
@@ -224,7 +224,23 @@ const listings = {
       client.channels.cache.get(`1077663232564678686`).send("Script executed")
   },
 };
-commands.push(listings.data.toJSON())
+commands.push(listingsFBM.data.toJSON())
+
+const listingsSGW = {
+    data: new SlashCommandBuilder()
+        .setName('listings_shopgoodwill')
+        .setDescription('Posts customized ShopGoodwill listings <$40')
+        .addStringOption(option =>
+          option.setName('search').setDescription('Enter a search term').setRequired(true),
+        ),
+    async execute(interaction) {
+        await interaction.reply("Command received");
+        const userInputSearch = interaction.options.getString('search')
+        getShopGoodwillPostTitles("https://shopgoodwill.com/categories/listing?st="+userInputSearch+"&sg=Keyword&c=&s=&lp=0&hp=40&sbn=&spo=false&snpo=false&socs=false&sd=false&sca=false&caed=2%2F11%2F2024&cadb=7&scs=false&sis=false&col=1&p=1&ps=40&desc=false&ss=0&UseBuyerPrefs=true&sus=false&cln=1&catIds=&pn=&wc=false&mci=false&hmt=false&layout=grid&ihp=")
+        client.channels.cache.get(`1077663232564678686`).send("Script executed")
+    },
+  };
+  commands.push(listingsSGW.data.toJSON())
 
 
 // Construct and prepare an instance of the REST module
@@ -262,13 +278,14 @@ for (const file of commandFiles) {
 
 // slash commands related to app here
 client.commands.set(test.data.name, test)
-client.commands.set(listings.data.name, listings)
+client.commands.set(listingsFBM.data.name, listingsFBM)
+client.commands.set(listingsSGW.data.name, listingsSGW)
 
 client.once(Events.ClientReady, () => {
     console.log('Ready!');
     client.user.setPresence({
         activities: [{
-            name: `probably yt/reddit`,
+            name: `probably randomly browsing`,
             type: ActivityType.Watching
         }],
         status: 'idle',
@@ -352,10 +369,10 @@ function getShopGoodwillPostTitles(link) {
 
                 // I only want to be notified of posts with less than 10 minutes of time left
                 // conveniently, these are only posts that have seconds in them
-                if (timeRemaining.includes("s")) {
+                //if (timeRemaining.includes("s")) {
                   shopgoodwillCache.push(result)
                   client.channels.cache.get(`1077663232564678686`).send(result["link"]+"\n$"+result["price"]+"\n Time remaining: "+result["time_remaining"]+"\n"+result["image"])
-                }
+                //}
 
               })
           }
