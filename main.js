@@ -221,7 +221,7 @@ const listingsFBM = {
       await interaction.reply("Command received");
       const userInputSearch = interaction.options.getString('search')
       getFacebookMarketplaceImages("https://www.facebook.com/marketplace/107357592626761/search?maxPrice=40&deliveryMethod=local_pick_up&sortBy=creation_time_descend&query="+userInputSearch+"&exact=false&radius=10")
-      client.channels.cache.get(`1077663232564678686`).send("Script executed")
+      client.channels.cache.get(`1077663232564678686`).send("Script executed\nSearch term: "+userInputSearch)
   },
 };
 commands.push(listingsFBM.data.toJSON())
@@ -237,7 +237,7 @@ const listingsSGW = {
         await interaction.reply("Command received");
         const userInputSearch = interaction.options.getString('search')
         getShopGoodwillPostTitles("https://shopgoodwill.com/categories/listing?st="+userInputSearch+"&sg=Keyword&c=&s=&lp=0&hp=40&sbn=&spo=false&snpo=false&socs=false&sd=false&sca=false&caed=2%2F11%2F2024&cadb=7&scs=false&sis=false&col=1&p=1&ps=40&desc=false&ss=0&UseBuyerPrefs=true&sus=false&cln=1&catIds=&pn=&wc=false&mci=false&hmt=false&layout=grid&ihp=")
-        client.channels.cache.get(`1077663232564678686`).send("Script executed")
+        client.channels.cache.get(`1077663232564678686`).send("Script executed\nSearch term: "+userInputSearch)
     },
   };
   commands.push(listingsSGW.data.toJSON())
