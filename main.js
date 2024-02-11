@@ -213,14 +213,14 @@ commands.push(test.data.toJSON())
 const listings = {
   data: new SlashCommandBuilder()
       .setName('listings')
-      .setDescription('Posts customized Facebook Marketplace listings <$20')
+      .setDescription('Posts customized Facebook Marketplace listings <$40')
       .addStringOption(option =>
         option.setName('search').setDescription('Enter a search term').setRequired(true),
       ),
   async execute(interaction) {
       await interaction.reply("Command received");
       const userInputSearch = interaction.options.getString('search')
-      getFacebookMarketplaceImages("https://www.facebook.com/marketplace/107357592626761/search?maxPrice=20&deliveryMethod=local_pick_up&sortBy=creation_time_descend&query="+userInputSearch+"&exact=false&radius=10")
+      getFacebookMarketplaceImages("https://www.facebook.com/marketplace/107357592626761/search?maxPrice=40&deliveryMethod=local_pick_up&sortBy=creation_time_descend&query="+userInputSearch+"&exact=false&radius=10")
       client.channels.cache.get(`1077663232564678686`).send("Script executed")
   },
 };
@@ -384,7 +384,7 @@ function getFacebookMarketplaceImages(link) {
         await page.goto(link);
         await page.waitForSelector('.xt7dq6l.xl1xv1r.x6ikm8r.x10wlt62.xh8yej3')
 
-        const pageContent = await page.$$eval('.x1i10hfl.xjbqb8w.x6umtig.x1b1mbwd.xaqea5y.xav7gou.x9f619.x1ypdohk.xt0psk2.xe8uvvx.xdj266r.x11i5rnm.xat24cr.x1mh8g0r.xexx8yu.x4uap5.x18d9i69.xkhd6sd.x16tdsg8.x1hl2dhg.xggy1nq.x1a2a7pz.x1heor9g.x1lku1pv', items => {return items.map(item => item.href)} )
+        const pageContent = await page.$$eval('.xt7dq6l.xl1xv1r.x6ikm8r.x10wlt62.xh8yej3', items => {return items.map(item => item.src)} )
 
         //pageContent.forEach(item => console.log(item))
         pageContent.forEach(item => client.channels.cache.get(`1077663232564678686`).send(item))
