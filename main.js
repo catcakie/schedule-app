@@ -75,7 +75,7 @@ function createWindow() {
 
             client.user.setPresence({
                 activities: [{
-                    name: `probably yt/reddit`,
+                    name: `probably randomly browsing`,
                     type: ActivityType.Watching
                 }],
                 status: 'idle',
